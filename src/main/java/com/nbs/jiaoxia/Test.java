@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
-import com.nbs.jiaoxia.domain.db.UserInfo;
+import com.nbs.jiaoxia.domain.po.UserInfo;
 import com.nbs.jiaoxia.mapper.UserInfoMapper;
 
 public class Test {

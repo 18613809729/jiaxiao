@@ -2,7 +2,7 @@ package com.nbs.jiaoxia.service.db;
 
 import java.util.List;
 
-import com.nbs.jiaoxia.domain.db.UserInfo;
+import com.nbs.jiaoxia.domain.po.UserInfo;
 
 public interface UserInfoService {
 	/**

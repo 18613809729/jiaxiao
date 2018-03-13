@@ -1,4 +1,4 @@
-package com.nbs.jiaoxia.domain.db;
+package com.nbs.jiaoxia.domain.po;
 
 import com.nbs.jiaoxia.domain.base.Base;
 

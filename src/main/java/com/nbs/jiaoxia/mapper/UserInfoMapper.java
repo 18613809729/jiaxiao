@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.nbs.jiaoxia.domain.db.UserInfo;
+import com.nbs.jiaoxia.domain.po.UserInfo;
 
 public interface UserInfoMapper {
 	

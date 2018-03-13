@@ -2,7 +2,7 @@ package com.nbs.jiaoxia.service.db.impl;
 
 import java.util.List;
 
-import com.nbs.jiaoxia.domain.db.UserInfo;
+import com.nbs.jiaoxia.domain.po.UserInfo;
 import com.nbs.jiaoxia.service.db.UserInfoService;
 
 public class UserInfoServiceImpl implements UserInfoService {
