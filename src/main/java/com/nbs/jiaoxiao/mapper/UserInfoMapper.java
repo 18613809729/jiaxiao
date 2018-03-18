@@ -1,10 +1,10 @@
-package com.nbs.jiaoxia.mapper;
+package com.nbs.jiaoxiao.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.nbs.jiaoxia.domain.po.UserInfo;
+import com.nbs.jiaoxiao.domain.po.UserInfo;
 
 public interface UserInfoMapper {
 	

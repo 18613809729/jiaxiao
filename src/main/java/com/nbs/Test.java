@@ -1,4 +1,4 @@
-package com.nbs.jiaoxia;
+package com.nbs;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
-import com.nbs.jiaoxia.domain.po.UserInfo;
-import com.nbs.jiaoxia.mapper.UserInfoMapper;
+import com.nbs.jiaoxiao.domain.po.UserInfo;
+import com.nbs.jiaoxiao.mapper.UserInfoMapper;
 
 public class Test {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);

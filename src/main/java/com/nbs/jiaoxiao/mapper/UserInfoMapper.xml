@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbs.loan.mapper.UserInfoMapper">
-	<resultMap id="userInfoResultMap" type="com.nbs.loan.domain.db.UserInfo">
+<mapper namespace="com.nbs.jiaoxia.mapper.UserInfoMapper">
+	<resultMap id="userInfoResultMap" type="com.nbs.jiaoxia.domain.po.UserInfo">
   		<result property="id" column="ID"/>
   		<result property="pin" column="PIN"/>
   		<result property="custName" column="CUST_NAME"/>

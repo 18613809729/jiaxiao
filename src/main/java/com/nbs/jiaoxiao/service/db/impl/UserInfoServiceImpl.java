@@ -1,9 +1,9 @@
-package com.nbs.jiaoxia.service.db.impl;
+package com.nbs.jiaoxiao.service.db.impl;
 
 import java.util.List;
 
-import com.nbs.jiaoxia.domain.po.UserInfo;
-import com.nbs.jiaoxia.service.db.UserInfoService;
+import com.nbs.jiaoxiao.domain.po.UserInfo;
+import com.nbs.jiaoxiao.service.db.UserInfoService;
 
 public class UserInfoServiceImpl implements UserInfoService {
 

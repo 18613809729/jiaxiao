@@ -1,4 +1,4 @@
-package com.nbs.jiaoxia.domain.base;
+package com.nbs.jiaoxiao.domain.base;
 
 import java.util.Date;
 import java.util.HashMap;

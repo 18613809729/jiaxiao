@@ -1,6 +1,6 @@
-package com.nbs.jiaoxia.domain.po;
+package com.nbs.jiaoxiao.domain.po;
 
-import com.nbs.jiaoxia.domain.base.Base;
+import com.nbs.jiaoxiao.domain.base.Base;
 
 /**
  * 

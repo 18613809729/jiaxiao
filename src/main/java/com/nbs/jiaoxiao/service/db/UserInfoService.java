@@ -1,8 +1,8 @@
-package com.nbs.jiaoxia.service.db;
+package com.nbs.jiaoxiao.service.db;
 
 import java.util.List;
 
-import com.nbs.jiaoxia.domain.po.UserInfo;
+import com.nbs.jiaoxiao.domain.po.UserInfo;
 
 public interface UserInfoService {
 	/**
