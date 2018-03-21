@@ -1,6 +1,7 @@
 package com.nbs.jiaoxiao.common;
 
-public class XbsUtils {
+public class NbsUtils {
+	
 	public static String toHex(byte[] bytes) {
 		final String HEX = "0123456789abcdef";
 		StringBuilder sb = new StringBuilder(bytes.length * 2);
