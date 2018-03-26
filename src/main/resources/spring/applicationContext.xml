@@ -11,8 +11,17 @@
 	<context:component-scan base-package="com.nbs.jiaoxiao.controller" />
 	<mvc:annotation-driven />
 
-	<mvc:resources mapping="/*.txt" location="/txt/" />
+	<mvc:resources mapping="/**/*.txt" location="/txt/" />
 	
+
+	<mvc:interceptors>  
+		<mvc:interceptor>
+		 	<mvc:mapping path="/**/*"/>
+			<mvc:exclude-mapping path="/**/*.txt"/>
+			<mvc:exclude-mapping path="/wx"/>
+			<bean class="com.nbs.jiaoxiao.wx.WxLoginInteceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> 
 
 	<!-- freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">

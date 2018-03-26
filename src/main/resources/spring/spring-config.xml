@@ -15,6 +15,20 @@
 	</context:component-scan>
 	
 	<import resource="spring-mybatis.xml"/>
-   
+   	
+   <bean id="redisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="blockWhenExhausted" value="true"/> <!--连接池耗尽时是否阻塞-->
+        <property name="maxWaitMillis" value="500" /> <!--连接池耗尽时最大等待时间-->
+        <property name="maxTotal" value="20"/> <!---最大连接数，如果blockWhenExhausted为false会阻塞，为true会抛出异常-->
+        <property name="maxIdle" value="20"/>  <!--最大可以保的空闲连接数量，实际空闲连接数会在 maxIdle与minIdle 之间-->
+        <property name="minIdle" value="5"/> <!-- 最小空闲保持连接数-->
+        <property name="testOnBorrow" value="true"/> <!--获取连接先校验-->
+    </bean>
+    
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+    	<constructor-arg name="poolConfig" ref="redisPoolConfig"/>
+    	<constructor-arg name="host" value="${redis.host}"/>
+    	<constructor-arg name="port" value="${redis.port}"/>
+    </bean>
    
 </beans>

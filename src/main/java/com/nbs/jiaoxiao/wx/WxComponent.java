@@ -2,6 +2,7 @@ package com.nbs.jiaoxiao.wx;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -20,7 +21,9 @@ import com.nbs.jiaoxiao.common.HttpUtil;
 import com.nbs.jiaoxiao.common.NbsUtils;
 import com.nbs.jiaoxiao.exception.CheckToRuntimeException;
 import com.nbs.jiaoxiao.exception.RpcException;
-import com.nbs.jiaoxiao.wx.vo.AccessTokenRes;
+import com.nbs.jiaoxiao.wx.vo.BaseRes;
+import com.nbs.jiaoxiao.wx.vo.CommonRes;
+import com.nbs.jiaoxiao.wx.vo.UserInfo;
 
 @Component
 public class WxComponent {
@@ -31,6 +34,7 @@ public class WxComponent {
 	private String appID;
 	@Value("${wx.appsecret}")
 	private String appsecret;
+	
 
 	private volatile String accessToken;
 	private volatile long expireTime = Long.MAX_VALUE;
@@ -52,19 +56,39 @@ public class WxComponent {
 		if(System.currentTimeMillis() < expireTime) {
 			synchronized (this) {
 				if(System.currentTimeMillis() < expireTime) {
-					String res = HttpUtil.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appID + "&secret=" + appsecret);
-					AccessTokenRes accessTokenRes = JSON.parseObject(res, AccessTokenRes.class);
-					if(AccessTokenRes.SUCCESS != accessTokenRes.getErrcode()) {
-						throw new RpcException("get access_token error,res:" + res);
+					String resStr = HttpUtil.get(MessageFormat.format(WxConstant.ACCESS_TOKEN_URL, appID, appsecret));
+					CommonRes commonRes = JSON.parseObject(resStr, CommonRes.class);
+					if(BaseRes.SUCCESS != commonRes.getErrcode()) {
+						throw new RpcException("get access_token error,res:" + resStr);
 					}
-					this.accessToken = accessTokenRes.getAccess_token();
+					this.accessToken = commonRes.getAccess_token();
 					//失效事件当前系统事件 + token有效时间 - 5min
-					this.expireTime = System.currentTimeMillis() + accessTokenRes.getExpires_in() * DateUtils.MILLIS_PER_SECOND  - 5 * DateUtils.MILLIS_PER_MINUTE;
+					this.expireTime = System.currentTimeMillis() + commonRes.getExpires_in() * DateUtils.MILLIS_PER_SECOND  - 5 * DateUtils.MILLIS_PER_MINUTE;
 					LOGGER.info("refesh access_token {} , expired at {}", accessToken, LocalDateTime.ofInstant(Instant.ofEpochMilli(expireTime), ZoneId.systemDefault()));
 				}
 			}
 		}
 		return accessToken;
+	}
+	
+	
+	public CommonRes getLoginAccessToken(String code) {
+		String res = HttpUtil.get(MessageFormat.format(WxConstant.LOGIN_ACCESS_TOKEN_URL, appID, appsecret, code));
+		CommonRes commonRes = JSON.parseObject(res, CommonRes.class);
+		if(BaseRes.SUCCESS != commonRes.getErrcode()) {
+			throw new RpcException("get LoginAccessToken error,res:" + res);
+		}
+		return commonRes;
+	}
+	
+	
+	public UserInfo getUserInfo(String accessToken, String openid) {
+		String res = HttpUtil.get(MessageFormat.format(WxConstant.USERINFO_URL, accessToken, openid));
+		UserInfo userInfo = JSON.parseObject(res, UserInfo.class);
+		if(BaseRes.SUCCESS != userInfo.getErrcode()) {
+			throw new RpcException("get LoginAccessToken error,res:" + res);
+		}
+		return userInfo;
 	}
 	
 	public static void main(String[] args) {
