@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.nbs.jiaoxiao.exception.CheckToRuntimeException;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
  * xstream 工具类，使用全局xstream，避免创建大对象xstream，此类是线程安全的
@@ -26,7 +28,7 @@ public class XStreamUtil {
 	private static volatile XStreamUtil instance;
 
 	private XStreamUtil(){
-		xStream = new XStream(new DomDriver(null, new XmlFriendlyNameCoder("_-", "_")));
+		xStream = new XStream(new DomDriver());
 		xStream.ignoreUnknownElements();
 	}
 	

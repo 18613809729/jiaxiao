@@ -7,9 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public class WebUtil {
 	public static String getCookie(HttpServletRequest request, String cookieName) {
-		for (Cookie cookie : request.getCookies()) {
-			if(cookie.getName().equalsIgnoreCase(cookieName)) {
-				return cookie.getValue();
+		if(request.getCookies() != null) {
+			for (Cookie cookie : request.getCookies()) {
+				if(cookie.getName().equalsIgnoreCase(cookieName)) {
+					return cookie.getValue();
+				}
 			}
 		}
 		return null;
