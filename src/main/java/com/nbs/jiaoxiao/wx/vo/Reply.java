@@ -1,11 +1,15 @@
 package com.nbs.jiaoxiao.wx.vo;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.nbs.jiaoxiao.common.XStreamUtil;
 import com.nbs.jiaoxiao.exception.CheckToRuntimeException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @XStreamAlias("xml")
 public class Reply {
@@ -31,7 +35,7 @@ public class Reply {
 	@XStreamCDATA
 	private String thumbMediaId;
 	private Integer articleCount;
-	private String articles;
+	private List<News> articles;
 	
 	public String getToUserName() {
 		return toUserName;
@@ -105,20 +109,27 @@ public class Reply {
 	public void setArticleCount(Integer articleCount) {
 		this.articleCount = articleCount;
 	}
-	public String getArticles() {
+	
+	public List<News> getArticles() {
 		return articles;
 	}
-	public void setArticles(String articles) {
+	public void setArticles(List<News> articles) {
 		this.articles = articles;
 	}
-	
-	
 	public static void main(String[] args) {
 		Reply reply = new Reply();
 		reply.setFromUserName("zhangsan");
 		reply.setToUserName("lisi");
 		reply.setCreateTime(17890L);
 		reply.setArticleCount(8);
-		System.out.println(reply.toXML());
+		List<News> lst = new ArrayList<>();
+		News news1 = new News();
+		news1.setDescription("描述");
+		news1.setPicUrl("/img");
+		news1.setTitle("new image");
+		news1.setUrl("//im");
+		lst.add(news1);
+		reply.setArticles(lst);
+		System.out.println(XStreamUtil.toWxXML(reply));
 	}
 }

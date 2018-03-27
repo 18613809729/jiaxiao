@@ -2,18 +2,22 @@ package com.nbs.jiaoxiao.common;
 
 import java.io.StringWriter;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.nbs.jiaoxiao.exception.CheckToRuntimeException;
 import com.nbs.jiaoxiao.wx.vo.XStreamCDATA;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.io.xml.Dom4JDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
@@ -126,6 +130,7 @@ public class XStreamUtil {
 		return t;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static String toWxXML(Object obj) {
 		StringBuilder sb = new StringBuilder();
 		XStreamAlias alias = obj.getClass().getAnnotation(XStreamAlias.class);
@@ -133,6 +138,7 @@ public class XStreamUtil {
 		sb.append("<").append(rootName).append(">");
 		Field[] fields = obj.getClass().getDeclaredFields();
 		for (Field field : fields) {
+			field.setAccessible(true);
 			Object val = null;
 			try {
 				val = field.get(obj);
@@ -142,14 +148,26 @@ public class XStreamUtil {
 			if(val == null || (val instanceof String && StringUtils.isBlank((CharSequence) val))) {
 				continue;
 			}
+			if(val instanceof List && CollectionUtils.isEmpty((Collection<?>) val)) {
+				continue;
+			}
+			
 			String fieldName = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
 			XStreamCDATA[] cdatas = field.getAnnotationsByType(XStreamCDATA.class);
-			if(cdatas != null && cdatas.length > 0) {
-				sb.append("\n").append("  <").append(fieldName).append("><![CDATA[").append(val).append("]]></").append(fieldName).append(">");
+			sb.append("\n").append("  <").append(fieldName).append(">");
+			if(val instanceof List) {
+				List<Object> lst = (List<Object>) val;
+				for (Object item : lst) {
+					sb.append("\n").append(toWxXML(item)).append("\n");
+				}
 			} else {
-				sb.append("\n").append("  <").append(fieldName).append(">").append(val).append("</").append(fieldName).append(">");
-
+				if(cdatas != null && cdatas.length > 0) {
+					sb.append("<![CDATA[").append(val).append("]]>");
+				} else {
+					sb.append(val);
+				}
 			}
+			sb.append("</").append(fieldName).append(">");
 		}
 		sb.append("\n</").append(rootName).append(">");
 		return sb.toString();
