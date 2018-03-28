@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbs.jiaxiao.mapper.UserMapper">
+	<resultMap id="userResultMap" type="com.nbs.jiaxiao.domain.po.User">
+  		<result property="id" column="ID"/>
+  		<result property="openId" column="OPEN_ID"/>
+  		<result property="userName" column="USER_NAME"/>
+  		<result property="nickName" column="NICK_NAME"/>
+  		<result property="certNo" column="CERT_NO"/>
+  		<result property="mobile" column="MOBILE"/>
+  		<result property="sex" column="SEX"/>
+  		<result property="country" column="COUNTRY"/>
+  		<result property="province" column="PROVINCE"/>
+  		<result property="city" column="CITY"/>
+  		<result property="address" column="ADDRESS"/>
+  		<result property="headImg" column="HEAD_IMG"/>
+  		<result property="password" column="PASSWORD"/>
+  		<result property="subscribe" column="SUBSCRIBE"/>
+  		<result property="createdTime" column="CREATED_TIME"/>
+  		<result property="modifiedTime" column="MODIFIED_TIME"/>
+  		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
+  		<result property="lastUpdateNoUserId" column="LAST_UPDATE_NO_USER_ID"/>
+	</resultMap>
+
+	<sql id="commonSelect">
+		ID, OPEN_ID, USER_NAME, NICK_NAME, CERT_NO, MOBILE, SEX, COUNTRY, PROVINCE, CITY, ADDRESS, HEAD_IMG, PASSWORD, SUBSCRIBE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+	</sql>
+	
+	<sql id="whereCondition">
+		WHERE DELETED = 0 
+	 			<if test="id != null"> AND ID = #{id}</if> 
+	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
+	 			<if test="userName != null"> AND USER_NAME = #{userName}</if> 
+	 			<if test="nickName != null"> AND NICK_NAME = #{nickName}</if> 
+	 			<if test="certNo != null"> AND CERT_NO = #{certNo}</if> 
+	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
+	 			<if test="sex != null"> AND SEX = #{sex}</if> 
+	 			<if test="country != null"> AND COUNTRY = #{country}</if> 
+	 			<if test="province != null"> AND PROVINCE = #{province}</if> 
+	 			<if test="city != null"> AND CITY = #{city}</if> 
+	 			<if test="address != null"> AND ADDRESS = #{address}</if> 
+	 			<if test="headImg != null"> AND HEAD_IMG = #{headImg}</if> 
+	 			<if test="password != null"> AND PASSWORD = #{password}</if> 
+	 			<if test="subscribe != null"> AND SUBSCRIBE = #{subscribe}</if> 
+	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
+	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
+	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
+	 			<if test="param.modifiedTimeEnd != null"> AND MODIFIED_TIME <![CDATA[<=]]> #{param.modifiedTimeEnd} </if>
+				<if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo}</if> 
+	 			<if test="param.lastUpdateNoStart != null"> AND LAST_UPDATE_NO <![CDATA[>=]]> #{param.lastUpdateNoStart} </if> 
+	 			<if test="param.lastUpdateNoEnd != null"> AND LAST_UPDATE_NO <![CDATA[<=]]> #{param.lastUpdateNoEnd} </if>
+	 			<if test="lastUpdateNoUserId != null"> AND LAST_UPDATE_NO_USER_ID = #{lastUpdateNoUserId}</if> 
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	 	INSERT  INTO  user 
+	 	<trim prefix="(" suffixOverrides="," suffix=")">
+				<if test="id != null">ID,</if> 
+				<if test="openId != null">OPEN_ID,</if> 
+				<if test="userName != null">USER_NAME,</if> 
+				<if test="nickName != null">NICK_NAME,</if> 
+				<if test="certNo != null">CERT_NO,</if> 
+				<if test="mobile != null">MOBILE,</if> 
+				<if test="sex != null">SEX,</if> 
+				<if test="country != null">COUNTRY,</if> 
+				<if test="province != null">PROVINCE,</if> 
+				<if test="city != null">CITY,</if> 
+				<if test="address != null">ADDRESS,</if> 
+				<if test="headImg != null">HEAD_IMG,</if> 
+				<if test="password != null">PASSWORD,</if> 
+				<if test="subscribe != null">SUBSCRIBE,</if> 
+				<if test="createdTime != null">CREATED_TIME,</if> 
+				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
+				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID,</if> 
+	 	</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">#{id},</if> 
+			<if test="openId != null">#{openId},</if> 
+			<if test="userName != null">#{userName},</if> 
+			<if test="nickName != null">#{nickName},</if> 
+			<if test="certNo != null">#{certNo},</if> 
+			<if test="mobile != null">#{mobile},</if> 
+			<if test="sex != null">#{sex},</if> 
+			<if test="country != null">#{country},</if> 
+			<if test="province != null">#{province},</if> 
+			<if test="city != null">#{city},</if> 
+			<if test="address != null">#{address},</if> 
+			<if test="headImg != null">#{headImg},</if> 
+			<if test="password != null">#{password},</if> 
+			<if test="subscribe != null">#{subscribe},</if> 
+			<if test="createdTime != null">#{createdTime},</if> 
+			<if test="modifiedTime != null">#{modifiedTime},</if> 
+			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
+			<if test="lastUpdateNoUserId != null">#{lastUpdateNoUserId},</if> 
+		</trim>
+	</insert>
+	
+	<update id="updateByPriKey">
+		UPDATE   user 
+		<set>
+				<if test="openId != null">OPEN_ID=#{openId},</if>
+				<if test="userName != null">USER_NAME=#{userName},</if>
+				<if test="nickName != null">NICK_NAME=#{nickName},</if>
+				<if test="certNo != null">CERT_NO=#{certNo},</if>
+				<if test="mobile != null">MOBILE=#{mobile},</if>
+				<if test="sex != null">SEX=#{sex},</if>
+				<if test="country != null">COUNTRY=#{country},</if>
+				<if test="province != null">PROVINCE=#{province},</if>
+				<if test="city != null">CITY=#{city},</if>
+				<if test="address != null">ADDRESS=#{address},</if>
+				<if test="headImg != null">HEAD_IMG=#{headImg},</if>
+				<if test="password != null">PASSWORD=#{password},</if>
+				<if test="subscribe != null">SUBSCRIBE=#{subscribe},</if>
+				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
+				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
+				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID=#{lastUpdateNoUserId},</if>
+    	</set>
+    	WHERE ID = #{id}  <if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo} </if>  AND DELETED = 0 
+    </update>
+	
+	<update id="delete">
+		UPDATE  user SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+	</update>
+	
+	<update id="deleteByPriKey">
+		UPDATE  user SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+	</update>
+	
+	<delete id="deleteActual">
+		DELETE FROM user <include refid="whereCondition"/>
+	</delete>
+	
+	<delete id="deleteActualByPriKey">
+		DELETE FROM user WHERE ID = #{id}
+	</delete>
+	
+	<delete id="clean">
+		DELETE FROM user WHERE ID > #{id} and DELETED != 0 
+	</delete>
+	
+	<select id="selectByPriKey" resultMap="userResultMap">
+		   SELECT   
+		   <include refid="commonSelect" />
+		   FROM   user WHERE ID = #{id}
+	</select>
+	
+	<select id="selectList" resultMap="userResultMap">
+		   SELECT   
+		   <include refid="commonSelect"/>
+		   FROM   user
+		   <include refid="whereCondition"/> 
+		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
+		   <if test="param.columnSort == null">ORDER BY ID </if>   
+	</select>
+	
+	<select id="selectCount" resultType="long">
+	 	SELECT  COUNT(1) CNT FROM   user
+		<include refid="whereCondition"/> 
+	</select>
+	
+	<select id="exist" resultType="int">
+	 	SELECT  ID FROM   user
+		<include refid="whereCondition"/> limit 1
+	</select>
+</mapper>
