@@ -111,6 +111,39 @@ public class Reply {
 	public void setArticles(List<News> articles) {
 		this.articles = articles;
 	}
+	
+	
+	public static enum ReplyType{
+		TEXT("text", "文本消息"), IMAGE("image", "图片"), VOICE("voice", "语音"), VIDEO("video", "视频"), MUSIC("music", "音乐"),
+		NEWS("news", "图文");
+		String code;
+		String desc;
+		
+		
+		private ReplyType(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+		public String getCode() {
+			return code;
+		}
+		public String getDesc() {
+			return desc;
+		}
+		
+		
+		
+		public ReplyType valueOfByCode(String type) {
+			for (ReplyType replyType : ReplyType.values()) {
+				if(replyType.getCode().equalsIgnoreCase(type)) {
+					return replyType;
+				}
+			}
+			return null;
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		Reply reply = new Reply();
 		reply.setFromUserName("zhangsan");

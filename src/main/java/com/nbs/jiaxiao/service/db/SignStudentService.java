@@ -18,7 +18,7 @@ public interface SignStudentService {
 	 * @param signStudent
 	 * @return
 	 */
-	public int updateByPriKey(SignStudent signStudent);
+	public void updateByPriKey(SignStudent signStudent);
 	
 	/**
 	 * 根据条件逻辑删除 慎用

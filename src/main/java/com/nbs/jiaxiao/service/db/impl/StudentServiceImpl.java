@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.StudentMapper;
+import com.nbs.jiaxiao.service.db.StudentService;
 
 @Service
-public class StudentServiceImpl {
+public class StudentServiceImpl implements StudentService{
 	
 	@Resource
 	private StudentMapper studentMapper;

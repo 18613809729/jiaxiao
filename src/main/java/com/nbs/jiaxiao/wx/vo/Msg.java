@@ -364,7 +364,7 @@ public class Msg {
 		
 		public MsgType valueOfByCode(String type) {
 			for (MsgType msgType : MsgType.values()) {
-				if(msgType.getCode().equals(type)) {
+				if(msgType.getCode().equalsIgnoreCase(type)) {
 					return msgType;
 				}
 			}
@@ -376,7 +376,7 @@ public class Msg {
 	
 	public static enum Event{
 		SUBSCRIBE("subscribe", "公众号订阅"), UNSUBSCRIBE("unsubscribe", "订阅取消"), SCAN("SCAN", "扫描"), LOCATION("LOCATION", "地理位置上报"), 
-		CLICK("CLICK", "菜单点击"), VIEW("link", "位置");
+		CLICK("click", "菜单点击"), VIEW("view", "位置");
 		String code;
 		String desc;
 		
@@ -396,7 +396,7 @@ public class Msg {
 		
 		public Event valueOfByCode(String type) {
 			for (Event event : Event.values()) {
-				if(event.getCode().equals(type)) {
+				if(event.getCode().equalsIgnoreCase(type)) {
 					return event;
 				}
 			}

@@ -18,7 +18,7 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	public int updateByPriKey(User user);
+	public void updateByPriKey(User user);
 	
 	/**
 	 * 根据条件逻辑删除 慎用

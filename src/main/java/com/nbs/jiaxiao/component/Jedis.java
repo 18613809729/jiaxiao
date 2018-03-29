@@ -160,8 +160,9 @@ public class Jedis implements JedisCommands{
 
 	@Override
 	public String setex(String key, int seconds, String value) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.setex(key, seconds, value);
+		}
 	}
 
 	@Override

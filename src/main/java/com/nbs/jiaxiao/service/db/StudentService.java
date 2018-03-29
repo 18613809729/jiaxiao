@@ -18,7 +18,7 @@ public interface StudentService {
 	 * @param student
 	 * @return
 	 */
-	public int updateByPriKey(Student student);
+	public void updateByPriKey(Student student);
 	
 	/**
 	 * 根据条件逻辑删除 慎用
