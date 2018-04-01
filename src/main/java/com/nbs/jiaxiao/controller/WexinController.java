@@ -4,15 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nbs.jiaxiao.common.XStreamUtil;
-import com.nbs.jiaxiao.service.biz.WxService;
 import com.nbs.jiaxiao.wx.WxComponent;
-import com.nbs.jiaxiao.wx.vo.Msg;
 
 @Controller
 @RequestMapping("/wx")
@@ -20,8 +16,8 @@ public class WexinController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WexinController.class);
 	@Autowired
 	private WxComponent wxComponent;
-	@Autowired
-	private WxService wxService;
+//	@Autowired
+//	private WxService wxService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody String validate(String signature, String timestamp, String nonce, String echostr) {
@@ -29,7 +25,7 @@ public class WexinController {
 		return wxComponent.checkSign(signature, timestamp, nonce) ? echostr : "";
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	/*@RequestMapping(value = "", method = RequestMethod.POST)
 	public @ResponseBody String index(@RequestBody String text) {
 		try {
 			LOGGER.info("handle msg:{}", text);
@@ -41,6 +37,6 @@ public class WexinController {
 			LOGGER.error("handle msg error", e);
 		}
 		return "";
-	}
+	}*/
 
 }

@@ -20,13 +20,17 @@ public class Student extends Base{
 	/* 学员证件号 */
 	private java.lang.String certNo;
 	/* 驾驶类型 0：手动档，1：自动档 */
-	private java.lang.Integer diverType;
+	private java.lang.Integer driveType;
 	/* 学费 */
 	private java.math.BigDecimal totalFee;
+	/*  */
+	private java.sql.Date signDate;
 	/* 分销员 */
 	private java.lang.String sellId;
 	/* 学车阶段 */
 	private java.lang.String stage;
+	/* 是否欠费 */
+	private java.lang.Boolean isArrearage;
 	/* 二级阶段 */
 	private java.lang.String phase;
 	/* 备注 */
@@ -82,12 +86,12 @@ public class Student extends Base{
 		}
 	}
 	
-	public java.lang.Integer getDiverType() {
-		return diverType;
+	public java.lang.Integer getDriveType() {
+		return driveType;
 	}
 
-	public void setDiverType(java.lang.Integer diverType) {
-		this.diverType = diverType;
+	public void setDriveType(java.lang.Integer driveType) {
+		this.driveType = driveType;
 	}
 	
 	public java.math.BigDecimal getTotalFee() {
@@ -96,6 +100,14 @@ public class Student extends Base{
 
 	public void setTotalFee(java.math.BigDecimal totalFee) {
 		this.totalFee = totalFee;
+	}
+	
+	public java.sql.Date getSignDate() {
+		return signDate;
+	}
+
+	public void setSignDate(java.sql.Date signDate) {
+		this.signDate = signDate;
 	}
 	
 	public java.lang.String getSellId() {
@@ -116,6 +128,14 @@ public class Student extends Base{
 		if (stage != null) {
 			this.stage = stage.trim();
 		}
+	}
+	
+	public java.lang.Boolean getIsArrearage() {
+		return isArrearage;
+	}
+
+	public void setIsArrearage(java.lang.Boolean isArrearage) {
+		this.isArrearage = isArrearage;
 	}
 	
 	public java.lang.String getPhase() {

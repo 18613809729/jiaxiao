@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbs.jiaxiao.mapper.StudentMapper">
-	<resultMap id="studentResultMap" type="com.nbs.jiaxiao.domain.po.Student">
+<mapper namespace="com.nbs.jiaxiao.mapper.SellerMapper">
+	<resultMap id="sellerResultMap" type="com.nbs.jiaxiao.domain.po.Seller">
   		<result property="id" column="ID"/>
   		<result property="openId" column="OPEN_ID"/>
   		<result property="username" column="USERNAME"/>
   		<result property="mobile" column="MOBILE"/>
-  		<result property="certNo" column="CERT_NO"/>
-  		<result property="driveType" column="DRIVE_TYPE"/>
-  		<result property="totalFee" column="TOTAL_FEE"/>
-  		<result property="signDate" column="SIGN_DATE"/>
-  		<result property="sellId" column="SELL_ID"/>
-  		<result property="stage" column="STAGE"/>
-  		<result property="isArrearage" column="IS_ARREARAGE"/>
-  		<result property="phase" column="PHASE"/>
-  		<result property="remark" column="REMARK"/>
+  		<result property="level" column="LEVEL"/>
+  		<result property="parenId" column="PAREN_ID"/>
+  		<result property="status" column="STATUS"/>
+  		<result property="fee" column="FEE"/>
   		<result property="createdTime" column="CREATED_TIME"/>
   		<result property="modifiedTime" column="MODIFIED_TIME"/>
   		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
@@ -22,7 +17,7 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, OPEN_ID, USERNAME, MOBILE, CERT_NO, DRIVE_TYPE, TOTAL_FEE, SIGN_DATE, SELL_ID, STAGE, IS_ARREARAGE, PHASE, REMARK, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, OPEN_ID, USERNAME, MOBILE, LEVEL, PAREN_ID, STATUS, FEE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
@@ -31,15 +26,10 @@
 	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
 	 			<if test="username != null"> AND USERNAME = #{username}</if> 
 	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
-	 			<if test="certNo != null"> AND CERT_NO = #{certNo}</if> 
-	 			<if test="driveType != null"> AND DRIVE_TYPE = #{driveType}</if> 
-	 			<if test="totalFee != null"> AND TOTAL_FEE = #{totalFee}</if> 
-	 			<if test="signDate != null"> AND SIGN_DATE = #{signDate}</if> 
-	 			<if test="sellId != null"> AND SELL_ID = #{sellId}</if> 
-	 			<if test="stage != null"> AND STAGE = #{stage}</if> 
-	 			<if test="isArrearage != null"> AND IS_ARREARAGE = #{isArrearage}</if> 
-	 			<if test="phase != null"> AND PHASE = #{phase}</if> 
-	 			<if test="remark != null"> AND REMARK = #{remark}</if> 
+	 			<if test="level != null"> AND LEVEL = #{level}</if> 
+	 			<if test="parenId != null"> AND PAREN_ID = #{parenId}</if> 
+	 			<if test="status != null"> AND STATUS = #{status}</if> 
+	 			<if test="fee != null"> AND FEE = #{fee}</if> 
 	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
 	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
 	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
@@ -51,21 +41,16 @@
 	</sql>
 	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
-	 	INSERT  INTO  student 
+	 	INSERT  INTO  seller 
 	 	<trim prefix="(" suffixOverrides="," suffix=")">
 				<if test="id != null">ID,</if> 
 				<if test="openId != null">OPEN_ID,</if> 
 				<if test="username != null">USERNAME,</if> 
 				<if test="mobile != null">MOBILE,</if> 
-				<if test="certNo != null">CERT_NO,</if> 
-				<if test="driveType != null">DRIVE_TYPE,</if> 
-				<if test="totalFee != null">TOTAL_FEE,</if> 
-				<if test="signDate != null">SIGN_DATE,</if> 
-				<if test="sellId != null">SELL_ID,</if> 
-				<if test="stage != null">STAGE,</if> 
-				<if test="isArrearage != null">IS_ARREARAGE,</if> 
-				<if test="phase != null">PHASE,</if> 
-				<if test="remark != null">REMARK,</if> 
+				<if test="level != null">LEVEL,</if> 
+				<if test="parenId != null">PAREN_ID,</if> 
+				<if test="status != null">STATUS,</if> 
+				<if test="fee != null">FEE,</if> 
 				<if test="createdTime != null">CREATED_TIME,</if> 
 				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
 				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
@@ -77,15 +62,10 @@
 			<if test="openId != null">#{openId},</if> 
 			<if test="username != null">#{username},</if> 
 			<if test="mobile != null">#{mobile},</if> 
-			<if test="certNo != null">#{certNo},</if> 
-			<if test="driveType != null">#{driveType},</if> 
-			<if test="totalFee != null">#{totalFee},</if> 
-			<if test="signDate != null">#{signDate},</if> 
-			<if test="sellId != null">#{sellId},</if> 
-			<if test="stage != null">#{stage},</if> 
-			<if test="isArrearage != null">#{isArrearage},</if> 
-			<if test="phase != null">#{phase},</if> 
-			<if test="remark != null">#{remark},</if> 
+			<if test="level != null">#{level},</if> 
+			<if test="parenId != null">#{parenId},</if> 
+			<if test="status != null">#{status},</if> 
+			<if test="fee != null">#{fee},</if> 
 			<if test="createdTime != null">#{createdTime},</if> 
 			<if test="modifiedTime != null">#{modifiedTime},</if> 
 			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
@@ -94,20 +74,15 @@
 	</insert>
 	
 	<update id="updateByPriKey">
-		UPDATE   student 
+		UPDATE   seller 
 		<set>
 				<if test="openId != null">OPEN_ID=#{openId},</if>
 				<if test="username != null">USERNAME=#{username},</if>
 				<if test="mobile != null">MOBILE=#{mobile},</if>
-				<if test="certNo != null">CERT_NO=#{certNo},</if>
-				<if test="driveType != null">DRIVE_TYPE=#{driveType},</if>
-				<if test="totalFee != null">TOTAL_FEE=#{totalFee},</if>
-				<if test="signDate != null">SIGN_DATE=#{signDate},</if>
-				<if test="sellId != null">SELL_ID=#{sellId},</if>
-				<if test="stage != null">STAGE=#{stage},</if>
-				<if test="isArrearage != null">IS_ARREARAGE=#{isArrearage},</if>
-				<if test="phase != null">PHASE=#{phase},</if>
-				<if test="remark != null">REMARK=#{remark},</if>
+				<if test="level != null">LEVEL=#{level},</if>
+				<if test="parenId != null">PAREN_ID=#{parenId},</if>
+				<if test="status != null">STATUS=#{status},</if>
+				<if test="fee != null">FEE=#{fee},</if>
 				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
 				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
 				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
@@ -117,47 +92,47 @@
     </update>
 	
 	<update id="delete">
-		UPDATE  student SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+		UPDATE  seller SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
 	</update>
 	
 	<update id="deleteByPriKey">
-		UPDATE  student SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+		UPDATE  seller SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
 	</update>
 	
 	<delete id="deleteActual">
-		DELETE FROM student <include refid="whereCondition"/>
+		DELETE FROM seller <include refid="whereCondition"/>
 	</delete>
 	
 	<delete id="deleteActualByPriKey">
-		DELETE FROM student WHERE ID = #{id}
+		DELETE FROM seller WHERE ID = #{id}
 	</delete>
 	
 	<delete id="clean">
-		DELETE FROM student WHERE ID > #{id} and DELETED != 0 
+		DELETE FROM seller WHERE ID > #{id} and DELETED != 0 
 	</delete>
 	
-	<select id="selectByPriKey" resultMap="studentResultMap">
+	<select id="selectByPriKey" resultMap="sellerResultMap">
 		   SELECT   
 		   <include refid="commonSelect" />
-		   FROM   student WHERE ID = #{id}
+		   FROM   seller WHERE ID = #{id}
 	</select>
 	
-	<select id="selectList" resultMap="studentResultMap">
+	<select id="selectList" resultMap="sellerResultMap">
 		   SELECT   
 		   <include refid="commonSelect"/>
-		   FROM   student
+		   FROM   seller
 		   <include refid="whereCondition"/> 
 		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
 		   <if test="param.columnSort == null">ORDER BY ID </if>   
 	</select>
 	
 	<select id="selectCount" resultType="long">
-	 	SELECT  COUNT(1) CNT FROM   student
+	 	SELECT  COUNT(1) CNT FROM   seller
 		<include refid="whereCondition"/> 
 	</select>
 	
 	<select id="exist" resultType="int">
-	 	SELECT  ID FROM   student
+	 	SELECT  ID FROM   seller
 		<include refid="whereCondition"/> limit 1
 	</select>
 </mapper>

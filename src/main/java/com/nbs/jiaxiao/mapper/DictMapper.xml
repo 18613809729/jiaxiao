@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbs.jiaxiao.mapper.DictMapper">
+	<resultMap id="dictResultMap" type="com.nbs.jiaxiao.domain.po.Dict">
+  		<result property="id" column="ID"/>
+  		<result property="type" column="TYPE"/>
+  		<result property="code" column="CODE"/>
+  		<result property="value" column="VALUE"/>
+  		<result property="createdTime" column="CREATED_TIME"/>
+  		<result property="modifiedTime" column="MODIFIED_TIME"/>
+  		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
+  		<result property="lastUpdateNoUserId" column="LAST_UPDATE_NO_USER_ID"/>
+	</resultMap>
+
+	<sql id="commonSelect">
+		ID, TYPE, CODE, VALUE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+	</sql>
+	
+	<sql id="whereCondition">
+		WHERE DELETED = 0 
+	 			<if test="id != null"> AND ID = #{id}</if> 
+	 			<if test="type != null"> AND TYPE = #{type}</if> 
+	 			<if test="code != null"> AND CODE = #{code}</if> 
+	 			<if test="value != null"> AND VALUE = #{value}</if> 
+	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
+	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
+	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
+	 			<if test="param.modifiedTimeEnd != null"> AND MODIFIED_TIME <![CDATA[<=]]> #{param.modifiedTimeEnd} </if>
+				<if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo}</if> 
+	 			<if test="param.lastUpdateNoStart != null"> AND LAST_UPDATE_NO <![CDATA[>=]]> #{param.lastUpdateNoStart} </if> 
+	 			<if test="param.lastUpdateNoEnd != null"> AND LAST_UPDATE_NO <![CDATA[<=]]> #{param.lastUpdateNoEnd} </if>
+	 			<if test="lastUpdateNoUserId != null"> AND LAST_UPDATE_NO_USER_ID = #{lastUpdateNoUserId}</if> 
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	 	INSERT  INTO  dict 
+	 	<trim prefix="(" suffixOverrides="," suffix=")">
+				<if test="id != null">ID,</if> 
+				<if test="type != null">TYPE,</if> 
+				<if test="code != null">CODE,</if> 
+				<if test="value != null">VALUE,</if> 
+				<if test="createdTime != null">CREATED_TIME,</if> 
+				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
+				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID,</if> 
+	 	</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">#{id},</if> 
+			<if test="type != null">#{type},</if> 
+			<if test="code != null">#{code},</if> 
+			<if test="value != null">#{value},</if> 
+			<if test="createdTime != null">#{createdTime},</if> 
+			<if test="modifiedTime != null">#{modifiedTime},</if> 
+			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
+			<if test="lastUpdateNoUserId != null">#{lastUpdateNoUserId},</if> 
+		</trim>
+	</insert>
+	
+	<update id="updateByPriKey">
+		UPDATE   dict 
+		<set>
+				<if test="type != null">TYPE=#{type},</if>
+				<if test="code != null">CODE=#{code},</if>
+				<if test="value != null">VALUE=#{value},</if>
+				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
+				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
+				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID=#{lastUpdateNoUserId},</if>
+    	</set>
+    	WHERE ID = #{id}  <if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo} </if>  AND DELETED = 0 
+    </update>
+	
+	<update id="delete">
+		UPDATE  dict SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+	</update>
+	
+	<update id="deleteByPriKey">
+		UPDATE  dict SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+	</update>
+	
+	<delete id="deleteActual">
+		DELETE FROM dict <include refid="whereCondition"/>
+	</delete>
+	
+	<delete id="deleteActualByPriKey">
+		DELETE FROM dict WHERE ID = #{id}
+	</delete>
+	
+	<delete id="clean">
+		DELETE FROM dict WHERE ID > #{id} and DELETED != 0 
+	</delete>
+	
+	<select id="selectByPriKey" resultMap="dictResultMap">
+		   SELECT   
+		   <include refid="commonSelect" />
+		   FROM   dict WHERE ID = #{id}
+	</select>
+	
+	<select id="selectList" resultMap="dictResultMap">
+		   SELECT   
+		   <include refid="commonSelect"/>
+		   FROM   dict
+		   <include refid="whereCondition"/> 
+		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
+		   <if test="param.columnSort == null">ORDER BY ID </if>   
+	</select>
+	
+	<select id="selectCount" resultType="long">
+	 	SELECT  COUNT(1) CNT FROM   dict
+		<include refid="whereCondition"/> 
+	</select>
+	
+	<select id="exist" resultType="int">
+	 	SELECT  ID FROM   dict
+		<include refid="whereCondition"/> limit 1
+	</select>
+</mapper>

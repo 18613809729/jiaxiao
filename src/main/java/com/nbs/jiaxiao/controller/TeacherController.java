@@ -1,6 +1,5 @@
 package com.nbs.jiaxiao.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,15 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
+import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.exception.NotFoundException;
-import com.nbs.jiaxiao.service.db.StudentService;
+import com.nbs.jiaxiao.service.biz.TeacherService;
 import com.nbs.jiaxiao.wx.WxComponent;
 
 @Controller
@@ -30,7 +30,7 @@ public class TeacherController {
 	private WxComponent wxComponent;
 	
 	@Autowired
-	private StudentService studentService;
+	private TeacherService teacherService;
 	
 	@RequestMapping("/student")
 	public ModelAndView studentIndex() {
@@ -45,7 +45,7 @@ public class TeacherController {
 	@RequestMapping("/student/info/{id}")
 	public ModelAndView studentInfo(int id){
 		ModelAndView mv = new  ModelAndView("teacher/student/info");
-		Student student = studentService.selectByPriKey(id);
+		Student student = teacherService.queryStudent(id);
 		if(student == null) {
 			throw new NotFoundException("student not found id:" + id);
 		}
@@ -53,23 +53,17 @@ public class TeacherController {
 		return mv;
 	}
 	
-	@RequestMapping("/getToken")
-	public @ResponseBody String getToken() {
-		return wxComponent.getAccessToken();
-	} 
-	
 	@RequestMapping("/student/sign/submit")
-	public @ResponseBody BaseRes<Object> studentSignSubmit(@RequestAttribute("openId") String openId, Student student, double payFee) {
+	public @ResponseBody BaseRes<Student> studentSignSubmit(@RequestAttribute("openId") String openId, Student student, double payFee) {
 		try {
-			student.setLastUpdateNoUserId(openId);
-			student.setStage(Stage.STAGE_1.getCode());
-			studentService.insert(student);
-			return BaseRes.buildSuccessRes(null);
+			teacherService.addStudent(openId, student, payFee);
+			return BaseRes.buildSuccess(student);
 		} catch(Exception e) {
-			LOGGER.error("登记学生信息出错", e);
-			return BaseRes.buildExceptionRes();
+			LOGGER.error("登记学员信息出错", e);
+			return BaseRes.Error();
 		}
 	} 
+	
 	
 	@RequestMapping("/seller/all.json")
 	public @ResponseBody List<Seller> sellerAll() {
@@ -84,5 +78,37 @@ public class TeacherController {
 		seller2.setUsername("李四");
 		return Arrays.asList(seller1, seller2);
 	}
+	
+	
+	@RequestMapping("/getToken")
+	public @ResponseBody String getToken() {
+		return wxComponent.getAccessToken();
+	} 
 
+	
+	@RequestMapping(value="/sell/commission", method=RequestMethod.GET)
+	public ModelAndView commission() {
+		ModelAndView mv = new  ModelAndView("teacher/sys/commission");
+		mv.addObject("commissions", teacherService.queryCommission());
+		return mv;
+	}
+	
+	@RequestMapping(value="/sell/commission", method=RequestMethod.POST)
+	public @ResponseBody BaseRes<Object> updateCommission(@RequestAttribute("openId") String openId, Commissions commissions ) {
+		try {
+			teacherService.updateCommission(openId, commissions);
+			return BaseRes.buildSuccess(null);
+		} catch(Exception e) {
+			LOGGER.error("登记学员信息出错", e);
+			return BaseRes.Error();
+		}
+	}
+	
+	
+	
+	@RequestMapping("/sys/commission/init")
+	public @ResponseBody BaseRes<Object> init() {
+		teacherService.init();
+		return BaseRes.buildSuccess(null);
+	}
 }
