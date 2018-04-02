@@ -1,5 +1,7 @@
 package com.nbs.jiaxiao.domain.vo;
 
+import com.nbs.jiaxiao.constant.ResCode;
+
 public class BaseRes<T> {
 	private boolean isSuccess;
 	private String code;
@@ -7,7 +9,7 @@ public class BaseRes<T> {
 	private T t;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static BaseRes ERROR = new BaseRes(false, "-1", "一套异常，请稍后再试", null);
+	public static BaseRes ERROR = new BaseRes(false, "-1", "系统异常，请稍后再试", null);
 	
 	public BaseRes(boolean isSuccess, String code, String msg, T t) {
 		this.isSuccess = isSuccess;
@@ -32,6 +34,15 @@ public class BaseRes<T> {
 	public static <A> BaseRes<A> build(String code, String msg, A a) {
 		return new BaseRes<A>(true, code, msg, a);
 	}
+	
+	public static <A> BaseRes<A> build(ResCode resCode) {
+		return new BaseRes<A>(true, resCode.getCode(), resCode.getDesc(), null);
+	}
+	
+	public static <A> BaseRes<A> build(ResCode resCode, A a) {
+		return new BaseRes<A>(true, resCode.getCode(), resCode.getDesc(), a);
+	}
+	
 	
 	public boolean isSuccess() {
 		return isSuccess;

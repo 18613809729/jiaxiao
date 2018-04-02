@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.service.biz;
 import java.util.Map;
 
 import com.nbs.jiaxiao.domain.po.Dict;
+import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 
@@ -38,5 +39,29 @@ public interface TeacherService {
 	 * @return
 	 */
 	Map<String, Dict> queryCommission();
+
+	/**
+	 * 添加分销员
+	 * @param opeOpenId
+	 * @param seller
+	 * @return
+	 */
+	Seller addSeller(String opeOpenId, Seller seller);
+
+	/**
+	 * 查询分销员
+	 * @param username
+	 * @param mobile
+	 * @return
+	 */
+	Seller querySeller(String username, String mobile);
+
+	/**
+	 * 根据姓名和手机号查询
+	 * @param username
+	 * @param mobile
+	 * @return
+	 */
+	Student queryStudent(String username, String mobile);
 
 }
