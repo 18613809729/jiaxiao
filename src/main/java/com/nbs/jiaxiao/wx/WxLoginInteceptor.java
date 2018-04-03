@@ -50,7 +50,7 @@ public class WxLoginInteceptor implements HandlerInterceptor  {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response , Object arg2) throws Exception {
 		if(true) {
-			request.setAttribute("openId", "test");
+			request.setAttribute("openId", "test3");
 			return true;
 		}
 		LOGGER.info("login prehand, url:{}, paramters:{}, cookie:{}", WebUtil.getRequestUrl(request), JSON.toJSONString(request.getParameterMap()), JSON.toJSONString(request.getCookies()));

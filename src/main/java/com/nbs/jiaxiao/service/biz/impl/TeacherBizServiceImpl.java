@@ -24,14 +24,14 @@ import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.Commissions;
-import com.nbs.jiaxiao.service.biz.TeacherService;
+import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.FeeService;
 import com.nbs.jiaxiao.service.db.SellerService;
 import com.nbs.jiaxiao.service.db.StudentService;
 
 @Service
-public class TeacherServiceImpl implements TeacherService{
+public class TeacherBizServiceImpl implements TeacherBizService{
 	private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
 
 	@Resource
@@ -96,6 +96,11 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 	
 	@Override
+	public Seller querySeller(int id) {
+		return sellerService.selectByPriKey(id);
+	}
+	
+	@Override
 	public Seller querySeller(String username, String mobile) {
 		Seller con = new Seller();
 		con.setUsername(username);
@@ -103,6 +108,19 @@ public class TeacherServiceImpl implements TeacherService{
 		List<Seller> lst = sellerService.selectList(con);
 		return lst.isEmpty() ? null : lst.get(0);
 	}
+	
+	@Override
+	public List<Seller> queryAllValidSellers(){
+		Seller seller = new Seller();
+		seller.setStatus(Status.VALID.getCode());
+		return sellerService.selectList(seller);
+	}
+	
+	@Override
+	public List<Seller> queryLevel1AndLevel2Sellers(){
+		return queryAllValidSellers().stream().filter(seller -> seller.getLevel() == 3).collect(Collectors.toList());
+	}
+	
 	
 	@Override
 	public void updateCommission(String openId, Commissions commissions) {
