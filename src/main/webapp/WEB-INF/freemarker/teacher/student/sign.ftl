@@ -105,7 +105,7 @@
             	var _btn = $(this);
         		form.validate(function(){
                     var data = $("#signForm").serialize();
-                    $.singlePost(_btn, "/teacher/student/sign/submit", data).done(function(res){
+                    $.singlePost(_btn, "/teacher/student/sign", data).done(function(res){
                         if(res.code == '0'){
                             $.toast('提交成功');
                         } else {

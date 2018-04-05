@@ -5,8 +5,8 @@
   		<result property="id" column="ID"/>
   		<result property="openId" column="OPEN_ID"/>
   		<result property="username" column="USERNAME"/>
-  		<result property="mobile" column="MOBILE"/>
-  		<result property="certNo" column="CERT_NO"/>
+  		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="certNo" column="CERT_NO" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
   		<result property="driveType" column="DRIVE_TYPE"/>
   		<result property="totalFee" column="TOTAL_FEE"/>
   		<result property="signDate" column="SIGN_DATE"/>
@@ -30,8 +30,8 @@
 	 			<if test="id != null"> AND ID = #{id}</if> 
 	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
 	 			<if test="username != null"> AND USERNAME = #{username}</if> 
-	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
-	 			<if test="certNo != null"> AND CERT_NO = #{certNo}</if> 
+	 			<if test="mobile != null"> AND MOBILE = #{mobile,typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
+	 			<if test="certNo != null"> AND CERT_NO = #{certNo,typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
 	 			<if test="driveType != null"> AND DRIVE_TYPE = #{driveType}</if> 
 	 			<if test="totalFee != null"> AND TOTAL_FEE = #{totalFee}</if> 
 	 			<if test="signDate != null"> AND SIGN_DATE = #{signDate}</if> 
@@ -76,8 +76,8 @@
 			<if test="id != null">#{id},</if> 
 			<if test="openId != null">#{openId},</if> 
 			<if test="username != null">#{username},</if> 
-			<if test="mobile != null">#{mobile},</if> 
-			<if test="certNo != null">#{certNo},</if> 
+			<if test="mobile != null">#{mobile,typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
+			<if test="certNo != null">#{certNo,typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
 			<if test="driveType != null">#{driveType},</if> 
 			<if test="totalFee != null">#{totalFee},</if> 
 			<if test="signDate != null">#{signDate},</if> 
@@ -98,8 +98,8 @@
 		<set>
 				<if test="openId != null">OPEN_ID=#{openId},</if>
 				<if test="username != null">USERNAME=#{username},</if>
-				<if test="mobile != null">MOBILE=#{mobile},</if>
-				<if test="certNo != null">CERT_NO=#{certNo},</if>
+				<if test="mobile != null">MOBILE=#{mobile,typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
+				<if test="certNo != null">CERT_NO=#{certNo,typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
 				<if test="driveType != null">DRIVE_TYPE=#{driveType},</if>
 				<if test="totalFee != null">TOTAL_FEE=#{totalFee},</if>
 				<if test="signDate != null">SIGN_DATE=#{signDate},</if>

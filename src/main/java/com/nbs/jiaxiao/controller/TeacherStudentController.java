@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.exception.NotFoundException;
@@ -35,8 +36,13 @@ public class TeacherStudentController {
 	
 	@PostMapping("/sign")
 	public @ResponseBody BaseRes<Student> studentSignSubmit(@RequestAttribute("openId") String openId, Student student, double payFee) {
-		teacherService.addStudent(openId, student, payFee);
-		return BaseRes.buildSuccess(student);
+		Student existStudent = teacherService.queryStudent(student.getUsername(), student.getMobile());
+		if (existStudent != null) {
+			return BaseRes.build(ResCode.REPEATED, existStudent);
+		} else {
+			teacherService.addStudent(openId, student, payFee);
+			return BaseRes.buildSuccess(student);
+		}
 	}
 	
 	@GetMapping("/info/{id}")
