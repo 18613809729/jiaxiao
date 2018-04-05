@@ -117,5 +117,9 @@ public class SignStudentServiceImpl implements SignStudentService{
 	public boolean exist(SignStudent con){
 		return signStudentMapper.exist(con) != null;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

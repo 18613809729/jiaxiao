@@ -157,4 +157,8 @@ public class Student extends Base{
 			this.remark = remark.trim();
 		}
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 }

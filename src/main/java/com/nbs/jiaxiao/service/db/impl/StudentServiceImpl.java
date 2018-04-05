@@ -117,5 +117,9 @@ public class StudentServiceImpl implements StudentService{
 	public boolean exist(Student con){
 		return studentMapper.exist(con) != null;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

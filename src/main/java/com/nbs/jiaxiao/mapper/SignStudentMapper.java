@@ -82,5 +82,9 @@ public interface SignStudentMapper {
 	 * @return 存在的第一个值的主键
 	 */
 	public Integer exist(SignStudent con);
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

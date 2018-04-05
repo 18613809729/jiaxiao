@@ -9,7 +9,7 @@
   		<result property="level" column="LEVEL"/>
   		<result property="parenId" column="PAREN_ID"/>
   		<result property="status" column="STATUS"/>
-  		<result property="fee" column="FEE"/>
+  		<result property="type" column="TYPE"/>
   		<result property="createdTime" column="CREATED_TIME"/>
   		<result property="modifiedTime" column="MODIFIED_TIME"/>
   		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
@@ -17,7 +17,7 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, OPEN_ID, USERNAME, MOBILE, LEVEL, PAREN_ID, STATUS, FEE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, OPEN_ID, USERNAME, MOBILE, LEVEL, PAREN_ID, STATUS, TYPE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
@@ -29,7 +29,7 @@
 	 			<if test="level != null"> AND LEVEL = #{level}</if> 
 	 			<if test="parenId != null"> AND PAREN_ID = #{parenId}</if> 
 	 			<if test="status != null"> AND STATUS = #{status}</if> 
-	 			<if test="fee != null"> AND FEE = #{fee}</if> 
+	 			<if test="type != null"> AND TYPE = #{type}</if> 
 	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
 	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
 	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
@@ -50,7 +50,7 @@
 				<if test="level != null">LEVEL,</if> 
 				<if test="parenId != null">PAREN_ID,</if> 
 				<if test="status != null">STATUS,</if> 
-				<if test="fee != null">FEE,</if> 
+				<if test="type != null">TYPE,</if> 
 				<if test="createdTime != null">CREATED_TIME,</if> 
 				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
 				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
@@ -65,7 +65,7 @@
 			<if test="level != null">#{level},</if> 
 			<if test="parenId != null">#{parenId},</if> 
 			<if test="status != null">#{status},</if> 
-			<if test="fee != null">#{fee},</if> 
+			<if test="type != null">#{type},</if> 
 			<if test="createdTime != null">#{createdTime},</if> 
 			<if test="modifiedTime != null">#{modifiedTime},</if> 
 			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
@@ -82,7 +82,7 @@
 				<if test="level != null">LEVEL=#{level},</if>
 				<if test="parenId != null">PAREN_ID=#{parenId},</if>
 				<if test="status != null">STATUS=#{status},</if>
-				<if test="fee != null">FEE=#{fee},</if>
+				<if test="type != null">TYPE=#{type},</if>
 				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
 				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
 				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
@@ -135,4 +135,7 @@
 	 	SELECT  ID FROM   seller
 		<include refid="whereCondition"/> limit 1
 	</select>
+	
+	<!-- customized code start -->
+	<!-- customized code end -->
 </mapper>

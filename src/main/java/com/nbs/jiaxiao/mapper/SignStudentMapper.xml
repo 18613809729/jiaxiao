@@ -125,4 +125,8 @@
 	 	SELECT  ID FROM   sign_student
 		<include refid="whereCondition"/> limit 1
 	</select>
+	
+	<!-- customized code start -->
+	
+	<!-- customized code end -->
 </mapper>

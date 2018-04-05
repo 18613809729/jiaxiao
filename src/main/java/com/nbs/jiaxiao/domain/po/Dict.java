@@ -57,4 +57,8 @@ public class Dict extends Base{
 			this.value = value.trim();
 		}
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 }

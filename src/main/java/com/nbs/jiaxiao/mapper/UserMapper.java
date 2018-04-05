@@ -82,5 +82,9 @@ public interface UserMapper {
 	 * @return 存在的第一个值的主键
 	 */
 	public Integer exist(User con);
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

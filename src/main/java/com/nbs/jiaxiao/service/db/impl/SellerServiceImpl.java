@@ -117,5 +117,9 @@ public class SellerServiceImpl implements SellerService{
 	public boolean exist(Seller con){
 		return sellerMapper.exist(con) != null;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

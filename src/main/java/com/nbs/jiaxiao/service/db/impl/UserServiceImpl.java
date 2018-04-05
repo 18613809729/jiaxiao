@@ -117,5 +117,9 @@ public class UserServiceImpl implements UserService{
 	public boolean exist(User con){
 		return userMapper.exist(con) != null;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

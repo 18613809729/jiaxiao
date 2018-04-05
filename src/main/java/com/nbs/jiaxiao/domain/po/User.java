@@ -173,4 +173,8 @@ public class User extends Base{
 	public void setSubscribe(java.lang.Boolean subscribe) {
 		this.subscribe = subscribe;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 }

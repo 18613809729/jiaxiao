@@ -81,4 +81,8 @@ public class SignStudent extends Base{
 			this.status = status.trim();
 		}
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 }

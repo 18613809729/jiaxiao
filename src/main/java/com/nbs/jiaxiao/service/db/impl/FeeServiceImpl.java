@@ -117,5 +117,9 @@ public class FeeServiceImpl implements FeeService{
 	public boolean exist(Fee con){
 		return feeMapper.exist(con) != null;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

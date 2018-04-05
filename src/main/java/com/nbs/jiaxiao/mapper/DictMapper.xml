@@ -115,4 +115,8 @@
 	 	SELECT  ID FROM   dict
 		<include refid="whereCondition"/> limit 1
 	</select>
+	
+	<!-- customized code start -->
+	
+	<!-- customized code end -->
 </mapper>

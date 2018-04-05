@@ -82,5 +82,9 @@ public interface DictMapper {
 	 * @return 存在的第一个值的主键
 	 */
 	public Integer exist(Dict con);
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

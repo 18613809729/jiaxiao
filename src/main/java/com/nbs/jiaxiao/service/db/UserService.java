@@ -82,5 +82,9 @@ public interface UserService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(User con);
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

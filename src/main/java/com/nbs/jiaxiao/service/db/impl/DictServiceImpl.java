@@ -117,5 +117,9 @@ public class DictServiceImpl implements DictService{
 	public boolean exist(Dict con){
 		return dictMapper.exist(con) != null;
 	}
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }

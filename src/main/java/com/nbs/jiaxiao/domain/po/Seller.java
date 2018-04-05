@@ -23,8 +23,8 @@ public class Seller extends Base{
 	private java.lang.Integer parenId;
 	/* 状态 */
 	private java.lang.String status;
-	/* 费率 */
-	private java.math.BigDecimal fee;
+	/* 类型 */
+	private java.lang.String type;
 	
 	
 	
@@ -92,11 +92,23 @@ public class Seller extends Base{
 		}
 	}
 	
-	public java.math.BigDecimal getFee() {
-		return fee;
+	public java.lang.String getType() {
+		return type;
 	}
 
-	public void setFee(java.math.BigDecimal fee) {
-		this.fee = fee;
+	public void setType(java.lang.String type) {
+		if (type != null) {
+			this.type = type.trim();
+		}
 	}
+	
+	/* customized code start */
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+	
+	/* customized code end */
 }

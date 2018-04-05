@@ -82,5 +82,9 @@ public interface SellerMapper {
 	 * @return 存在的第一个值的主键
 	 */
 	public Integer exist(Seller con);
+	
+	/* customized code start */
+	
+	/* customized code end */
 
 }
