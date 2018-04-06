@@ -16,6 +16,7 @@ import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
 
 @Controller
@@ -28,6 +29,9 @@ public class TeacherSellerController {
 	
 	@Autowired
 	private SellerService sellerService;
+	
+	@Autowired
+	private PreSellerService preSellerService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -62,6 +66,13 @@ public class TeacherSellerController {
 			seller = teacherService.addSeller(openId, seller);
 			return BaseRes.buildSuccess(seller);
 		}
+	}
+	
+	@GetMapping("/join/list")
+	public ModelAndView joinList() {
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/join");
+		preSellerService.qu
+		return mv;
 	}
 	
 	

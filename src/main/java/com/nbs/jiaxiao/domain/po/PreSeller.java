@@ -22,7 +22,7 @@ public class PreSeller extends Base{
 	/* 上级销售员代码 */
 	private java.lang.Integer parentId;
 	/* 状态 */
-	private java.lang.String status;
+	private java.lang.String state;
 	
 	
 	
@@ -80,13 +80,13 @@ public class PreSeller extends Base{
 		this.parentId = parentId;
 	}
 	
-	public java.lang.String getStatus() {
-		return status;
+	public java.lang.String getState() {
+		return state;
 	}
 
-	public void setStatus(java.lang.String status) {
-		if (status != null) {
-			this.status = status.trim();
+	public void setState(java.lang.String state) {
+		if (state != null) {
+			this.state = state.trim();
 		}
 	}
 	

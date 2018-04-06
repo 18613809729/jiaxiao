@@ -4,12 +4,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.PreSeller;
+import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.PreSellerMapper;
 import com.nbs.jiaxiao.service.db.PreSellerService;
+import com.nbs.jiaxiao.service.db.SellerService;
 
 @Service
 public class PreSellerServiceImpl implements PreSellerService{
@@ -119,6 +123,36 @@ public class PreSellerServiceImpl implements PreSellerService{
 	}
 	
 	/* customized code start */
+	
+	@Override
+	public PreSeller queryPreSeller(String username, String mobile) {
+		PreSeller con = new PreSeller();
+		con.setUsername(username);
+		con.setMobile(mobile);
+		List<PreSeller> lst = selectList(con);
+		return lst.isEmpty() ? null : lst.get(0);
+	}
+	
+	@Autowired
+	private SellerService sellerService;
+	
+	
+	@Override
+	public PreSeller addPreSeller(String opeOpenId, PreSeller preSeller) {
+		preSeller.setOpenId(opeOpenId);
+		preSeller.setLastUpdateNoUserId(opeOpenId);
+		preSeller.setState(State.UN_READ.getCode());
+		if(preSeller.getParentId() != null && preSeller.getParentId() != 0) {
+			Seller parentSeller =  sellerService.selectByPriKey(preSeller.getParentId());
+			preSeller.setLevel(parentSeller.getLevel() + 1);
+		} else {
+			preSeller.setLevel(1);
+			preSeller.setParentId(0);
+		}
+		insert(preSeller);
+		return preSeller;
+	}
+	
 	
 	/* customized code end */
 

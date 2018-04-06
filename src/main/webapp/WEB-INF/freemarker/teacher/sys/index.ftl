@@ -71,7 +71,7 @@
 
 					<div class="weui-cells__title">模拟</div>
 					<div class="weui-cells">
-			           <a class="weui-cell weui-cell_access" href="commission">
+			           <a class="weui-cell weui-cell_access" href="/seller/join">
 							<div class="weui-cell__bd">
 								<span>销售加盟</span>
 							</div>

@@ -5,12 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbs.jiaxiao.constant.ResCode;
+import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
+import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
 
 @Controller
@@ -21,6 +26,9 @@ public class SellerController {
 	
 	@Autowired
 	private SellerService sellerService;
+	
+	@Autowired
+	private PreSellerService preSellerService;
 	
 	@GetMapping("/all.json")
 	public @ResponseBody BaseRes<List<Seller>> sellerAll() {
@@ -39,4 +47,18 @@ public class SellerController {
 		return mv;
 	}
 
+	@PostMapping("/join")
+	public @ResponseBody BaseRes<Object> join(@RequestAttribute("openId") String openId, PreSeller preSeller) {
+		PreSeller existPreSeller = preSellerService.queryPreSeller(preSeller.getUsername(), preSeller.getMobile());
+		if(existPreSeller != null) {
+			return BaseRes.build(ResCode.REPEATED, existPreSeller);
+		}
+		
+		Seller seller = sellerService.querySeller(preSeller.getUsername(), preSeller.getMobile());
+		if(seller != null) {
+			return BaseRes.build(ResCode.HAS_JOIN, seller);
+		}
+		
+		return BaseRes.buildSuccess(preSellerService.addPreSeller(openId, preSeller));
+	}
 }

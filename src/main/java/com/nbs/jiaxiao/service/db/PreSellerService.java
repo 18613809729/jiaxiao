@@ -85,6 +85,22 @@ public interface PreSellerService {
 	
 	/* customized code start */
 	
+	/**
+	 * 查询分销员加盟信息
+	 * @param username
+	 * @param mobile
+	 * @return
+	 */
+	PreSeller queryPreSeller(String username, String mobile);
+
+	/**
+	 * 销售员加盟
+	 * @param opeOpenId
+	 * @param seller
+	 * @return
+	 */
+	PreSeller addPreSeller(String opeOpenId, PreSeller seller);
+
 	/* customized code end */
 
 }

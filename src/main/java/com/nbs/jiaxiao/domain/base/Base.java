@@ -18,6 +18,10 @@ public class Base {
 	/* 修改人 */
 	protected String lastUpdateNoUserId;
 	
+	protected Integer limit;
+	
+	protected Integer offset;
+	
 	protected ParamMap param = new ParamMap(); 
 	
 	public Date getCreatedTime() {
@@ -59,4 +63,21 @@ public class Base {
 	public void setParam(ParamMap param) {
 		this.param = param;
 	}
+
+	public Integer getLimit() {
+		return limit;
+	}
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
+	}
+
+	public Integer getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Integer offset) {
+		this.offset = offset;
+	}
+	
 }

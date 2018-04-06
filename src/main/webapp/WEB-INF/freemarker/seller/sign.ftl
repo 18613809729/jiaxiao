@@ -3,13 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-	<title>学员登记</title>
+	<title>推广加盟</title>
 	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
 	<link rel="stylesheet" href="http://localhost/jiaxiao/css/main.css">
 </head>
 <body ontouchstart>
 	<div class="page">
+		<div class="weui-cells__title">加入成为推广员，每成功推荐一名学员，都能销售推荐奖金，奖金金额根据推广员等级决定</div>
         <form id="signForm">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
@@ -28,8 +29,8 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="parentId">分销员</label></div>
                     <div class="weui-cell__bd">
-                        <input type="hidden" name="parentId">
-                        <input class="weui-input" type="text" id="sellerInput" placeholder="分销员(选填)" readonly>
+                        <input type="hidden" name="parentId" value="${parent.id}">
+                        <input class="weui-input" type="text" id="sellerInput" placeholder="分销员(选填)" <#if parent??> value="${parent.username}  ${parent.mobile!}"</#if> readonly>
                     </div>
                 </div>
             </div>
@@ -56,15 +57,15 @@
             	var _btn = $(this);
         		form.validate(function(){
                     var data = $("#signForm").serialize();
-                    $.singlePost(_btn, "/teacher/seller/sign", data).done(function(res){
+                    $.singlePost(_btn, "/seller/join", data).done(function(res){
                         if(res.code == '0'){
                             $.toSuccess({
-                            "title":"添加成功",
-                            "primary_btn_url":"index",
-                            "default_btn_msg":"继续添加",
-                            "default_btn_url":"javascript:location.reload();"
+                            "title":"申请成功",
+                            "desc":"请耐心等候管理员审核",
+                            "primary_btn_url":"index"
                             })
                         } else {
+                        	//TODO 数据重复处理
                             $.toast(res.msg, "cancel");
                         }
                     });

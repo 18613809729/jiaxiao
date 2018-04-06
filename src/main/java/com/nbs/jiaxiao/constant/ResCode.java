@@ -2,7 +2,10 @@ package com.nbs.jiaxiao.constant;
 
 public enum ResCode{
 	
-	REPEATED("101", "数据重复");
+	REPEATED("101", "数据重复"),
+	HAS_JOIN("3001", "已是销售员");
+	
+	
 	String code;
 	String desc;
 	
