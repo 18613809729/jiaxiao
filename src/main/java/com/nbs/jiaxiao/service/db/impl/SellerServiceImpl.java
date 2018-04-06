@@ -1,11 +1,13 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.SellerMapper;
@@ -119,6 +121,39 @@ public class SellerServiceImpl implements SellerService{
 	}
 	
 	/* customized code start */
+	
+	@Override
+	public Seller queryParentSeller(Integer parentId) {
+		if(parentId == null) {
+			return null;
+		}
+		Seller seller = selectByPriKey(parentId);
+		if(seller != null && seller.isValid() && seller.canParent()) {
+			return seller;
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Seller> queryAllValidSellers(){
+		Seller seller = new Seller();
+		seller.setStatus(Status.VALID.getCode());
+		return selectList(seller);
+	}
+	
+	@Override
+	public List<Seller> queryAllValidParentSellers(){
+		return queryAllValidSellers().stream().filter(seller -> seller.canParent()).collect(Collectors.toList());
+	}
+	
+	@Override
+	public Seller querySeller(String username, String mobile) {
+		Seller con = new Seller();
+		con.setUsername(username);
+		con.setMobile(mobile);
+		List<Seller> lst = selectList(con);
+		return lst.isEmpty() ? null : lst.get(0);
+	}
 	
 	/* customized code end */
 

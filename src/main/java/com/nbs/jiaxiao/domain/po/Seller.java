@@ -1,5 +1,6 @@
 package com.nbs.jiaxiao.domain.po;
 
+import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.base.Base;
 
 /**
@@ -20,7 +21,7 @@ public class Seller extends Base{
 	/* 等级 */
 	private java.lang.Integer level;
 	/* 上级分销员代码 */
-	private java.lang.Integer parenId;
+	private java.lang.Integer parentId;
 	/* 状态 */
 	private java.lang.String status;
 	/* 类型 */
@@ -74,12 +75,12 @@ public class Seller extends Base{
 		this.level = level;
 	}
 	
-	public java.lang.Integer getParenId() {
-		return parenId;
+	public java.lang.Integer getParentId() {
+		return parentId;
 	}
 
-	public void setParenId(java.lang.Integer parenId) {
-		this.parenId = parenId;
+	public void setParentId(java.lang.Integer parentId) {
+		this.parentId = parentId;
 	}
 	
 	public java.lang.String getStatus() {
@@ -104,11 +105,16 @@ public class Seller extends Base{
 	
 	/* customized code start */
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public static final String SIGN_TYPE = "0";
+	
+	public static final String APPLY_TYPE = "1";
+	
+	public boolean canParent() {
+		return getLevel() < 3;
 	}
 	
+	public boolean isValid() {
+		 return Status.isValid(getStatus());
+	}
 	/* customized code end */
 }

@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +16,6 @@ import com.nbs.jiaxiao.constant.FeeType;
 import com.nbs.jiaxiao.constant.PayType;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.Status;
-import com.nbs.jiaxiao.controller.TeacherController;
 import com.nbs.jiaxiao.domain.po.Dict;
 import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
@@ -32,7 +29,7 @@ import com.nbs.jiaxiao.service.db.StudentService;
 
 @Service
 public class TeacherBizServiceImpl implements TeacherBizService{
-	private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
+//	private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
 
 	@Resource
 	private StudentService studentService;
@@ -84,42 +81,23 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	public Seller addSeller(String opeOpenId, Seller seller) {
 		seller.setLastUpdateNoUserId(opeOpenId);
 		seller.setStatus(Status.VALID.getCode());
-		if(seller.getParenId() != null && seller.getParenId() != 0) {
-			Seller parentSeller =  sellerService.selectByPriKey(seller.getParenId());
+		seller.setType(Seller.SIGN_TYPE);
+		if(seller.getParentId() != null && seller.getParentId() != 0) {
+			Seller parentSeller =  sellerService.selectByPriKey(seller.getParentId());
 			seller.setLevel(parentSeller.getLevel() + 1);
 		} else {
 			seller.setLevel(1);
-			seller.setParenId(0);
+			seller.setParentId(0);
 		}
 		sellerService.insert(seller);
 		return seller;
 	}
 	
-	@Override
-	public Seller querySeller(int id) {
-		return sellerService.selectByPriKey(id);
-	}
 	
-	@Override
-	public Seller querySeller(String username, String mobile) {
-		Seller con = new Seller();
-		con.setUsername(username);
-		con.setMobile(mobile);
-		List<Seller> lst = sellerService.selectList(con);
-		return lst.isEmpty() ? null : lst.get(0);
-	}
 	
-	@Override
-	public List<Seller> queryAllValidSellers(){
-		Seller seller = new Seller();
-		seller.setStatus(Status.VALID.getCode());
-		return sellerService.selectList(seller);
-	}
 	
-	@Override
-	public List<Seller> queryLevel1AndLevel2Sellers(){
-		return queryAllValidSellers().stream().filter(seller -> seller.getLevel() == 3).collect(Collectors.toList());
-	}
+	
+	
 	
 	
 	@Override

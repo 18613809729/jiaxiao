@@ -1,6 +1,5 @@
 package com.nbs.jiaxiao.service.biz;
 
-import java.util.List;
 import java.util.Map;
 
 import com.nbs.jiaxiao.domain.po.Dict;
@@ -50,38 +49,11 @@ public interface TeacherBizService {
 	Seller addSeller(String opeOpenId, Seller seller);
 
 	/**
-	 * 查询分销员
-	 * @param username
-	 * @param mobile
-	 * @return
-	 */
-	Seller querySeller(String username, String mobile);
-
-	/**
 	 * 根据姓名和手机号查询
 	 * @param username
 	 * @param mobile
 	 * @return
 	 */
 	Student queryStudent(String username, String mobile);
-
-	/**
-	 * 根据主键查询学生信息
-	 * @param id
-	 * @return
-	 */
-	Seller querySeller(int id);
-
-	/**
-	 * 查询所有有效的分销员
-	 * @return
-	 */
-	List<Seller> queryAllValidSellers();
-
-	/**
-	 * 查询所有一级和二级分销员
-	 * @return
-	 */
-	List<Seller> queryLevel1AndLevel2Sellers();
 
 }

@@ -95,11 +95,11 @@
 					<img src="https://static.newbs.xyz/common/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 					<p class="weui-tabbar__label">学员</p>
 				</a>
-				<a href="fenxiao.html" class="weui-tabbar__item">
+				<a href="/teacher/seller/index" class="weui-tabbar__item">
 					<img src="https://static.newbs.xyz/common/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 					<p class="weui-tabbar__label">分销员</p>
 				</a>
-				<a href="gzh.html" class="weui-tabbar__item">
+				<a href="/teacher/sys/index" class="weui-tabbar__item">
 					<img src="https://static.newbs.xyz/common/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 					<p class="weui-tabbar__label">系统</p>
 				</a>

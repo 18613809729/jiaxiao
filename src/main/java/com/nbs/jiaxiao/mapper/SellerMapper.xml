@@ -7,7 +7,7 @@
   		<result property="username" column="USERNAME"/>
   		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
   		<result property="level" column="LEVEL"/>
-  		<result property="parenId" column="PAREN_ID"/>
+  		<result property="parentId" column="PARENT_ID"/>
   		<result property="status" column="STATUS"/>
   		<result property="type" column="TYPE"/>
   		<result property="createdTime" column="CREATED_TIME"/>
@@ -17,7 +17,7 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, OPEN_ID, USERNAME, MOBILE, LEVEL, PAREN_ID, STATUS, TYPE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, OPEN_ID, USERNAME, MOBILE, LEVEL, PARENT_ID, STATUS, TYPE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
@@ -27,7 +27,7 @@
 	 			<if test="username != null"> AND USERNAME = #{username}</if> 
 	 			<if test="mobile != null"> AND MOBILE = #{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
 	 			<if test="level != null"> AND LEVEL = #{level}</if> 
-	 			<if test="parenId != null"> AND PAREN_ID = #{parenId}</if> 
+	 			<if test="parentId != null"> AND PARENT_ID = #{parentId}</if> 
 	 			<if test="status != null"> AND STATUS = #{status}</if> 
 	 			<if test="type != null"> AND TYPE = #{type}</if> 
 	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
@@ -48,7 +48,7 @@
 				<if test="username != null">USERNAME,</if> 
 				<if test="mobile != null">MOBILE,</if> 
 				<if test="level != null">LEVEL,</if> 
-				<if test="parenId != null">PAREN_ID,</if> 
+				<if test="parentId != null">PARENT_ID,</if> 
 				<if test="status != null">STATUS,</if> 
 				<if test="type != null">TYPE,</if> 
 				<if test="createdTime != null">CREATED_TIME,</if> 
@@ -63,7 +63,7 @@
 			<if test="username != null">#{username},</if> 
 			<if test="mobile != null">#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
 			<if test="level != null">#{level},</if> 
-			<if test="parenId != null">#{parenId},</if> 
+			<if test="parentId != null">#{parentId},</if> 
 			<if test="status != null">#{status},</if> 
 			<if test="type != null">#{type},</if> 
 			<if test="createdTime != null">#{createdTime},</if> 
@@ -80,7 +80,7 @@
 				<if test="username != null">USERNAME=#{username},</if>
 				<if test="mobile != null">MOBILE=#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
 				<if test="level != null">LEVEL=#{level},</if>
-				<if test="parenId != null">PAREN_ID=#{parenId},</if>
+				<if test="parentId != null">PARENT_ID=#{parentId},</if>
 				<if test="status != null">STATUS=#{status},</if>
 				<if test="type != null">TYPE=#{type},</if>
 				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>

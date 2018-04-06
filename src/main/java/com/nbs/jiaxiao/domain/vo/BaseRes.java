@@ -6,16 +6,16 @@ public class BaseRes<T> {
 	private boolean isSuccess;
 	private String code;
 	private String msg;
-	private T t;
+	private T data;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static BaseRes ERROR = new BaseRes(false, "-1", "系统异常，请稍后再试", null);
 	
-	public BaseRes(boolean isSuccess, String code, String msg, T t) {
+	public BaseRes(boolean isSuccess, String code, String msg, T data) {
 		this.isSuccess = isSuccess;
 		this.code = code;
 		this.msg = msg;
-		this.t = t;
+		this.data = data;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -63,11 +63,12 @@ public class BaseRes<T> {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public T getT() {
-		return t;
+
+	public T getData() {
+		return data;
 	}
-	public void setT(T t) {
-		this.t = t;
+
+	public void setData(T data) {
+		this.data = data;
 	}
-	
 }

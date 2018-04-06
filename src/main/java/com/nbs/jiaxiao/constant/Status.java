@@ -28,4 +28,8 @@ public enum Status{
 		}
 		return null;
 	}
+	
+	public static boolean isValid(String code) {
+		return VALID.getCode().equals(code);
+	}
 }

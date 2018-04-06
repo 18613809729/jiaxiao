@@ -16,6 +16,7 @@ import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.SellerService;
 
 @Controller
 @RequestMapping("/teacher/seller")
@@ -24,6 +25,9 @@ public class TeacherSellerController {
 	
 	@Autowired
 	private TeacherBizService teacherService;
+	
+	@Autowired
+	private SellerService sellerService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -46,13 +50,12 @@ public class TeacherSellerController {
 	@GetMapping("/sign")
 	public ModelAndView sign() {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sign");
-		//mv.addObject("commissions", teacherService.queryCommission());
 		return mv;
 	}
 	
 	@PostMapping("/sign")
-	public BaseRes<Seller> addSell(@RequestAttribute("openId") String openId, Seller seller) {
-		Seller existSeller = teacherService.querySeller(seller.getUsername(), seller.getMobile());
+	public @ResponseBody BaseRes<Seller> addSell(@RequestAttribute("openId") String openId, Seller seller) {
+		Seller existSeller = sellerService.querySeller(seller.getUsername(), seller.getMobile());
 		if (existSeller != null) {
 			return BaseRes.build(ResCode.REPEATED, existSeller);
 		} else {
@@ -64,7 +67,7 @@ public class TeacherSellerController {
 	
 	@GetMapping("/info/{id}")
 	public ModelAndView sellerInfo(@PathVariable("id") int id) {
-		Seller seller = teacherService.querySeller(id);
+		Seller seller = sellerService.selectByPriKey(id);
 		if (seller == null) {
 			throw new NotFoundException("seller not found id:" + id);
 		}

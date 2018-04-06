@@ -82,9 +82,37 @@ public interface SellerService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(Seller con);
+
 	
 	/* customized code start */
 	
+	/**
+	 * 根据id查询一二级且有效的销售员
+	 * @param parentId
+	 * @return
+	 */
+	Seller queryParentSeller(Integer parentId);
+
+	/**
+	 * 查询所有有效的分销员
+	 * @return
+	 */
+	List<Seller> queryAllValidSellers();
+
+	/**
+	 * 查询所有有效的一二级销售员
+	 * @return
+	 */
+	List<Seller> queryAllValidParentSellers();
+
+	/**
+	 * 根据姓名和手机号查询
+	 * @param username
+	 * @param mobile
+	 * @return
+	 */
+	Seller querySeller(String username, String mobile);
+
 	/* customized code end */
 
 }
