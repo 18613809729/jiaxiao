@@ -38,6 +38,13 @@
 			        </div>
 
 					<div class="weui-cells">
+						<a class="weui-cell weui-cell_access" href="commission">
+							<div class="weui-cell__bd">
+								<span>佣金设置</span>
+							</div>
+							<div class="weui-cell__ft">
+							</div>
+						</a>
 						<a class="weui-cell weui-cell_access" href="javascript:;">
 							<div class="weui-cell__bd">
 								<span>分销报名</span><span class="weui-badge">8</span>

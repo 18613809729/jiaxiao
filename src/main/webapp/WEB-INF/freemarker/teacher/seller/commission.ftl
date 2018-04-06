@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-	<title>WeUI</title>
+	<title>佣金设置</title>
 	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
 	<link rel="stylesheet" href="http://localhost/jiaxiao/css/main.css">
@@ -75,8 +75,8 @@
 			$("#submitBtn").click(function(){
 				var _this = $(this);
 				$.confirm("确认修改分销员佣金?", function() {
-					$.singlePost(_this, "/teacher/sell/commission", $("#form").serialize()).done(function(res){
-						res.success && $.toSuccess();
+					$.singlePost(_this, "/teacher/seller/commission", $("#form").serialize()).done(function(res){
+						res.success && $.toSuccess({"title":"修改成功","desc":"佣金修改后，将对新增学员立即生效，原有佣金不变", "primary_btn_url":"index"});
 					});
   				});
 			});
