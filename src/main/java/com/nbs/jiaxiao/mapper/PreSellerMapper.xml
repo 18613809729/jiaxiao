@@ -119,6 +119,7 @@
 		   <include refid="whereCondition"/> 
 		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
 		   <if test="param.columnSort == null">ORDER BY ID </if>   
+		   <if test="param.limit != null">limit param.offset, param.limit </if>   
 	</select>
 	
 	<select id="selectCount" resultType="long">
@@ -132,6 +133,33 @@
 	</select>
 	
 	<!-- customized code start -->
+	
+	<resultMap id="preSellerInfoResultMap" type="com.nbs.jiaxiao.domain.vo.PreSellerInfo">
+  		<result property="id" column="ID"/>
+  		<result property="openId" column="OPEN_ID"/>
+  		<result property="username" column="USERNAME"/>
+  		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="level" column="LEVEL"/>
+  		<result property="parentId" column="PARENT_ID"/>
+  		<result property="state" column="STATE"/>
+  		<result property="createdTime" column="CREATED_TIME"/>
+  		<result property="modifiedTime" column="MODIFIED_TIME"/>
+  		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
+  		<result property="lastUpdateNoUserId" column="LAST_UPDATE_NO_USER_ID"/>
+  		<result property="nickName" column="NICK_NAME"/>
+  		<result property="certNo" column="CERT_NO" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="sex" column="SEX"/>
+  		<result property="country" column="COUNTRY"/>
+  		<result property="province" column="PROVINCE"/>
+  		<result property="city" column="CITY"/>
+  		<result property="address" column="ADDRESS"/>
+  		<result property="headImg" column="HEAD_IMG"/>
+	</resultMap>
+	
+	<select id="selectRecentInfos" resultMap="preSellerInfoResultMap">
+		select a.id, a.username, a.mobile, a.state, a.created_time, b.nick_name, b.head_img from pre_seller as a inner join user as b on a.open_id = b.open_id 
+		where a.DELETED = 0 AND a.STATE != -1 order by id desc limit 0, 100
+	</select>
 	
 	<!-- customized code end -->
 </mapper>

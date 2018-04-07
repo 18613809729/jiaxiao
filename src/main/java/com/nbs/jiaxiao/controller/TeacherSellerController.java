@@ -1,7 +1,11 @@
 package com.nbs.jiaxiao.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nbs.jiaxiao.constant.ResCode;
+import com.nbs.jiaxiao.constant.State;
+import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
+import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.PreSellerService;
@@ -71,10 +78,27 @@ public class TeacherSellerController {
 	@GetMapping("/join/list")
 	public ModelAndView joinList() {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/join");
-		preSellerService.qu
 		return mv;
 	}
 	
+	@GetMapping("/join/infos.json")
+	public @ResponseBody BaseRes<Map<String, List<PreSellerInfo>>> joinDatas() {
+		return BaseRes.buildSuccess(teacherService.queryRecent());
+	}
+	
+	@GetMapping("/join/info/{id}")
+	public ModelAndView joinInfo(@PathVariable("id") int id) {
+		return new ModelAndView(FTL_PREFIX + "/info");
+	}
+	
+	@DeleteMapping("/join/info/{id}")
+	public @ResponseBody BaseRes<Object> deleteJoin(@RequestAttribute("openId") String openId, @PathVariable("id") int id) {
+		int count = preSellerService.deleteByPriKey(id);
+		if(count == 0) {
+			throw new NotFoundException("the deleted preseller not exist, id:" + id);
+		}
+		return BaseRes.buildSuccess(null);
+	}
 	
 	@GetMapping("/info/{id}")
 	public ModelAndView sellerInfo(@PathVariable("id") int id) {

@@ -92,5 +92,15 @@ public class PreSeller extends Base{
 	
 	/* customized code start */
 	
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	/* customized code end */
 }

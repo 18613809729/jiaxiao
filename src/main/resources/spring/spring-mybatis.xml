@@ -24,11 +24,11 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath*:com/nbs/jiaxiao/mapper/**/*.xml" />
-		<!-- <property name="configuration">
+		<property name="configuration">
 			<bean class="org.apache.ibatis.session.Configuration">
 				<property name="mapUnderscoreToCamelCase" value="true" />
 			</bean>
-		</property> -->
+		</property>
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.nbs.jiaxiao.mapper" />

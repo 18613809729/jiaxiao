@@ -1,11 +1,13 @@
 package com.nbs.jiaxiao.service.biz;
 
+import java.util.List;
 import java.util.Map;
 
 import com.nbs.jiaxiao.domain.po.Dict;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.Commissions;
+import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 
 public interface TeacherBizService {
 
@@ -55,5 +57,7 @@ public interface TeacherBizService {
 	 * @return
 	 */
 	Student queryStudent(String username, String mobile);
+
+	Map<String, List<PreSellerInfo>> queryRecent();
 
 }

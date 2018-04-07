@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
+import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.PreSellerMapper;
 import com.nbs.jiaxiao.service.db.PreSellerService;
@@ -153,6 +154,10 @@ public class PreSellerServiceImpl implements PreSellerService{
 		return preSeller;
 	}
 	
+	@Override
+	public List<PreSellerInfo> selectRecentInfos(){
+		return preSellerMapper.selectRecentInfos();
+	}
 	
 	/* customized code end */
 

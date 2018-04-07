@@ -11,6 +11,16 @@ import java.util.HashMap;
  */
 public class ParamMap extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
+	
+	/* offset */
+	public void appointOffset(Integer offset) {
+		put("offset", offset);
+	}
+	
+	/* offset */
+	public void appointLimit(Integer limit) {
+		put("limit", limit);
+	}
 
 	/* 创建时间开始 */
 	public void appointCreatedTimeStart(Date createdTimeStart) {

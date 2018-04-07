@@ -53,9 +53,9 @@
 							</div>
 						</a>
 
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="join/list">
 							<div class="weui-cell__bd">
-								<span>分销报名</span><span class="weui-badge">8</span>
+								<span>推广报名</span><span class="weui-badge">8</span>
 							</div>
 							<div class="weui-cell__ft">
 							</div>

@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.service.db;
 import java.util.List;
 
 import com.nbs.jiaxiao.domain.po.PreSeller;
+import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 
 public interface PreSellerService {
 	
@@ -100,6 +101,9 @@ public interface PreSellerService {
 	 * @return
 	 */
 	PreSeller addPreSeller(String opeOpenId, PreSeller seller);
+
+	
+	List<PreSellerInfo> selectRecentInfos();
 
 	/* customized code end */
 

@@ -1,6 +1,9 @@
 package com.nbs.jiaxiao.service.biz.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,9 +24,11 @@ import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.Commissions;
+import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.FeeService;
+import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
 import com.nbs.jiaxiao.service.db.StudentService;
 
@@ -42,6 +47,9 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	
 	@Resource
 	private SellerService sellerService;
+	
+	@Resource
+	private PreSellerService preSellerService;
 	
 	@Transactional
 	@Override
@@ -158,13 +166,19 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 		return dictService.selectList(dict);
 	}
 	
-	/*private Dict queryDictByTypeAndCode(String type, String code) {
-		Dict dict = new Dict();
-		dict.setType(type);
-		dict.setCode(code);
-		List<Dict> lst = dictService.selectList(dict);
-		return lst.isEmpty() ? null : lst.get(0);
-	}*/
+	@Override
+	public Map<String, List<PreSellerInfo>> queryRecent() {
+		Map<String, List<PreSellerInfo>> map = new HashMap<String, List<PreSellerInfo>>();
+		LocalDateTime localDateTime = LocalDate.now().minusDays(2).atStartOfDay();
+		List<PreSellerInfo> recentInfos = preSellerService.selectRecentInfos();
+		List<PreSellerInfo> recentLst = recentInfos.stream().filter(sellerInfo -> sellerInfo.getCreatedTime().compareTo(localDateTime) >= 0).collect(Collectors.toList());
+		List<PreSellerInfo> beforeLst = recentInfos.stream().filter(sellerInfo -> sellerInfo.getCreatedTime().compareTo(localDateTime) < 0).collect(Collectors.toList());
+		map.put("recentLst", recentLst);
+		map.put("beforeLst", beforeLst);
+		return map;
+	}
+	
+	
 	
 	@Transactional
 	@Override

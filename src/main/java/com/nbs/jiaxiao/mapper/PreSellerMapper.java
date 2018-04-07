@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.mapper;
 import java.util.List;
 
 import com.nbs.jiaxiao.domain.po.PreSeller;
+import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 
 public interface PreSellerMapper {
 	
@@ -84,6 +85,8 @@ public interface PreSellerMapper {
 	public Integer exist(PreSeller con);
 	
 	/* customized code start */
+	
+	public List<PreSellerInfo> selectRecentInfos();
 	
 	/* customized code end */
 

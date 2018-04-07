@@ -1,6 +1,6 @@
 package com.nbs.jiaxiao.domain.base;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 数据库表domain公用字段
@@ -10,33 +10,29 @@ import java.util.Date;
  */
 public class Base {
 	/* 创建事件 */
-	protected Date createdTime;
+	protected LocalDateTime createdTime;
 	/* 修改事件 */
-	protected Date modifiedTime;
+	protected LocalDateTime modifiedTime;
 	/* 更新次数 */
 	protected Integer lastUpdateNo;
 	/* 修改人 */
 	protected String lastUpdateNoUserId;
 	
-	protected Integer limit;
-	
-	protected Integer offset;
-	
 	protected ParamMap param = new ParamMap(); 
-	
-	public Date getCreatedTime() {
+
+	public LocalDateTime getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(LocalDateTime createdTime) {
 		this.createdTime = createdTime;
 	}
 
-	public Date getModifiedTime() {
+	public LocalDateTime getModifiedTime() {
 		return modifiedTime;
 	}
 
-	public void setModifiedTime(Date modifiedTime) {
+	public void setModifiedTime(LocalDateTime modifiedTime) {
 		this.modifiedTime = modifiedTime;
 	}
 
@@ -64,20 +60,4 @@ public class Base {
 		this.param = param;
 	}
 
-	public Integer getLimit() {
-		return limit;
-	}
-
-	public void setLimit(Integer limit) {
-		this.limit = limit;
-	}
-
-	public Integer getOffset() {
-		return offset;
-	}
-
-	public void setOffset(Integer offset) {
-		this.offset = offset;
-	}
-	
 }

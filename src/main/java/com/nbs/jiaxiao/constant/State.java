@@ -6,7 +6,7 @@ public enum State{
 	MAR_READ("2", "标为已读"),
 	HANDLED("3", "已处理"),
 	REJECTED("4", "已拒绝"),
-	DELETED("5", "删除");
+	DELETED("-1", "删除");
 	String code;
 	String desc;
 	
