@@ -4,7 +4,6 @@ package com.nbs.jiaxiao.service.db.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-
 import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.exception.ConcurrentException;

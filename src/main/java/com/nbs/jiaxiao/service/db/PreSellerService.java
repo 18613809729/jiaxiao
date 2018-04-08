@@ -106,6 +106,8 @@ public interface PreSellerService {
 	
 	List<PreSellerInfo> selectRecentInfos();
 
+	long queryUnReadCount();
+
 	/* customized code end */
 
 }

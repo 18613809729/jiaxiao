@@ -195,7 +195,7 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 			seller.setLastUpdateNoUserId(openId);
 			seller.setLevel(preSeller.getLevel());
 			seller.setMobile(preSeller.getMobile());
-			seller.setOpenId(openId);
+			seller.setOpenId(preSeller.getOpenId());
 			seller.setParentId(preSeller.getParentId());
 			seller.setStatus(Status.VALID.getCode());
 			seller.setType(Seller.APPLY_TYPE);

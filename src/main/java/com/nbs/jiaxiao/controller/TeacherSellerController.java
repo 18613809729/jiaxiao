@@ -1,5 +1,6 @@
 package com.nbs.jiaxiao.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
+import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
@@ -38,6 +40,8 @@ import com.nbs.jiaxiao.service.db.UserService;
 public class TeacherSellerController {
 	public static final String FTL_PREFIX = "teacher/seller";
 	
+	private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	
 	@Autowired
 	private TeacherBizService teacherService;
 	
@@ -52,7 +56,9 @@ public class TeacherSellerController {
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
-		return new ModelAndView(FTL_PREFIX + "/index");
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/index");
+		mv.addObject("unReadCount", preSellerService.queryUnReadCount());
+		return mv;
 	}
 	
 	@GetMapping("/commission")
@@ -100,13 +106,18 @@ public class TeacherSellerController {
 	public ModelAndView joinInfo(@PathVariable("id") int id) {
 		PreSeller preSeller = preSellerService.selectByPriKey(id);
 		NbsUtils.assertNull(preSeller, "the preseller {} not exisd", id);
-		preSeller.setUser(userService.queryByOpenId(preSeller.getOpenId()));
+		User user = userService.queryByOpenId(preSeller.getOpenId());
+		preSeller.setUser(user);
 		if(State.isUnRead(preSeller.getState())) {
 			preSeller.setState(State.HAS_READ.getCode());
 			preSellerService.updateByPriKey(preSeller);
 		}
-		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/preSeller");
+		mv.addObject("createdTime", preSeller.getCreatedTime().format(FORMAT));
 		mv.addObject("info", preSeller);
+		if(preSeller.getParentId() != null && preSeller.getParentId().intValue() != 0) {
+			mv.addObject("parent", sellerService.selectByPriKey(preSeller.getParentId()));
+		}
 		return mv;
 	}
 	

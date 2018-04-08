@@ -5,7 +5,7 @@
   		<result property="id" column="ID"/>
   		<result property="userName" column="USER_NAME"/>
   		<result property="openId" column="OPEN_ID"/>
-  		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="mobile" column="MOBILE"/>
   		<result property="remark" column="REMARK"/>
   		<result property="status" column="STATUS"/>
   		<result property="createdTime" column="CREATED_TIME"/>
@@ -23,7 +23,7 @@
 	 			<if test="id != null"> AND ID = #{id}</if> 
 	 			<if test="userName != null"> AND USER_NAME = #{userName}</if> 
 	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
-	 			<if test="mobile != null"> AND MOBILE = #{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
+	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
 	 			<if test="remark != null"> AND REMARK = #{remark}</if> 
 	 			<if test="status != null"> AND STATUS = #{status}</if> 
 	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
@@ -55,7 +55,7 @@
 			<if test="id != null">#{id},</if> 
 			<if test="userName != null">#{userName},</if> 
 			<if test="openId != null">#{openId},</if> 
-			<if test="mobile != null">#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
+			<if test="mobile != null">#{mobile},</if> 
 			<if test="remark != null">#{remark},</if> 
 			<if test="status != null">#{status},</if> 
 			<if test="createdTime != null">#{createdTime},</if> 
@@ -70,7 +70,7 @@
 		<set>
 				<if test="userName != null">USER_NAME=#{userName},</if>
 				<if test="openId != null">OPEN_ID=#{openId},</if>
-				<if test="mobile != null">MOBILE=#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
+				<if test="mobile != null">MOBILE=#{mobile},</if>
 				<if test="remark != null">REMARK=#{remark},</if>
 				<if test="status != null">STATUS=#{status},</if>
 				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>

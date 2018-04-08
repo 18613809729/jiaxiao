@@ -5,7 +5,7 @@
   		<result property="id" column="ID"/>
   		<result property="openId" column="OPEN_ID"/>
   		<result property="username" column="USERNAME"/>
-  		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="mobile" column="MOBILE"/>
   		<result property="level" column="LEVEL"/>
   		<result property="parentId" column="PARENT_ID"/>
   		<result property="status" column="STATUS"/>
@@ -25,7 +25,7 @@
 	 			<if test="id != null"> AND ID = #{id}</if> 
 	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
 	 			<if test="username != null"> AND USERNAME = #{username}</if> 
-	 			<if test="mobile != null"> AND MOBILE = #{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
+	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
 	 			<if test="level != null"> AND LEVEL = #{level}</if> 
 	 			<if test="parentId != null"> AND PARENT_ID = #{parentId}</if> 
 	 			<if test="status != null"> AND STATUS = #{status}</if> 
@@ -61,7 +61,7 @@
 			<if test="id != null">#{id},</if> 
 			<if test="openId != null">#{openId},</if> 
 			<if test="username != null">#{username},</if> 
-			<if test="mobile != null">#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
+			<if test="mobile != null">#{mobile},</if> 
 			<if test="level != null">#{level},</if> 
 			<if test="parentId != null">#{parentId},</if> 
 			<if test="status != null">#{status},</if> 
@@ -78,7 +78,7 @@
 		<set>
 				<if test="openId != null">OPEN_ID=#{openId},</if>
 				<if test="username != null">USERNAME=#{username},</if>
-				<if test="mobile != null">MOBILE=#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
+				<if test="mobile != null">MOBILE=#{mobile},</if>
 				<if test="level != null">LEVEL=#{level},</if>
 				<if test="parentId != null">PARENT_ID=#{parentId},</if>
 				<if test="status != null">STATUS=#{status},</if>

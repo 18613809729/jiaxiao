@@ -158,6 +158,13 @@ public class PreSellerServiceImpl implements PreSellerService{
 		return preSellerMapper.selectRecentInfos();
 	}
 	
+	@Override
+	public long queryUnReadCount() {
+		PreSeller con = new PreSeller();
+		con.setState(State.UN_READ.getCode());
+		return selectCount(con);
+	}
+	
 	/* customized code end */
 
 }

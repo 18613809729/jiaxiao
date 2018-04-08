@@ -6,8 +6,8 @@
   		<result property="openId" column="OPEN_ID"/>
   		<result property="userName" column="USER_NAME"/>
   		<result property="nickName" column="NICK_NAME"/>
-  		<result property="certNo" column="CERT_NO"/>
-  		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="certNo" column="CERT_NO" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="mobile" column="MOBILE"/>
   		<result property="sex" column="SEX"/>
   		<result property="country" column="COUNTRY"/>
   		<result property="province" column="PROVINCE"/>
@@ -32,8 +32,8 @@
 	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
 	 			<if test="userName != null"> AND USER_NAME = #{userName}</if> 
 	 			<if test="nickName != null"> AND NICK_NAME = #{nickName}</if> 
-	 			<if test="certNo != null"> AND CERT_NO = #{certNo}</if> 
-	 			<if test="mobile != null"> AND MOBILE = #{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
+	 			<if test="certNo != null"> AND CERT_NO = #{certNo, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler}</if> 
+	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
 	 			<if test="sex != null"> AND SEX = #{sex}</if> 
 	 			<if test="country != null"> AND COUNTRY = #{country}</if> 
 	 			<if test="province != null"> AND PROVINCE = #{province}</if> 
@@ -80,8 +80,8 @@
 			<if test="openId != null">#{openId},</if> 
 			<if test="userName != null">#{userName},</if> 
 			<if test="nickName != null">#{nickName},</if> 
-			<if test="certNo != null">#{certNo},</if> 
-			<if test="mobile != null">#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
+			<if test="certNo != null">#{certNo, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if> 
+			<if test="mobile != null">#{mobile},</if> 
 			<if test="sex != null">#{sex},</if> 
 			<if test="country != null">#{country},</if> 
 			<if test="province != null">#{province},</if> 
@@ -103,8 +103,8 @@
 				<if test="openId != null">OPEN_ID=#{openId},</if>
 				<if test="userName != null">USER_NAME=#{userName},</if>
 				<if test="nickName != null">NICK_NAME=#{nickName},</if>
-				<if test="certNo != null">CERT_NO=#{certNo},</if>
-				<if test="mobile != null">MOBILE=#{mobile, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
+				<if test="certNo != null">CERT_NO=#{certNo, typeHandler=com.nbs.jiaxiao.component.CryptTypeHandler},</if>
+				<if test="mobile != null">MOBILE=#{mobile},</if>
 				<if test="sex != null">SEX=#{sex},</if>
 				<if test="country != null">COUNTRY=#{country},</if>
 				<if test="province != null">PROVINCE=#{province},</if>
