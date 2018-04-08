@@ -1,12 +1,10 @@
 package com.nbs.jiaxiao.service.db.impl;
 
+
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
@@ -15,6 +13,7 @@ import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.PreSellerMapper;
 import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
+
 
 @Service
 public class PreSellerServiceImpl implements PreSellerService{

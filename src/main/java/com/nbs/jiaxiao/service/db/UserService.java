@@ -1,8 +1,9 @@
 package com.nbs.jiaxiao.service.db;
 
-import java.util.List;
 
+import java.util.List;
 import com.nbs.jiaxiao.domain.po.User;
+
 
 public interface UserService {
 	

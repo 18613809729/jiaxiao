@@ -1,17 +1,16 @@
 package com.nbs.jiaxiao.service.db.impl;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.SellerMapper;
 import com.nbs.jiaxiao.service.db.SellerService;
+
 
 @Service
 public class SellerServiceImpl implements SellerService{

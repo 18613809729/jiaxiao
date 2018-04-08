@@ -1,8 +1,9 @@
 package com.nbs.jiaxiao.mapper;
 
-import java.util.List;
 
+import java.util.List;
 import com.nbs.jiaxiao.domain.po.Dict;
+
 
 public interface DictMapper {
 	

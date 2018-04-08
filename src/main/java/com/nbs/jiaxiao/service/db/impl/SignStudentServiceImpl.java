@@ -1,15 +1,14 @@
 package com.nbs.jiaxiao.service.db.impl;
 
+
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.SignStudentMapper;
 import com.nbs.jiaxiao.service.db.SignStudentService;
+
 
 @Service
 public class SignStudentServiceImpl implements SignStudentService{

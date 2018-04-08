@@ -1,15 +1,14 @@
 package com.nbs.jiaxiao.service.db.impl;
 
+
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.nbs.jiaxiao.domain.po.Dict;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.DictMapper;
 import com.nbs.jiaxiao.service.db.DictService;
+
 
 @Service
 public class DictServiceImpl implements DictService{

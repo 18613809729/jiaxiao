@@ -1,9 +1,10 @@
 package com.nbs.jiaxiao.service.db;
 
-import java.util.List;
 
+import java.util.List;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
+
 
 public interface PreSellerService {
 	

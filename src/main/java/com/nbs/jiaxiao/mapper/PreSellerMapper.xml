@@ -138,7 +138,7 @@
   		<result property="id" column="ID"/>
   		<result property="openId" column="OPEN_ID"/>
   		<result property="username" column="USERNAME"/>
-  		<result property="mobile" column="MOBILE" typeHandler="com.nbs.jiaxiao.component.CryptTypeHandler"/>
+  		<result property="mobile" column="MOBILE"/>
   		<result property="level" column="LEVEL"/>
   		<result property="parentId" column="PARENT_ID"/>
   		<result property="state" column="STATE"/>

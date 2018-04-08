@@ -1,6 +1,8 @@
 package com.nbs.jiaxiao.domain.po;
 
+
 import com.nbs.jiaxiao.domain.base.Base;
+
 
 /**
  * 

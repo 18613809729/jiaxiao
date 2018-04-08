@@ -1,8 +1,9 @@
 package com.nbs.jiaxiao.service.db;
 
-import java.util.List;
 
+import java.util.List;
 import com.nbs.jiaxiao.domain.po.Seller;
+
 
 public interface SellerService {
 	
@@ -82,7 +83,6 @@ public interface SellerService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(Seller con);
-
 	
 	/* customized code start */
 	
