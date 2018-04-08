@@ -3,28 +3,35 @@ package com.nbs.jiaxiao.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.State;
+import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
+import com.nbs.jiaxiao.service.db.UserService;
 
 @Controller
 @RequestMapping("/teacher/seller")
@@ -39,6 +46,9 @@ public class TeacherSellerController {
 	
 	@Autowired
 	private PreSellerService preSellerService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -88,27 +98,54 @@ public class TeacherSellerController {
 	
 	@GetMapping("/join/info/{id}")
 	public ModelAndView joinInfo(@PathVariable("id") int id) {
-		return new ModelAndView(FTL_PREFIX + "/info");
+		PreSeller preSeller = preSellerService.selectByPriKey(id);
+		NbsUtils.assertNull(preSeller, "the preseller {} not exisd", id);
+		preSeller.setUser(userService.queryByOpenId(preSeller.getOpenId()));
+		if(State.isUnRead(preSeller.getState())) {
+			preSeller.setState(State.HAS_READ.getCode());
+			preSellerService.updateByPriKey(preSeller);
+		}
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
+		mv.addObject("info", preSeller);
+		return mv;
+	}
+	
+	@PutMapping("/join/info/{id}")
+	public @ResponseBody BaseRes<Object> joinStateChange(@RequestAttribute("openId") String openId, @PathVariable("id") int id, String state) {
+		teacherService.operatePreSeller(openId, id, state);
+		return BaseRes.buildSuccess(null);
 	}
 	
 	@DeleteMapping("/join/info/{id}")
 	public @ResponseBody BaseRes<Object> deleteJoin(@RequestAttribute("openId") String openId, @PathVariable("id") int id) {
 		int count = preSellerService.deleteByPriKey(id);
-		if(count == 0) {
-			throw new NotFoundException("the deleted preseller not exist, id:" + id);
-		}
+		NbsUtils.assertExist(count, "the deleted preseller not exist, id:{}", id);
 		return BaseRes.buildSuccess(null);
 	}
 	
 	@GetMapping("/info/{id}")
 	public ModelAndView sellerInfo(@PathVariable("id") int id) {
 		Seller seller = sellerService.selectByPriKey(id);
-		if (seller == null) {
-			throw new NotFoundException("seller not found id:" + id);
-		}
+		NbsUtils.assertNull(seller, "seller {} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
 		mv.addObject("sellerInfo", seller);
 		return mv;
 	}
 
+	@PutMapping("/info/{id}")
+	public @ResponseBody BaseRes<Seller> sellerInfo(@PathVariable("id") int id, Seller info) {
+		Seller seller = sellerService.selectByPriKey(id);
+		NbsUtils.assertNull(seller, "seller {} not found", id);
+		if(StringUtils.isNotBlank(info.getMobile())) {
+			seller.setMobile(info.getMobile());
+		}
+		if(StringUtils.isNotBlank(info.getUsername())) {
+			seller.setUsername(info.getUsername());
+		}
+		if(StringUtils.isNotBlank(info.getStatus())) {
+			seller.setStatus(info.getStatus());
+		}
+		sellerService.updateByPriKey(seller);
+		return BaseRes.buildSuccess(seller);
+	}
 }

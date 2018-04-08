@@ -60,4 +60,6 @@ public interface TeacherBizService {
 
 	Map<String, List<PreSellerInfo>> queryRecent();
 
+	void operatePreSeller(String openId, int id, String state);
+
 }

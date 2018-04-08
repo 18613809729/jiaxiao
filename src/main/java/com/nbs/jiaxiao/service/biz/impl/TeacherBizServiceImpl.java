@@ -12,19 +12,24 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.CommissionType;
 import com.nbs.jiaxiao.constant.DictType;
 import com.nbs.jiaxiao.constant.FeeType;
 import com.nbs.jiaxiao.constant.PayType;
 import com.nbs.jiaxiao.constant.Stage;
+import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.po.Dict;
 import com.nbs.jiaxiao.domain.po.Fee;
+import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.FeeService;
@@ -178,6 +183,30 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 		return map;
 	}
 	
+	@Transactional
+	@Override
+	public void operatePreSeller(String openId, int id, String state) {
+		PreSeller preSeller = preSellerService.selectByPriKey(id);
+		NbsUtils.assertNull(preSeller, "the preseller {} not exisd", id);
+		if(State.REJECTED.getCode().equals(state)) {
+			preSeller.setState(state);
+		} else if(State.HANDLED.getCode().equals(state)) {
+			Seller seller = new Seller();
+			seller.setLastUpdateNoUserId(openId);
+			seller.setLevel(preSeller.getLevel());
+			seller.setMobile(preSeller.getMobile());
+			seller.setOpenId(openId);
+			seller.setParentId(preSeller.getParentId());
+			seller.setStatus(Status.VALID.getCode());
+			seller.setType(Seller.APPLY_TYPE);
+			seller.setUsername(preSeller.getUsername());
+			preSeller.setState(state);
+			sellerService.insert(seller);
+		} else {
+			throw new InvalidParamException("joinStateChange bad state:" + state);
+		}
+		preSellerService.updateByPriKey(preSeller);
+	}
 	
 	
 	@Transactional

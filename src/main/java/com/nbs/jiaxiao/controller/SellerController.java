@@ -30,14 +30,19 @@ public class SellerController {
 	@Autowired
 	private PreSellerService preSellerService;
 	
-	@GetMapping("/all.json")
-	public @ResponseBody BaseRes<List<Seller>> sellerAll() {
+	@GetMapping("/valid.json")
+	public @ResponseBody BaseRes<List<Seller>> validSellers() {
 		return BaseRes.buildSuccess(sellerService.queryAllValidSellers()) ;
 	}
 
 	@GetMapping("/parent.json")
 	public @ResponseBody BaseRes<List<Seller>> parentSellers() {
 		return BaseRes.buildSuccess(sellerService.queryAllValidParentSellers());
+	}
+	
+	@GetMapping("/all.json")
+	public @ResponseBody BaseRes<List<Seller>> allSellers() {
+		return BaseRes.buildSuccess(sellerService.selectList(new Seller()));
 	}
 	
 	@GetMapping("/join")

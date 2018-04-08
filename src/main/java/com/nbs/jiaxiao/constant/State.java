@@ -22,7 +22,9 @@ public enum State{
 		return desc;
 	}
 	
-	
+	public static boolean isUnRead(String code) {
+		return UN_READ.getCode().equals(code);
+	}
 	
 	public State valueOfByCode(String type) {
 		for (State stage : State.values()) {

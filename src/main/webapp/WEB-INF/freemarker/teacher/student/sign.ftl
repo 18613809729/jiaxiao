@@ -116,7 +116,7 @@
             });
             $("#date").calendar({"dateFormat":'yyyy-mm-dd'});
             var sellLst;
-            $.getJSON("/teacher/seller/all.json").done(function(res){
+            $.getJSON("/teacher/seller/valid.json").done(function(res){
               	sellLst = res;
                 for (var i = 0; i < sellLst.length; i++) {
                     sellLst[i].id = sellLst[i].openId;

@@ -4,6 +4,8 @@ package com.nbs.jiaxiao.service.db.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.UserMapper;
@@ -118,6 +120,13 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/* customized code start */
+	
+	@Override
+	public User queryByOpenId(String openId) {
+		User user = new User();
+		user.setOpenId(openId);
+		return NbsUtils.getFirst(selectList(user));
+	}
 	
 	/* customized code end */
 
