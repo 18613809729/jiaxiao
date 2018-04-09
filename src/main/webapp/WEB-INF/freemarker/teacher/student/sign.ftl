@@ -60,7 +60,7 @@
     			<div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="payFee">实缴学费</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="payFee" type="number" required min="0" max="20000" step="0.01" placeholder="实缴学费" maxlength="7">
+                        <input class="weui-input" name="payFee" type="number" min="0" max="20000" step="0.01" placeholder="实缴学费" maxlength="7">
                     </div>
                 </div>
 
@@ -69,6 +69,9 @@
                     <div class="weui-cell__bd">
                         <input type="hidden" name="sellerId">
                         <input class="weui-input" type="text" id="sellerInput" placeholder="分销员(选填)" readonly>
+                    </div>
+                    <div class="weui-cell__ft" id="clearSellerId">
+                        <i class="weui-icon-cancel"></i>
                     </div>
                 </div>
             </div>
@@ -107,7 +110,13 @@
                     var data = $("#signForm").serialize();
                     $.singlePost(_btn, "/teacher/student/sign", data).done(function(res){
                         if(res.code == '0'){
-                            $.toast('提交成功');
+                            $.toSuccess({
+                                "title":"登记成功",
+                                "primary_btn_msg":"查看信息",
+                                "primary_btn_url":"index",
+                                "default_btn_msg":"继续添加",
+                                "default_btn_url":"javascript:location.reload();"
+                            });
                         } else {
                             $.toast(res.msg, "cancel");
                         }
@@ -129,6 +138,11 @@
                     $('[name="sellerId"]').val(data.id);
                     $("#sellerInput").val(data.username + "  " + data.mobile);
                 }});
+            });
+
+            $("#clearSellerId").on("click", function(){
+                $('[name="sellerId"]').val("");
+                $("#sellerInput").val("");
             });
         });
 	</script>

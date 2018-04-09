@@ -107,6 +107,16 @@ public class Seller extends Base{
 	
 	/* customized code start */
 	
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	public static final String SIGN_TYPE = "0";
 	
 	public static final String APPLY_TYPE = "1";

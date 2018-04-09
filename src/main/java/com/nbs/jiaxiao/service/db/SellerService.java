@@ -113,6 +113,8 @@ public interface SellerService {
 	 */
 	Seller querySeller(String username, String mobile);
 
+	List<Seller> queryChildrenSellers(Integer parentId);
+
 	/* customized code end */
 
 }

@@ -18,7 +18,7 @@ public interface TeacherBizService {
 	 * @param payFee 缴费金额
 	 * @return 
 	 */
-	Student addStudent(String opeOpenId, Student student, double payFee);
+	Student addStudent(String opeOpenId, Student student, Double payFee);
 
 	/**
 	 * 根据主键查询学员
@@ -61,5 +61,6 @@ public interface TeacherBizService {
 	Map<String, List<PreSellerInfo>> queryRecent();
 
 	void operatePreSeller(String openId, int id, String state);
+
 
 }

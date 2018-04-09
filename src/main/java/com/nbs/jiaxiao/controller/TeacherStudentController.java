@@ -35,7 +35,7 @@ public class TeacherStudentController {
 	}
 	
 	@PostMapping("/sign")
-	public @ResponseBody BaseRes<Student> studentSignSubmit(@RequestAttribute("openId") String openId, Student student, double payFee) {
+	public @ResponseBody BaseRes<Student> studentSignSubmit(@RequestAttribute("openId") String openId, Student student, Double payFee) {
 		Student existStudent = teacherService.queryStudent(student.getUsername(), student.getMobile());
 		if (existStudent != null) {
 			return BaseRes.build(ResCode.REPEATED, existStudent);

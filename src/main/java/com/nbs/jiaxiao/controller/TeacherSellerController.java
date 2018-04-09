@@ -31,6 +31,7 @@ import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.CommisionFeeService;
 import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
 import com.nbs.jiaxiao.service.db.UserService;
@@ -53,6 +54,9 @@ public class TeacherSellerController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CommisionFeeService commisionFeeService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -140,6 +144,30 @@ public class TeacherSellerController {
 		NbsUtils.assertNull(seller, "seller {} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
 		mv.addObject("sellerInfo", seller);
+
+		if(StringUtils.isNotBlank(seller.getOpenId())) {
+			User user = userService.queryByOpenId(seller.getOpenId());
+			seller.setUser(user);
+		}
+		if(seller.getParentId() != null && seller.getParentId().intValue() != 0) {
+			Seller parentSeller = sellerService.selectByPriKey(seller.getParentId());
+			if(parentSeller != null) {
+				mv.addObject("parentSeller", parentSeller);
+			}
+			if(parentSeller.getParentId() != null && parentSeller.getParentId().intValue() != 0) {
+				Seller topSeller = sellerService.selectByPriKey(parentSeller.getParentId());
+				if(topSeller != null) {
+					mv.addObject("topSeller", topSeller);
+				}
+			}
+		}
+		
+		if(seller.getLevel() != 3) {
+			mv.addObject("childrenSellers", sellerService.queryChildrenSellers(seller.getId()));
+		}
+		
+		commisionFeeService
+		
 		return mv;
 	}
 

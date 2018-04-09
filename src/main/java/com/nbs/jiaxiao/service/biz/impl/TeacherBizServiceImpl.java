@@ -65,20 +65,23 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	
 	@Transactional
 	@Override
-	public Student addStudent(String opeOpenId, Student student, double payFee) {
+	public Student addStudent(String opeOpenId, Student student, Double payFee) {
+		payFee = payFee == null ? 0.0d : payFee;
 		student.setLastUpdateNoUserId(opeOpenId);
 		student.setStage(Stage.STAGE_1.getCode());
 		student.setIsArrearage(student.getTotalFee().doubleValue() > payFee); //是否欠费
 		studentService.insert(student);
-		Fee fee = new Fee();
-		fee.setUserId(student.getId());
-		fee.setMoney(BigDecimal.valueOf(payFee));
-		fee.setType(FeeType.TUITION.getCode());
-		fee.setPayType(PayType.SIGN.getCode());
-		fee.setPayDate(student.getSignDate());
-		fee.setRemark("学员登记录入");
-		fee.setLastUpdateNoUserId(opeOpenId);
-		feeService.insert(fee);
+		if(payFee != null && payFee.doubleValue() != 0.0d) {
+			Fee fee = new Fee();
+			fee.setUserId(student.getId());
+			fee.setMoney(BigDecimal.valueOf(payFee));
+			fee.setType(FeeType.TUITION.getCode());
+			fee.setPayType(PayType.SIGN.getCode());
+			fee.setPayDate(student.getSignDate());
+			fee.setRemark("学员登记录入");
+			fee.setLastUpdateNoUserId(opeOpenId);
+			feeService.insert(fee);
+		}
 		
 		if(student.getSellerId() != null && student.getSellerId().intValue() != 0) {
 			addCommisionFee(opeOpenId, student.getId(), student.getSellerId());	
