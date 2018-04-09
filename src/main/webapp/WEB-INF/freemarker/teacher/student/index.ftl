@@ -38,7 +38,7 @@
 							<div class="weui-cell__ft">
 							</div>
 						</a>
-						<a class="weui-cell weui-cell_access" href="xydj.html">
+						<a class="weui-cell weui-cell_access" href="sign">
 							<div class="weui-cell__bd">
 								<p>学员登记</p>
 							</div>

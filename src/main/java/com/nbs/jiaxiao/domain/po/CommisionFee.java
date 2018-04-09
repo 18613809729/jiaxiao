@@ -15,6 +15,8 @@ public class CommisionFee extends Base{
 	private java.lang.Integer id;
 	/* 学员ID */
 	private java.lang.Integer studentId;
+	/*  */
+	private java.lang.Integer topSellerId;
 	/* 销售员Id */
 	private java.lang.Integer sellerId;
 	/* 费用金额 */
@@ -42,6 +44,14 @@ public class CommisionFee extends Base{
 
 	public void setStudentId(java.lang.Integer studentId) {
 		this.studentId = studentId;
+	}
+	
+	public java.lang.Integer getTopSellerId() {
+		return topSellerId;
+	}
+
+	public void setTopSellerId(java.lang.Integer topSellerId) {
+		this.topSellerId = topSellerId;
 	}
 	
 	public java.lang.Integer getSellerId() {
@@ -89,6 +99,9 @@ public class CommisionFee extends Base{
 	}
 	
 	/* customized code start */
+	public static final String NOT_PAY = "0";
+	public static final String HAS_PAY = "1";
+	public static final String DISABLED = "3";
 	
 	/* customized code end */
 }

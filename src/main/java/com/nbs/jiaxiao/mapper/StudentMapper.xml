@@ -10,7 +10,7 @@
   		<result property="driveType" column="DRIVE_TYPE"/>
   		<result property="totalFee" column="TOTAL_FEE"/>
   		<result property="signDate" column="SIGN_DATE"/>
-  		<result property="sellId" column="SELL_ID"/>
+  		<result property="sellerId" column="SELLER_ID"/>
   		<result property="stage" column="STAGE"/>
   		<result property="isArrearage" column="IS_ARREARAGE"/>
   		<result property="phase" column="PHASE"/>
@@ -22,7 +22,7 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, OPEN_ID, USERNAME, MOBILE, CERT_NO, DRIVE_TYPE, TOTAL_FEE, SIGN_DATE, SELL_ID, STAGE, IS_ARREARAGE, PHASE, REMARK, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, OPEN_ID, USERNAME, MOBILE, CERT_NO, DRIVE_TYPE, TOTAL_FEE, SIGN_DATE, SELLER_ID, STAGE, IS_ARREARAGE, PHASE, REMARK, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
@@ -35,7 +35,7 @@
 	 			<if test="driveType != null"> AND DRIVE_TYPE = #{driveType}</if> 
 	 			<if test="totalFee != null"> AND TOTAL_FEE = #{totalFee}</if> 
 	 			<if test="signDate != null"> AND SIGN_DATE = #{signDate}</if> 
-	 			<if test="sellId != null"> AND SELL_ID = #{sellId}</if> 
+	 			<if test="sellerId != null"> AND SELLER_ID = #{sellerId}</if> 
 	 			<if test="stage != null"> AND STAGE = #{stage}</if> 
 	 			<if test="isArrearage != null"> AND IS_ARREARAGE = #{isArrearage}</if> 
 	 			<if test="phase != null"> AND PHASE = #{phase}</if> 
@@ -61,7 +61,7 @@
 				<if test="driveType != null">DRIVE_TYPE,</if> 
 				<if test="totalFee != null">TOTAL_FEE,</if> 
 				<if test="signDate != null">SIGN_DATE,</if> 
-				<if test="sellId != null">SELL_ID,</if> 
+				<if test="sellerId != null">SELLER_ID,</if> 
 				<if test="stage != null">STAGE,</if> 
 				<if test="isArrearage != null">IS_ARREARAGE,</if> 
 				<if test="phase != null">PHASE,</if> 
@@ -81,7 +81,7 @@
 			<if test="driveType != null">#{driveType},</if> 
 			<if test="totalFee != null">#{totalFee},</if> 
 			<if test="signDate != null">#{signDate},</if> 
-			<if test="sellId != null">#{sellId},</if> 
+			<if test="sellerId != null">#{sellerId},</if> 
 			<if test="stage != null">#{stage},</if> 
 			<if test="isArrearage != null">#{isArrearage},</if> 
 			<if test="phase != null">#{phase},</if> 
@@ -103,7 +103,7 @@
 				<if test="driveType != null">DRIVE_TYPE=#{driveType},</if>
 				<if test="totalFee != null">TOTAL_FEE=#{totalFee},</if>
 				<if test="signDate != null">SIGN_DATE=#{signDate},</if>
-				<if test="sellId != null">SELL_ID=#{sellId},</if>
+				<if test="sellerId != null">SELLER_ID=#{sellerId},</if>
 				<if test="stage != null">STAGE=#{stage},</if>
 				<if test="isArrearage != null">IS_ARREARAGE=#{isArrearage},</if>
 				<if test="phase != null">PHASE=#{phase},</if>

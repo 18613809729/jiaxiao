@@ -28,7 +28,7 @@ public class Student extends Base{
 	/*  */
 	private java.sql.Date signDate;
 	/* 分销员 */
-	private java.lang.String sellId;
+	private java.lang.Integer sellerId;
 	/* 学车阶段 */
 	private java.lang.String stage;
 	/* 是否欠费 */
@@ -112,14 +112,12 @@ public class Student extends Base{
 		this.signDate = signDate;
 	}
 	
-	public java.lang.String getSellId() {
-		return sellId;
+	public java.lang.Integer getSellerId() {
+		return sellerId;
 	}
 
-	public void setSellId(java.lang.String sellId) {
-		if (sellId != null) {
-			this.sellId = sellId.trim();
-		}
+	public void setSellerId(java.lang.Integer sellerId) {
+		this.sellerId = sellerId;
 	}
 	
 	public java.lang.String getStage() {

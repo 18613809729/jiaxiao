@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.CommissionType;
@@ -22,6 +23,8 @@ import com.nbs.jiaxiao.constant.PayType;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.constant.Status;
+import com.nbs.jiaxiao.controller.TeacherController;
+import com.nbs.jiaxiao.domain.po.CommisionFee;
 import com.nbs.jiaxiao.domain.po.Dict;
 import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.PreSeller;
@@ -31,6 +34,7 @@ import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.CommisionFeeService;
 import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.FeeService;
 import com.nbs.jiaxiao.service.db.PreSellerService;
@@ -39,7 +43,7 @@ import com.nbs.jiaxiao.service.db.StudentService;
 
 @Service
 public class TeacherBizServiceImpl implements TeacherBizService{
-//	private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
 
 	@Resource
 	private StudentService studentService;
@@ -55,6 +59,9 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	
 	@Resource
 	private PreSellerService preSellerService;
+	
+	@Resource
+	private CommisionFeeService commisionFeeService;
 	
 	@Transactional
 	@Override
@@ -72,7 +79,67 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 		fee.setRemark("学员登记录入");
 		fee.setLastUpdateNoUserId(opeOpenId);
 		feeService.insert(fee);
+		
+		if(student.getSellerId() != null && student.getSellerId().intValue() != 0) {
+			addCommisionFee(opeOpenId, student.getId(), student.getSellerId());	
+		}
 		return student;
+	}
+	
+	private void addCommisionFee(String opeOpenId, Integer studentId, Integer sellerId) {
+		Seller seller = sellerService.selectByPriKey(sellerId);
+		NbsUtils.assertNull(seller, "sign student the seller {} not exist", sellerId);
+		if(!seller.isValid()) {
+			LOGGER.warn("sign student the seller {} is invalid", seller.getId());
+			return;
+		}
+		Map<String, Dict> commissionsMap = queryCommission();
+		if(seller.getLevel() == 1) {
+			CommisionFee commisionFee = build(opeOpenId, studentId, sellerId, seller.getId(), CommissionType.TYPE_1_1, commissionsMap);
+			commisionFeeService.insert(commisionFee);
+		} else if(seller.getLevel() == 2) {
+			CommisionFee commisionFee = build(opeOpenId, studentId, sellerId, seller.getId(), CommissionType.TYPE_2_2, commissionsMap);
+			commisionFeeService.insert(commisionFee);
+			Seller seller21 =  sellerService.selectByPriKey(seller.getParentId());
+			if(!seller21.isValid()) {
+				LOGGER.warn("sign student the seller21 {} is invalid", seller.getParentId());
+				return;
+			}
+			CommisionFee commisionFee21 = build(opeOpenId, studentId, sellerId, seller21.getId(), CommissionType.TYPE_2_1, commissionsMap);
+			commisionFeeService.insert(commisionFee21);
+		} else {
+			CommisionFee commisionFee = build(opeOpenId, studentId, sellerId, seller.getId(), CommissionType.TYPE_3_3, commissionsMap);
+			commisionFeeService.insert(commisionFee);
+			
+			Seller seller32 =  sellerService.selectByPriKey(seller.getParentId());
+			if(!seller32.isValid()) {
+				LOGGER.warn("sign student the seller32 {} is invalid", seller.getParentId());
+				return;
+			}
+			CommisionFee commisionFee32 = build(opeOpenId, studentId, sellerId, seller32.getId(), CommissionType.TYPE_3_2, commissionsMap);
+			commisionFeeService.insert(commisionFee32);
+			
+			
+			Seller seller31 =  sellerService.selectByPriKey(seller32.getParentId());
+			if(!seller31.isValid()) {
+				LOGGER.warn("sign student the seller31 {} is invalid", seller32.getParentId());
+				return;
+			}
+			CommisionFee commisionFee31 = build(opeOpenId, studentId, sellerId, seller31.getId(), CommissionType.TYPE_3_1, commissionsMap);
+			commisionFeeService.insert(commisionFee31);
+		}
+	}
+	
+	private CommisionFee build(String opeOpenId, Integer studentId, Integer topSellerId, Integer sellerId, CommissionType type, Map<String, Dict> commissionsMap) {
+		CommisionFee commisionFee = new CommisionFee();
+		commisionFee.setStudentId(studentId);
+		commisionFee.setTopSellerId(topSellerId);
+		commisionFee.setSellerId(sellerId);
+		BigDecimal money = new BigDecimal(commissionsMap.get(type.getCode()).getValue());
+		commisionFee.setMoney(money);
+		commisionFee.setStatus(CommisionFee.NOT_PAY);
+		commisionFee.setLastUpdateNoUserId(opeOpenId);
+		return commisionFee;
 	}
 	
 	@Override

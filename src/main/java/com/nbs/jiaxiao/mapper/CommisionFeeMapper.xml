@@ -4,6 +4,7 @@
 	<resultMap id="commisionFeeResultMap" type="com.nbs.jiaxiao.domain.po.CommisionFee">
   		<result property="id" column="ID"/>
   		<result property="studentId" column="STUDENT_ID"/>
+  		<result property="topSellerId" column="TOP_SELLER_ID"/>
   		<result property="sellerId" column="SELLER_ID"/>
   		<result property="money" column="MONEY"/>
   		<result property="status" column="STATUS"/>
@@ -16,13 +17,14 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, STUDENT_ID, SELLER_ID, MONEY, STATUS, REMARK, PAY_ID, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, STUDENT_ID, TOP_SELLER_ID, SELLER_ID, MONEY, STATUS, REMARK, PAY_ID, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
 		WHERE DELETED = 0 
 	 			<if test="id != null"> AND ID = #{id}</if> 
 	 			<if test="studentId != null"> AND STUDENT_ID = #{studentId}</if> 
+	 			<if test="topSellerId != null"> AND TOP_SELLER_ID = #{topSellerId}</if> 
 	 			<if test="sellerId != null"> AND SELLER_ID = #{sellerId}</if> 
 	 			<if test="money != null"> AND MONEY = #{money}</if> 
 	 			<if test="status != null"> AND STATUS = #{status}</if> 
@@ -43,6 +45,7 @@
 	 	<trim prefix="(" suffixOverrides="," suffix=")">
 				<if test="id != null">ID,</if> 
 				<if test="studentId != null">STUDENT_ID,</if> 
+				<if test="topSellerId != null">TOP_SELLER_ID,</if> 
 				<if test="sellerId != null">SELLER_ID,</if> 
 				<if test="money != null">MONEY,</if> 
 				<if test="status != null">STATUS,</if> 
@@ -57,6 +60,7 @@
 		<trim prefix="(" suffixOverrides="," suffix=")">
 			<if test="id != null">#{id},</if> 
 			<if test="studentId != null">#{studentId},</if> 
+			<if test="topSellerId != null">#{topSellerId},</if> 
 			<if test="sellerId != null">#{sellerId},</if> 
 			<if test="money != null">#{money},</if> 
 			<if test="status != null">#{status},</if> 
@@ -73,6 +77,7 @@
 		UPDATE   commision_fee 
 		<set>
 				<if test="studentId != null">STUDENT_ID=#{studentId},</if>
+				<if test="topSellerId != null">TOP_SELLER_ID=#{topSellerId},</if>
 				<if test="sellerId != null">SELLER_ID=#{sellerId},</if>
 				<if test="money != null">MONEY=#{money},</if>
 				<if test="status != null">STATUS=#{status},</if>

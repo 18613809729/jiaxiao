@@ -35,7 +35,7 @@
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
                     <div class="weui-cell__hd"><label class="weui-label">档位</label></div>
                     <div class="weui-cell__bd">
-                        <select class="weui-select" name="diverType">
+                        <select class="weui-select" name="driveType">
                             <option selected="" value="1">自动档</option>
                             <option value="0">手动档</option>
                         </select>
@@ -65,10 +65,10 @@
                 </div>
 
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label" for="sellId">分销员</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label" for="sellerId">分销员</label></div>
                     <div class="weui-cell__bd">
-                        <input type="hidden" name="sellId">
-                        <input class="weui-input" type="text" id="sellInput" placeholder="分销员(选填)" readonly>
+                        <input type="hidden" name="sellerId">
+                        <input class="weui-input" type="text" id="sellerInput" placeholder="分销员(选填)" readonly>
                     </div>
                 </div>
             </div>
@@ -115,22 +115,19 @@
             	});
             });
             $("#date").calendar({"dateFormat":'yyyy-mm-dd'});
-            var sellLst;
-            $.getJSON("/teacher/seller/valid.json").done(function(res){
-              	sellLst = res;
-                for (var i = 0; i < sellLst.length; i++) {
-                    sellLst[i].id = sellLst[i].openId;
-                }
+            var sellerLst;
+            $.getJSON("/seller/valid.json").done(function(res){
+              	sellerLst = res.data;
             });
 
-            $("#sellInput").on("click", function(){
-                if(sellLst == undefined){
+            $("#sellerInput").on("click", function(){
+                if(sellerLst == undefined){
                     $.toast("分销员信息加载失败，请刷新重试", "cancel");
                     return;
                 }
-                $.searchDialog({"datas":sellLst, "itemClickCallback":function(data){
-                    $('[name="sellId"]').val(data.openId);
-                    $("#sellInput").val(data.username + "  " + data.mobile);
+                $.searchDialog({"datas":sellerLst, "itemClickCallback":function(data){
+                    $('[name="sellerId"]').val(data.id);
+                    $("#sellerInput").val(data.username + "  " + data.mobile);
                 }});
             });
         });
