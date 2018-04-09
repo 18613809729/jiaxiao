@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbs.jiaxiao.mapper.CommisionFeeMapper">
+	<resultMap id="commisionFeeResultMap" type="com.nbs.jiaxiao.domain.po.CommisionFee">
+  		<result property="id" column="ID"/>
+  		<result property="studentId" column="STUDENT_ID"/>
+  		<result property="sellerId" column="SELLER_ID"/>
+  		<result property="money" column="MONEY"/>
+  		<result property="status" column="STATUS"/>
+  		<result property="remark" column="REMARK"/>
+  		<result property="payId" column="PAY_ID"/>
+  		<result property="createdTime" column="CREATED_TIME"/>
+  		<result property="modifiedTime" column="MODIFIED_TIME"/>
+  		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
+  		<result property="lastUpdateNoUserId" column="LAST_UPDATE_NO_USER_ID"/>
+	</resultMap>
+
+	<sql id="commonSelect">
+		ID, STUDENT_ID, SELLER_ID, MONEY, STATUS, REMARK, PAY_ID, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+	</sql>
+	
+	<sql id="whereCondition">
+		WHERE DELETED = 0 
+	 			<if test="id != null"> AND ID = #{id}</if> 
+	 			<if test="studentId != null"> AND STUDENT_ID = #{studentId}</if> 
+	 			<if test="sellerId != null"> AND SELLER_ID = #{sellerId}</if> 
+	 			<if test="money != null"> AND MONEY = #{money}</if> 
+	 			<if test="status != null"> AND STATUS = #{status}</if> 
+	 			<if test="remark != null"> AND REMARK = #{remark}</if> 
+	 			<if test="payId != null"> AND PAY_ID = #{payId}</if> 
+	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
+	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
+	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
+	 			<if test="param.modifiedTimeEnd != null"> AND MODIFIED_TIME <![CDATA[<=]]> #{param.modifiedTimeEnd} </if>
+				<if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo}</if> 
+	 			<if test="param.lastUpdateNoStart != null"> AND LAST_UPDATE_NO <![CDATA[>=]]> #{param.lastUpdateNoStart} </if> 
+	 			<if test="param.lastUpdateNoEnd != null"> AND LAST_UPDATE_NO <![CDATA[<=]]> #{param.lastUpdateNoEnd} </if>
+	 			<if test="lastUpdateNoUserId != null"> AND LAST_UPDATE_NO_USER_ID = #{lastUpdateNoUserId}</if> 
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	 	INSERT  INTO  commision_fee 
+	 	<trim prefix="(" suffixOverrides="," suffix=")">
+				<if test="id != null">ID,</if> 
+				<if test="studentId != null">STUDENT_ID,</if> 
+				<if test="sellerId != null">SELLER_ID,</if> 
+				<if test="money != null">MONEY,</if> 
+				<if test="status != null">STATUS,</if> 
+				<if test="remark != null">REMARK,</if> 
+				<if test="payId != null">PAY_ID,</if> 
+				<if test="createdTime != null">CREATED_TIME,</if> 
+				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
+				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID,</if> 
+	 	</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">#{id},</if> 
+			<if test="studentId != null">#{studentId},</if> 
+			<if test="sellerId != null">#{sellerId},</if> 
+			<if test="money != null">#{money},</if> 
+			<if test="status != null">#{status},</if> 
+			<if test="remark != null">#{remark},</if> 
+			<if test="payId != null">#{payId},</if> 
+			<if test="createdTime != null">#{createdTime},</if> 
+			<if test="modifiedTime != null">#{modifiedTime},</if> 
+			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
+			<if test="lastUpdateNoUserId != null">#{lastUpdateNoUserId},</if> 
+		</trim>
+	</insert>
+	
+	<update id="updateByPriKey">
+		UPDATE   commision_fee 
+		<set>
+				<if test="studentId != null">STUDENT_ID=#{studentId},</if>
+				<if test="sellerId != null">SELLER_ID=#{sellerId},</if>
+				<if test="money != null">MONEY=#{money},</if>
+				<if test="status != null">STATUS=#{status},</if>
+				<if test="remark != null">REMARK=#{remark},</if>
+				<if test="payId != null">PAY_ID=#{payId},</if>
+				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
+				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
+				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID=#{lastUpdateNoUserId},</if>
+    	</set>
+    	WHERE ID = #{id}  <if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo} </if>  AND DELETED = 0 
+    </update>
+	
+	<update id="delete">
+		UPDATE  commision_fee SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+	</update>
+	
+	<update id="deleteByPriKey">
+		UPDATE  commision_fee SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+	</update>
+	
+	<delete id="deleteActual">
+		DELETE FROM commision_fee <include refid="whereCondition"/>
+	</delete>
+	
+	<delete id="deleteActualByPriKey">
+		DELETE FROM commision_fee WHERE ID = #{id}
+	</delete>
+	
+	<delete id="clean">
+		DELETE FROM commision_fee WHERE ID > #{id} and DELETED != 0 
+	</delete>
+	
+	<select id="selectByPriKey" resultMap="commisionFeeResultMap">
+		   SELECT   
+		   <include refid="commonSelect" />
+		   FROM   commision_fee WHERE ID = #{id}
+	</select>
+	
+	<select id="selectList" resultMap="commisionFeeResultMap">
+		   SELECT   
+		   <include refid="commonSelect"/>
+		   FROM   commision_fee
+		   <include refid="whereCondition"/> 
+		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
+		   <if test="param.columnSort == null">ORDER BY ID </if>   
+		   <if test="param.limit != null">limit param.offset, param.limit </if>   
+	</select>
+	
+	<select id="selectCount" resultType="long">
+	 	SELECT  COUNT(1) CNT FROM   commision_fee
+		<include refid="whereCondition"/> 
+	</select>
+	
+	<select id="exist" resultType="int">
+	 	SELECT  ID FROM   commision_fee
+		<include refid="whereCondition"/> limit 1
+	</select>
+	
+	<!-- customized code start -->
+	
+	<!-- customized code end -->
+</mapper>
