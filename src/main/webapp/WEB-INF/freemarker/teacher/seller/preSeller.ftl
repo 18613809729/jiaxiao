@@ -74,7 +74,7 @@
 			</div>
 			
 			<#if parent??>
-				<a class="weui-cell weui-cell_access" href="">
+				<a class="weui-cell weui-cell_access" href="/teacher/seller/info/${parent.id}">
 					<div class="weui-cell__bd">
 						上级销售
 					</div>

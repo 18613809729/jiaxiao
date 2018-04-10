@@ -143,7 +143,7 @@ public class TeacherSellerController {
 		Seller seller = sellerService.selectByPriKey(id);
 		NbsUtils.assertNull(seller, "seller {} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
-		mv.addObject("sellerInfo", seller);
+		mv.addObject("info", seller);
 
 		if(StringUtils.isNotBlank(seller.getOpenId())) {
 			User user = userService.queryByOpenId(seller.getOpenId());
@@ -152,21 +152,16 @@ public class TeacherSellerController {
 		if(seller.getParentId() != null && seller.getParentId().intValue() != 0) {
 			Seller parentSeller = sellerService.selectByPriKey(seller.getParentId());
 			if(parentSeller != null) {
-				mv.addObject("parentSeller", parentSeller);
-			}
-			if(parentSeller.getParentId() != null && parentSeller.getParentId().intValue() != 0) {
-				Seller topSeller = sellerService.selectByPriKey(parentSeller.getParentId());
-				if(topSeller != null) {
-					mv.addObject("topSeller", topSeller);
-				}
+				mv.addObject("parent", parentSeller);
 			}
 		}
-		
+		mv.addObject("createdTime", seller.getCreatedTime().format(FORMAT));
 		if(seller.getLevel() != 3) {
-			mv.addObject("childrenSellers", sellerService.queryChildrenSellers(seller.getId()));
+			List<Seller> childrenSellers = sellerService.queryChildrenSellers(seller.getId());
+			if(!childrenSellers.isEmpty()) {
+				mv.addObject("childrenSellers", childrenSellers);
+			}
 		}
-		
-		commisionFeeService
 		
 		return mv;
 	}
@@ -182,6 +177,7 @@ public class TeacherSellerController {
 			seller.setUsername(info.getUsername());
 		}
 		if(StringUtils.isNotBlank(info.getStatus())) {
+			Status.assertLegalCode(info.getStatus());
 			seller.setStatus(info.getStatus());
 		}
 		sellerService.updateByPriKey(seller);

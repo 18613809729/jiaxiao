@@ -1,5 +1,7 @@
 package com.nbs.jiaxiao.constant;
 
+import com.nbs.jiaxiao.exception.InvalidParamException;
+
 public enum Status{
 	INVALID("0", "失效"),
 	VALID("1", "有效");
@@ -31,5 +33,11 @@ public enum Status{
 	
 	public static boolean isValid(String code) {
 		return VALID.getCode().equals(code);
+	}
+	
+	public static void assertLegalCode(String code) {
+		if(!VALID.getCode().equals(code) && !INVALID.getCode().equals(code)) {
+			throw new InvalidParamException("invalid status " + code);
+		}
 	}
 }
