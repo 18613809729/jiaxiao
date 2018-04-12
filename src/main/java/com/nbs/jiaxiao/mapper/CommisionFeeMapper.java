@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.mapper;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.CommisionFee;
+import com.nbs.jiaxiao.domain.vo.CommisionFeeInfo;
 
 
 public interface CommisionFeeMapper {
@@ -85,6 +86,8 @@ public interface CommisionFeeMapper {
 	public Integer exist(CommisionFee con);
 	
 	/* customized code start */
+	
+	public CommisionFeeInfo queryCommisionFeeInfo(Integer sellerId);
 	
 	/* customized code end */
 

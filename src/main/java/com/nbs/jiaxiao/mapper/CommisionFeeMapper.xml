@@ -139,5 +139,10 @@
 	
 	<!-- customized code start -->
 	
+	<select id="queryCommisionFeeInfo" resultType="CommisionFeeInfo">
+	 	select a.student_id, c.username as studentName, a.top_seller_id, b.username as topSellerUsername, a.money, a.status, a.pay_id from commision_fee  AS a inner join seller AS b on a.top_seller_id = b.id 
+		inner join student as c on a.student_id = c.id  where DELETED = 0 and a.seller_id = #{sellerId}	
+	</select>
+	
 	<!-- customized code end -->
 </mapper>
