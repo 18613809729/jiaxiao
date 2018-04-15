@@ -65,9 +65,9 @@
 							<div class="weui-cell__ft">
 							</div>
 						</a>
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="retrieve">
 							<div class="weui-cell__bd">
-								<p>分销查询</p>
+								<p>销售查询</p>
 							</div>
 							<div class="weui-cell__ft">
 							</div>

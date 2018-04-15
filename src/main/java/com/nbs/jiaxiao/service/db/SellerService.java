@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.service.db;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.Seller;
+import com.nbs.jiaxiao.domain.vo.SellerInfo;
 
 
 public interface SellerService {
@@ -114,6 +115,8 @@ public interface SellerService {
 	Seller querySeller(String username, String mobile);
 
 	List<Seller> queryChildrenSellers(Integer parentId);
+
+	List<SellerInfo> selectAllInfo();
 
 	/* customized code end */
 

@@ -183,4 +183,9 @@ public class TeacherSellerController {
 		sellerService.updateByPriKey(seller);
 		return BaseRes.buildSuccess(seller);
 	}
+	
+	@GetMapping("/retrieve")
+	public ModelAndView retrieve() {
+		return new ModelAndView(FTL_PREFIX + "/retrieve");
+	} 
 }

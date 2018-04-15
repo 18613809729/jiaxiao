@@ -138,5 +138,9 @@
 	</select>
 	
 	<!-- customized code start -->
+	<select id="selectAllInfo" resultType="com.nbs.jiaxiao.domain.vo.SellerInfo">
+		select a.id, a.username, a.mobile, b.nick_name, b.head_img from seller as a left join user as b on a.open_id = b.open_id 
+		where a.DELETED = 0 order by id
+	</select>
 	<!-- customized code end -->
 </mapper>

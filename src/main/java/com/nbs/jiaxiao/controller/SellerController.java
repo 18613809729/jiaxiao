@@ -15,6 +15,7 @@ import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
+import com.nbs.jiaxiao.domain.vo.SellerInfo;
 import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
 
@@ -41,8 +42,8 @@ public class SellerController {
 	}
 	
 	@GetMapping("/all.json")
-	public @ResponseBody BaseRes<List<Seller>> allSellers() {
-		return BaseRes.buildSuccess(sellerService.selectList(new Seller()));
+	public @ResponseBody BaseRes<List<SellerInfo>> allSellers() {
+		return BaseRes.buildSuccess(sellerService.selectAllInfo());
 	}
 	
 	@GetMapping("/join")

@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.mapper;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.Seller;
+import com.nbs.jiaxiao.domain.vo.SellerInfo;
 
 
 public interface SellerMapper {
@@ -85,6 +86,8 @@ public interface SellerMapper {
 	public Integer exist(Seller con);
 	
 	/* customized code start */
+	
+	public List<SellerInfo> selectAllInfo();
 	
 	/* customized code end */
 

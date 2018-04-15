@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.po.Seller;
+import com.nbs.jiaxiao.domain.vo.SellerInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.SellerMapper;
 import com.nbs.jiaxiao.service.db.SellerService;
@@ -159,6 +160,11 @@ public class SellerServiceImpl implements SellerService{
 		Seller con = new Seller();
 		con.setParentId(parentId);
 		return selectList(con);
+	}
+	
+	@Override
+	public List<SellerInfo> selectAllInfo() {
+		return sellerMapper.selectAllInfo();
 	}
 	/* customized code end */
 

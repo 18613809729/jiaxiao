@@ -12,21 +12,21 @@
 </head>
 <body ontouchstart>
 	<div class="page" id="container">
-		<#if info.user??>
-			<div class="weui-cells">
-		   		<div class="weui-cell">
-					<div class="weui-cell__hd">
-						<img src="${info.user.headImg}" width="60px">
-					</div>
-					<div class="weui-cell__bd">
-						<p>&nbsp;&nbsp;${info.username}</p>
-						<p class="sub_content">&nbsp;&nbsp;${info.user.nickName}</p>
-					</div>
-					<div class="weui-cell__ft">
-					</div>
+		<div class="weui-cells">
+	   		<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<img src="${info.user.headImg!"https://static.newbs.xyz/jiaxiao/image/default_head_img.jpg"}" width="60px">
 				</div>
-	   		</div>
-		</#if>
+				<div class="weui-cell__bd">
+					<p>&nbsp;&nbsp;${info.username}</p>
+					<#if info.user??>
+						<p class="sub_content">&nbsp;&nbsp;${info.user.nickName}</p>
+					</#if>
+				</div>
+				<div class="weui-cell__ft">
+				</div>
+			</div>
+   		</div>
 		
 		<div class="weui-cells__title">基本信息</div>
 	   	<div class="weui-cells">
