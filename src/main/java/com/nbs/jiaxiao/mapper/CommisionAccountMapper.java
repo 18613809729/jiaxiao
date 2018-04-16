@@ -2,32 +2,31 @@ package com.nbs.jiaxiao.mapper;
 
 
 import java.util.List;
-import com.nbs.jiaxiao.domain.po.CommisionFee;
-import com.nbs.jiaxiao.domain.vo.CommisionFeeInfo;
+import com.nbs.jiaxiao.domain.po.CommisionAccount;
 
 
-public interface CommisionFeeMapper {
+public interface CommisionAccountMapper {
 	
 	/**
 	 * 保存
-	 * @param commisionFee
+	 * @param commisionAccount
 	 * @return
 	 */
-	public int insert(CommisionFee commisionFee);
+	public int insert(CommisionAccount commisionAccount);
 	
 	/**
 	 * 根据主键更新
-	 * @param commisionFee
+	 * @param commisionAccount
 	 * @return
 	 */
-	public int updateByPriKey(CommisionFee commisionFee);
+	public int updateByPriKey(CommisionAccount commisionAccount);
 	
 	/**
 	 * 根据条件逻辑删除 慎用
 	 * @param con 条件
 	 * @return
 	 */
-	public int delete(CommisionFee con);
+	public int delete(CommisionAccount con);
 	
 	/**
 	 * 根据主键逻辑删除
@@ -41,7 +40,7 @@ public interface CommisionFeeMapper {
 	 * @param con
 	 * @return
 	 */
-	public int deleteActual(CommisionFee con);
+	public int deleteActual(CommisionAccount con);
 	
 	/**
 	 * 根据主键物理删除 慎用
@@ -62,32 +61,30 @@ public interface CommisionFeeMapper {
 	 * @param id
 	 * @return
 	 */
-	public CommisionFee selectByPriKey(Integer id);
+	public CommisionAccount selectByPriKey(Integer id);
 	
 	/**
 	 * 根据条件查询
 	 * @param con
 	 * @return
 	 */
-	public List<CommisionFee> selectList(CommisionFee con);
+	public List<CommisionAccount> selectList(CommisionAccount con);
 	
 	/**
 	 * 根据条件计数
 	 * @param con
 	 * @return
 	 */
-	public long selectCount(CommisionFee con);
+	public long selectCount(CommisionAccount con);
 	
 	/**
 	 * 根据条件判断是否存在
 	 * @param con 条件
 	 * @return 存在的第一个值的主键
 	 */
-	public Integer exist(CommisionFee con);
+	public Integer exist(CommisionAccount con);
 	
 	/* customized code start */
-	
-	public List<CommisionFeeInfo>  queryCommisionFeeInfo(Integer sellerId);
 	
 	/* customized code end */
 

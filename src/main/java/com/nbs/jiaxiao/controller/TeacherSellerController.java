@@ -198,5 +198,25 @@ public class TeacherSellerController {
 	@GetMapping("/fee/all.json")
 	public @ResponseBody BaseRes<List<SellerInfo>> feeSumInfos() {
 		return BaseRes.buildSuccess(sellerService.queryNotPayFeeSumInfo());
+	}
+	
+	@GetMapping("/fee/settle/{id}")
+	public ModelAndView feeSettle(@PathVariable("id") int id) {
+		Seller seller = sellerService.selectByPriKey(id);
+		NbsUtils.assertNull(seller, "seller {} not found", id);
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/feeSettle");
+		mv.addObject("info", seller);
+		if(StringUtils.isNotBlank(seller.getOpenId())) {
+			User user = userService.queryByOpenId(seller.getOpenId());
+			seller.setUser(user);
+		}
+		mv.addObject("feeList", commisionFeeService.queryNotPayCommisionFeeInfo(id));
+		return mv;
 	} 
+	
+	@PutMapping("/fee/settle/{id}")
+	public @ResponseBody BaseRes<Object> settle(@RequestAttribute("openId") String openId, @PathVariable("id") int id, int[] feeIds) {
+		commisionFeeService.settle(openId, id, feeIds);
+		return BaseRes.buildSuccess(null);
+	}
 }

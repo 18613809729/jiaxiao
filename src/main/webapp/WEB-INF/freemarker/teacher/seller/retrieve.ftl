@@ -50,6 +50,11 @@
             <span class="weui-loadmore__tips globl_bg_color">数据加载失败</span>
         </div>
 	</script>
+	<script id="empty" type="text/html">
+		<div class="weui-loadmore weui-loadmore_line">
+            <span class="weui-loadmore__tips globl_bg_color">暂无数据</span>
+        </div>
+	</script>
 	<script id="sellerLst" type="text/html">
 			<%for (var j = 0; j < datas.length; j++){%>
 				<div class="weui-cells__title"><%=datas[j].lettel%></div>
@@ -79,8 +84,12 @@
 	<script type="text/javascript">
 	$(function(){
 		function render(sellers){
-			var tpl = template(document.getElementById('sellerLst').innerHTML);
-			$("#container").html(tpl({"datas":$.groupByPinyin(sellers, "username")}));
+			if(sellers.length){
+				var tpl = template(document.getElementById('sellerLst').innerHTML);
+				$("#container").html(tpl({"datas":$.groupByPinyin(sellers, "username")}));
+			} else {
+				$("#container").html(template(document.getElementById('empty').innerHTML, {}));
+			}
 		}
 
 		 $.getJSON("/seller/all.json").done(function(res){
@@ -94,8 +103,9 @@
             } else {
                 $.toast(res.msg, "cancel");
             }
-        });
-
+        }).fail(function() {
+			$("#container").html(template(document.getElementById('error').innerHTML, {}));
+  		});
 	});
 	</script>
 </body>

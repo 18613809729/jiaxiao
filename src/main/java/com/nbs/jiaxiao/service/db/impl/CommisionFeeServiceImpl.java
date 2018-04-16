@@ -1,12 +1,24 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.nbs.jiaxiao.domain.po.CommisionAccount;
 import com.nbs.jiaxiao.domain.po.CommisionFee;
+import com.nbs.jiaxiao.domain.vo.CommisionFeeInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.mapper.CommisionFeeMapper;
+import com.nbs.jiaxiao.service.db.CommisionAccountService;
 import com.nbs.jiaxiao.service.db.CommisionFeeService;
 
 
@@ -118,8 +130,50 @@ public class CommisionFeeServiceImpl implements CommisionFeeService{
 	}
 	
 	/* customized code start */
+	@Autowired
+	private CommisionAccountService commisionAccountService;
 	
+	@Override
+	public List<CommisionFeeInfo> queryCommisionFeeInfo(Integer sellerId) {
+		return commisionFeeMapper.queryCommisionFeeInfo(sellerId);
+	}
 	
+	@Override
+	public List<CommisionFeeInfo> queryNotPayCommisionFeeInfo(Integer sellerId) {
+		return commisionFeeMapper.queryCommisionFeeInfo(sellerId).stream()
+				.filter(info -> CommisionFeeInfo.NOT_PAY.equals(info.getStatus())).collect(Collectors.toList());
+	}
+
+	@Transactional
+	@Override
+	public void settle(String opeOpenId, int sellerId, int[] feeIds) {
+		if(feeIds == null || feeIds.length == 0) {
+			return;
+		}
+		List<CommisionFee> lst = new ArrayList<CommisionFee>();
+		BigDecimal sumMoney = BigDecimal.valueOf(0.0D);
+		for (Integer feeId : feeIds) {
+			CommisionFee commisionFee = selectByPriKey(feeId);
+			if(commisionFee == null || commisionFee.getSellerId().intValue() != sellerId || !CommisionFee.NOT_PAY.equals(commisionFee.getStatus())) {
+				throw new InvalidParamException("settle error");
+			}
+			commisionFee.setLastUpdateNoUserId(opeOpenId);
+			commisionFee.setStatus(CommisionFee.HAS_PAY);
+			lst.add(commisionFee);
+			sumMoney = sumMoney.add(commisionFee.getMoney());
+		}
+		CommisionAccount account = new CommisionAccount();
+		account.setAmount(lst.size());
+		account.setTotalMoney(sumMoney);
+		account.setLastUpdateNoUserId(opeOpenId);
+		account.setSellerId(sellerId);
+		commisionAccountService.insert(account);
+		for (CommisionFee commisionFee : lst) {
+			commisionFee.setPayId(account.getId());
+			updateByPriKey(commisionFee);
+		}
+		
+	}
 	/* customized code end */
 
 }

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nbs.jiaxiao.mapper.CommisionFeeMapper">
-	<resultMap id="commisionFeeResultMap" type="com.nbs.jiaxiao.domain.po.CommisionFee">
+<mapper namespace="com.nbs.jiaxiao.mapper.CommisionAccountMapper">
+	<resultMap id="commisionAccountResultMap" type="com.nbs.jiaxiao.domain.po.CommisionAccount">
   		<result property="id" column="ID"/>
-  		<result property="studentId" column="STUDENT_ID"/>
-  		<result property="topSellerId" column="TOP_SELLER_ID"/>
   		<result property="sellerId" column="SELLER_ID"/>
-  		<result property="money" column="MONEY"/>
-  		<result property="status" column="STATUS"/>
-  		<result property="remark" column="REMARK"/>
-  		<result property="payId" column="PAY_ID"/>
+  		<result property="totalMoney" column="TOTAL_MONEY"/>
+  		<result property="amount" column="AMOUNT"/>
   		<result property="createdTime" column="CREATED_TIME"/>
   		<result property="modifiedTime" column="MODIFIED_TIME"/>
   		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
@@ -17,19 +13,15 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, STUDENT_ID, TOP_SELLER_ID, SELLER_ID, MONEY, STATUS, REMARK, PAY_ID, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, SELLER_ID, TOTAL_MONEY, AMOUNT, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
 		WHERE DELETED = 0 
 	 			<if test="id != null"> AND ID = #{id}</if> 
-	 			<if test="studentId != null"> AND STUDENT_ID = #{studentId}</if> 
-	 			<if test="topSellerId != null"> AND TOP_SELLER_ID = #{topSellerId}</if> 
 	 			<if test="sellerId != null"> AND SELLER_ID = #{sellerId}</if> 
-	 			<if test="money != null"> AND MONEY = #{money}</if> 
-	 			<if test="status != null"> AND STATUS = #{status}</if> 
-	 			<if test="remark != null"> AND REMARK = #{remark}</if> 
-	 			<if test="payId != null"> AND PAY_ID = #{payId}</if> 
+	 			<if test="totalMoney != null"> AND TOTAL_MONEY = #{totalMoney}</if> 
+	 			<if test="amount != null"> AND AMOUNT = #{amount}</if> 
 	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
 	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
 	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
@@ -41,16 +33,12 @@
 	</sql>
 	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
-	 	INSERT  INTO  commision_fee 
+	 	INSERT  INTO  commision_account 
 	 	<trim prefix="(" suffixOverrides="," suffix=")">
 				<if test="id != null">ID,</if> 
-				<if test="studentId != null">STUDENT_ID,</if> 
-				<if test="topSellerId != null">TOP_SELLER_ID,</if> 
 				<if test="sellerId != null">SELLER_ID,</if> 
-				<if test="money != null">MONEY,</if> 
-				<if test="status != null">STATUS,</if> 
-				<if test="remark != null">REMARK,</if> 
-				<if test="payId != null">PAY_ID,</if> 
+				<if test="totalMoney != null">TOTAL_MONEY,</if> 
+				<if test="amount != null">AMOUNT,</if> 
 				<if test="createdTime != null">CREATED_TIME,</if> 
 				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
 				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
@@ -59,13 +47,9 @@
 		VALUES
 		<trim prefix="(" suffixOverrides="," suffix=")">
 			<if test="id != null">#{id},</if> 
-			<if test="studentId != null">#{studentId},</if> 
-			<if test="topSellerId != null">#{topSellerId},</if> 
 			<if test="sellerId != null">#{sellerId},</if> 
-			<if test="money != null">#{money},</if> 
-			<if test="status != null">#{status},</if> 
-			<if test="remark != null">#{remark},</if> 
-			<if test="payId != null">#{payId},</if> 
+			<if test="totalMoney != null">#{totalMoney},</if> 
+			<if test="amount != null">#{amount},</if> 
 			<if test="createdTime != null">#{createdTime},</if> 
 			<if test="modifiedTime != null">#{modifiedTime},</if> 
 			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
@@ -74,15 +58,11 @@
 	</insert>
 	
 	<update id="updateByPriKey">
-		UPDATE   commision_fee 
+		UPDATE   commision_account 
 		<set>
-				<if test="studentId != null">STUDENT_ID=#{studentId},</if>
-				<if test="topSellerId != null">TOP_SELLER_ID=#{topSellerId},</if>
 				<if test="sellerId != null">SELLER_ID=#{sellerId},</if>
-				<if test="money != null">MONEY=#{money},</if>
-				<if test="status != null">STATUS=#{status},</if>
-				<if test="remark != null">REMARK=#{remark},</if>
-				<if test="payId != null">PAY_ID=#{payId},</if>
+				<if test="totalMoney != null">TOTAL_MONEY=#{totalMoney},</if>
+				<if test="amount != null">AMOUNT=#{amount},</if>
 				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
 				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
 				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
@@ -92,35 +72,35 @@
     </update>
 	
 	<update id="delete">
-		UPDATE  commision_fee SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+		UPDATE  commision_account SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
 	</update>
 	
 	<update id="deleteByPriKey">
-		UPDATE  commision_fee SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+		UPDATE  commision_account SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
 	</update>
 	
 	<delete id="deleteActual">
-		DELETE FROM commision_fee <include refid="whereCondition"/>
+		DELETE FROM commision_account <include refid="whereCondition"/>
 	</delete>
 	
 	<delete id="deleteActualByPriKey">
-		DELETE FROM commision_fee WHERE ID = #{id}
+		DELETE FROM commision_account WHERE ID = #{id}
 	</delete>
 	
 	<delete id="clean">
-		DELETE FROM commision_fee WHERE ID > #{id} and DELETED != 0 
+		DELETE FROM commision_account WHERE ID > #{id} and DELETED != 0 
 	</delete>
 	
-	<select id="selectByPriKey" resultMap="commisionFeeResultMap">
+	<select id="selectByPriKey" resultMap="commisionAccountResultMap">
 		   SELECT   
 		   <include refid="commonSelect" />
-		   FROM   commision_fee WHERE ID = #{id}
+		   FROM   commision_account WHERE ID = #{id}
 	</select>
 	
-	<select id="selectList" resultMap="commisionFeeResultMap">
+	<select id="selectList" resultMap="commisionAccountResultMap">
 		   SELECT   
 		   <include refid="commonSelect"/>
-		   FROM   commision_fee
+		   FROM   commision_account
 		   <include refid="whereCondition"/> 
 		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
 		   <if test="param.columnSort == null">ORDER BY ID </if>   
@@ -128,21 +108,16 @@
 	</select>
 	
 	<select id="selectCount" resultType="long">
-	 	SELECT  COUNT(1) CNT FROM   commision_fee
+	 	SELECT  COUNT(1) CNT FROM   commision_account
 		<include refid="whereCondition"/> 
 	</select>
 	
 	<select id="exist" resultType="int">
-	 	SELECT  ID FROM   commision_fee
+	 	SELECT  ID FROM   commision_account
 		<include refid="whereCondition"/> limit 1
 	</select>
 	
 	<!-- customized code start -->
-	
-	<select id="queryCommisionFeeInfo" resultType="com.nbs.jiaxiao.domain.vo.CommisionFeeInfo">
-	 	select a.id, a.student_id, c.username as studentName, a.top_seller_id, b.username as topSellerUsername, a.money, a.status, a.pay_id from commision_fee  AS a inner join seller AS b on a.top_seller_id = b.id 
-		inner join student as c on a.student_id = c.id  where a.DELETED = 0 and a.seller_id = #{sellerId}	
-	</select>
 	
 	<!-- customized code end -->
 </mapper>

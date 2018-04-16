@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.service.db;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.CommisionFee;
+import com.nbs.jiaxiao.domain.vo.CommisionFeeInfo;
 
 
 public interface CommisionFeeService {
@@ -83,9 +84,15 @@ public interface CommisionFeeService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(CommisionFee con);
-	
+
 	/* customized code start */
 	
+	List<CommisionFeeInfo> queryCommisionFeeInfo(Integer sellerId);
+
+	List<CommisionFeeInfo> queryNotPayCommisionFeeInfo(Integer sellerId);
+
+	void settle(String opeOpenId, int sellerId, int[] feeIds);
+
 	/* customized code end */
 
 }
