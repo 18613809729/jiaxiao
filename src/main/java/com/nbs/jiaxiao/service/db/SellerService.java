@@ -118,6 +118,8 @@ public interface SellerService {
 
 	List<SellerInfo> selectAllInfo();
 
+	List<SellerInfo> queryNotPayFeeSumInfo();
+
 	/* customized code end */
 
 }

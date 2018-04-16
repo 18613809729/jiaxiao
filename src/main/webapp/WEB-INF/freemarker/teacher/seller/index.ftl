@@ -56,10 +56,12 @@
 						<a class="weui-cell weui-cell_access" href="join/list">
 							<div class="weui-cell__bd">
 								<span>推广报名</span>
-								<#if unReadCount < 100>
-									<span class="weui-badge">${unReadCount}</span>
-								<#else>
-									<span class="weui-badge weui-badge_dot"></span>
+								<#if (unReadCount > 0) >
+									<#if unReadCount < 100>
+										<span class="weui-badge">${unReadCount}</span>
+									<#else>
+										<span class="weui-badge weui-badge_dot"></span>
+									</#if>
 								</#if>
 							</div>
 							<div class="weui-cell__ft">
@@ -73,7 +75,7 @@
 							</div>
 						</a>
 
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="fee/index">
 							<div class="weui-cell__bd">
 								<p>佣金结算</p>
 							</div>

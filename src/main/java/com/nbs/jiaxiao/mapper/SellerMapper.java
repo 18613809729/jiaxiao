@@ -89,6 +89,8 @@ public interface SellerMapper {
 	
 	public List<SellerInfo> selectAllInfo();
 	
+	public List<SellerInfo> queryNotPayFeeSumInfo();
+	
 	/* customized code end */
 
 }

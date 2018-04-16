@@ -17,6 +17,8 @@ public class SellerInfo extends Seller{
 	private java.lang.String address;
 	/* 图像 */
 	private java.lang.String headImg;
+	/* 佣金总额 */
+	private Double totalMoney;
 	public java.lang.String getNickName() {
 		return nickName;
 	}
@@ -58,5 +60,11 @@ public class SellerInfo extends Seller{
 	}
 	public void setHeadImg(java.lang.String headImg) {
 		this.headImg = headImg;
+	}
+	public Double getTotalMoney() {
+		return totalMoney;
+	}
+	public void setTotalMoney(Double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
 }

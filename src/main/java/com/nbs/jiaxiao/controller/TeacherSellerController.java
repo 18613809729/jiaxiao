@@ -28,6 +28,7 @@ import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
+import com.nbs.jiaxiao.domain.vo.SellerInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
@@ -187,5 +188,15 @@ public class TeacherSellerController {
 	@GetMapping("/retrieve")
 	public ModelAndView retrieve() {
 		return new ModelAndView(FTL_PREFIX + "/retrieve");
+	} 
+	
+	@GetMapping("/fee/index")
+	public ModelAndView feeIndex() {
+		return new ModelAndView(FTL_PREFIX + "/feeIndex");
+	} 
+	
+	@GetMapping("/fee/all.json")
+	public @ResponseBody BaseRes<List<SellerInfo>> feeSumInfos() {
+		return BaseRes.buildSuccess(sellerService.queryNotPayFeeSumInfo());
 	} 
 }

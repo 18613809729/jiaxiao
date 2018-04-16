@@ -166,6 +166,11 @@ public class SellerServiceImpl implements SellerService{
 	public List<SellerInfo> selectAllInfo() {
 		return sellerMapper.selectAllInfo();
 	}
+	
+	@Override
+	public List<SellerInfo> queryNotPayFeeSumInfo() {
+		return sellerMapper.queryNotPayFeeSumInfo();
+	}
 	/* customized code end */
 
 }
