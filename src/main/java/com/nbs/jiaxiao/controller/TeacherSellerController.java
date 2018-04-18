@@ -219,4 +219,19 @@ public class TeacherSellerController {
 		commisionFeeService.settle(openId, id, feeIds);
 		return BaseRes.buildSuccess(null);
 	}
+	
+	@GetMapping("/fee/history/index")
+	public ModelAndView feeHistory() {
+		return new ModelAndView(FTL_PREFIX + "/feeHistory");
+	} 
+	
+	@GetMapping("/fee/history/data.json")
+	public ModelAndView feeHistoryData() {
+		return new ModelAndView(FTL_PREFIX + "/feeIndex");
+	} 
+	
+	@GetMapping("/fee/history/detail")
+	public ModelAndView feeHistoryDetail() {
+		return new ModelAndView(FTL_PREFIX + "/feeIndex");
+	} 
 }
