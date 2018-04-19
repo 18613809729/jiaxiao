@@ -145,7 +145,7 @@
                 <div class="weui-cell__bd">佣金记录</div>
                 <div class="weui-cell__ft"></div>
             </a>
-            <a href="javascript:void(0);" class="weui-cell weui-cell_link weui-cell_access">
+            <a href="/teacher/seller/info/history/order/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
                 <div class="weui-cell__bd">销售历史</div>
                 <div class="weui-cell__ft"></div>
             </a>

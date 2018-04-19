@@ -296,4 +296,20 @@ public class TeacherSellerController {
 		return mv;
 	}
 	
+	@GetMapping("/info/history/order/{id}")
+	public ModelAndView sellerOrder(@PathVariable("id") int id) {
+		Seller seller = sellerService.selectByPriKey(id);
+		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
+		if(StringUtils.isNotBlank(seller.getOpenId())) {
+			User user = userService.queryByOpenId(seller.getOpenId());
+			seller.setUser(user);
+		}
+		List<CommisionFeeInfo> feeList = commisionFeeService.queryCommisionFeeInfo(id);
+		feeList.removeIf(fee -> fee.getTopSellerId().intValue() == id);
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sellerFeeOrder");
+		mv.addObject("feeList", feeList);
+		mv.addObject("info", seller);
+		return mv;
+	}
+	
 }

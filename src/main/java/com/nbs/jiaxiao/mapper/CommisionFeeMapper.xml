@@ -140,13 +140,13 @@
 	<!-- customized code start -->
 	
 	<select id="queryCommisionFeeInfo" resultType="com.nbs.jiaxiao.domain.vo.CommisionFeeInfo">
-	 	select a.id, a.student_id, c.username as studentName, a.top_seller_id, b.username as topSellerUsername, a.money, a.status, a.pay_id from commision_fee  AS a inner join seller AS b on a.top_seller_id = b.id 
-		inner join student as c on a.student_id = c.id  where a.DELETED = 0 and a.seller_id = #{sellerId}	
+	 	select a.id, a.student_id, c.username as studentName, c.mobile as studentMobile,a.top_seller_id, b.username as topSellerUsername, a.money, a.status, a.pay_id, a.created_time from commision_fee  AS a inner join seller AS b on a.top_seller_id = b.id 
+		inner join student as c on a.student_id = c.id  where a.DELETED = 0 and a.seller_id = #{sellerId} order by a.id desc
 	</select>
 	
 	<select id="queryPayCommisionFeeInfo" resultType="com.nbs.jiaxiao.domain.vo.CommisionFeeInfo">
 	 	select a.id, a.student_id, c.username as studentName, a.top_seller_id, b.username as topSellerUsername, a.money, a.status, a.pay_id from commision_fee  AS a inner join seller AS b on a.top_seller_id = b.id 
-		inner join student as c on a.student_id = c.id  where a.DELETED = 0 and a.pay_id = #{payId}	
+		inner join student as c on a.student_id = c.id  where a.DELETED = 0 and a.pay_id = #{payId}	order by a.id desc
 	</select>
 	
 	<!-- customized code end -->
