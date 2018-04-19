@@ -91,7 +91,7 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	
 	private void addCommisionFee(String opeOpenId, Integer studentId, Integer sellerId) {
 		Seller seller = sellerService.selectByPriKey(sellerId);
-		NbsUtils.assertNull(seller, "sign student the seller {} not exist", sellerId);
+		NbsUtils.assertNotNull(seller, "sign student the seller {0} not exist", sellerId);
 		if(!seller.isValid()) {
 			LOGGER.warn("sign student the seller {} is invalid", seller.getId());
 			return;
@@ -257,7 +257,7 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	@Override
 	public void operatePreSeller(String openId, int id, String state) {
 		PreSeller preSeller = preSellerService.selectByPriKey(id);
-		NbsUtils.assertNull(preSeller, "the preseller {} not exisd", id);
+		NbsUtils.assertNotNull(preSeller, "the preseller {0} not exisd", id);
 		if(State.REJECTED.getCode().equals(state)) {
 			preSeller.setState(state);
 		} else if(State.HANDLED.getCode().equals(state)) {

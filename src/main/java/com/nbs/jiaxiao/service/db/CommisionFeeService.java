@@ -93,6 +93,8 @@ public interface CommisionFeeService {
 
 	void settle(String opeOpenId, int sellerId, int[] feeIds);
 
+	List<CommisionFeeInfo> queryPayCommisionFeeInfo(Integer payId);
+
 	/* customized code end */
 
 }

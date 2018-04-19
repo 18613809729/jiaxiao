@@ -26,7 +26,7 @@
 			</a>
 		</div>
 		<form id="form">
-			<div class="weui-cells__title">学生姓名/直销人员/佣金金额</div>
+			<div class="weui-cells__title">学生姓名/直销人员/佣金金额/状态</div>
 			<div class="weui-cells">
 				<#list feeList as feeInfo>
 				<a class="weui-cell weui-cell_access">
@@ -35,6 +35,7 @@
 							<div class="weui-flex__item">${feeInfo.studentName}</div>
 							<div class="weui-flex__item">${feeInfo.topSellerUsername}</div>
 							<div class="weui-flex__item">${feeInfo.money}</div>
+							<div class="weui-flex__item"><#if feeInfo.status == "0"> 未付 <#else> 已付 </#if></div>
 						</div>
 					</div>
 					<div class="weui-cell__ft">
@@ -44,13 +45,19 @@
 				<a href="javascript:void(0);" id="loadMore" class="weui-cell weui-cell_link">
 					<div class="weui-cell__bd">
 					</div>
-	               	<div class="weui-cell__ft">支付金额：${feeSum}</div>
+	               	<div class="weui-cell__ft">佣金总额：${feeSum}</div>
+	            </a>
+	            <a href="javascript:void(0);" id="loadMore" class="weui-cell weui-cell_link">
+					<div class="weui-cell__bd">
+					</div>
+	               	<div class="weui-cell__ft">已付金额：${paySum}</div>
 	            </a>
 			</div>
 		</form>
 		<br>
 		<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" href="javascript:history.back();"><i></i>确定</a>
+			<#if needPay> <a class="weui-btn weui-btn_default" href="/teacher/seller/fee/settle/${info.id}"><i></i>结算佣金</a> </#if>
 		</div>
 	</div>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>

@@ -1,5 +1,6 @@
 package com.nbs.jiaxiao.controller;
 
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,13 @@ import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.constant.Status;
+import com.nbs.jiaxiao.domain.po.CommisionAccount;
+import com.nbs.jiaxiao.domain.po.CommisionFee;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
+import com.nbs.jiaxiao.domain.vo.CommisionFeeInfo;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PaySellerInfo;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
@@ -115,7 +119,7 @@ public class TeacherSellerController {
 	@GetMapping("/join/info/{id}")
 	public ModelAndView joinInfo(@PathVariable("id") int id) {
 		PreSeller preSeller = preSellerService.selectByPriKey(id);
-		NbsUtils.assertNull(preSeller, "the preseller {} not exisd", id);
+		NbsUtils.assertNotNull(preSeller, "the preseller {0} not exisd", id);
 		User user = userService.queryByOpenId(preSeller.getOpenId());
 		preSeller.setUser(user);
 		if(State.isUnRead(preSeller.getState())) {
@@ -140,14 +144,14 @@ public class TeacherSellerController {
 	@DeleteMapping("/join/info/{id}")
 	public @ResponseBody BaseRes<Object> deleteJoin(@RequestAttribute("openId") String openId, @PathVariable("id") int id) {
 		int count = preSellerService.deleteByPriKey(id);
-		NbsUtils.assertExist(count, "the deleted preseller not exist, id:{}", id);
+		NbsUtils.assertExist(count, "the deleted preseller not exist, id:{0}", id);
 		return BaseRes.buildSuccess(null);
 	}
 	
 	@GetMapping("/info/{id}")
 	public ModelAndView sellerInfo(@PathVariable("id") int id) {
 		Seller seller = sellerService.selectByPriKey(id);
-		NbsUtils.assertNull(seller, "seller {} not found", id);
+		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
 		mv.addObject("info", seller);
 
@@ -175,7 +179,7 @@ public class TeacherSellerController {
 	@PutMapping("/info/{id}")
 	public @ResponseBody BaseRes<Seller> sellerInfo(@PathVariable("id") int id, Seller info) {
 		Seller seller = sellerService.selectByPriKey(id);
-		NbsUtils.assertNull(seller, "seller {} not found", id);
+		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
 		if(StringUtils.isNotBlank(info.getMobile())) {
 			seller.setMobile(info.getMobile());
 		}
@@ -208,7 +212,7 @@ public class TeacherSellerController {
 	@GetMapping("/fee/settle/{id}")
 	public ModelAndView feeSettle(@PathVariable("id") int id) {
 		Seller seller = sellerService.selectByPriKey(id);
-		NbsUtils.assertNull(seller, "seller {} not found", id);
+		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/feeSettle");
 		mv.addObject("info", seller);
 		if(StringUtils.isNotBlank(seller.getOpenId())) {
@@ -235,8 +239,61 @@ public class TeacherSellerController {
 		return BaseRes.buildSuccess(commisionAccountService.queryPayFeeHistory(offset));
 	} 
 	
-	@GetMapping("/fee/history/detail")
-	public ModelAndView feeHistoryDetail() {
-		return new ModelAndView(FTL_PREFIX + "/feeIndex");
+	@GetMapping("/fee/history/detail/{id}")
+	public ModelAndView feeHistoryDetail(@PathVariable("id") int id) {
+		CommisionAccount account = commisionAccountService.selectByPriKey(id);
+		NbsUtils.assertNotNull(account, "CommisionAccount {0} not exist", id);
+		Seller seller = sellerService.selectByPriKey(account.getSellerId());
+		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/feeDetail");
+		mv.addObject("info", seller);
+		if(StringUtils.isNotBlank(seller.getOpenId())) {
+			User user = userService.queryByOpenId(seller.getOpenId());
+			seller.setUser(user);
+		}
+		mv.addObject("feeList", commisionFeeService.queryPayCommisionFeeInfo(id));
+		mv.addObject("feeSum", account.getTotalMoney());
+		return mv;
 	} 
+	
+	
+	@GetMapping("/info/history/fee/paied/{id}")
+	public ModelAndView sellerPaiedFee(@PathVariable("id") int id) {
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sellerFeeHistory");
+		mv.addObject("sellerId", id);
+		return mv;
+	}
+	
+	@GetMapping("/info/history/fee/paied/{id}/data.json")
+	public  @ResponseBody BaseRes<List<PaySellerInfo>> sellerPaiedFeeData(@PathVariable("id") int id, Integer offset) {
+		return BaseRes.buildSuccess(commisionAccountService.queryPayFeeHistory(id, offset));
+	}
+	
+	
+	@GetMapping("/info/history/fee/{id}")
+	public ModelAndView sellerFee(@PathVariable("id") int id) {
+		Seller seller = sellerService.selectByPriKey(id);
+		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
+		if(StringUtils.isNotBlank(seller.getOpenId())) {
+			User user = userService.queryByOpenId(seller.getOpenId());
+			seller.setUser(user);
+		}
+		List<CommisionFeeInfo> feeList = commisionFeeService.queryCommisionFeeInfo(id);
+		BigDecimal feeSum = new BigDecimal(0);
+		BigDecimal paySum = new BigDecimal(0);
+		for (CommisionFeeInfo commisionFeeInfo : feeList) {
+			feeSum = feeSum.add(commisionFeeInfo.getMoney());
+			if(CommisionFee.HAS_PAY.equals(commisionFeeInfo.getStatus())) {
+				paySum = paySum.add(commisionFeeInfo.getMoney());
+			}
+		}
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sellerFeeRecord");
+		mv.addObject("feeList", feeList);
+		mv.addObject("info", seller);
+		mv.addObject("feeSum", feeSum);
+		mv.addObject("paySum", paySum);
+		mv.addObject("needPay", feeSum.compareTo(paySum) > 0);
+		return mv;
+	}
+	
 }

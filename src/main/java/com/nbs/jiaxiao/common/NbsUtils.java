@@ -1,6 +1,7 @@
 package com.nbs.jiaxiao.common;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.List;
 
 import com.nbs.jiaxiao.exception.NotFoundException;
@@ -20,7 +21,7 @@ public class NbsUtils {
 		return sb.toString();
 	}
 	
-	public static void assertNull(Object obj, String msg, Object ... args) {
+	public static void assertNotNull(Object obj, String msg, Object ... args) {
 		if(obj == null) {
 			throw new NotFoundException(MessageFormat.format(msg, args));
 		}
@@ -28,6 +29,13 @@ public class NbsUtils {
 	
 	public static void assertExist(int count, String msg, Object ... args) {
 		if(count == 0) {
+			throw new NotFoundException(MessageFormat.format(msg, args));
+		}
+	}
+	
+	
+	public static void assertNotEmpty(Collection<? extends Object> collection, String msg, Object ... args) {
+		if(collection == null || collection.size() == 0) {
 			throw new NotFoundException(MessageFormat.format(msg, args));
 		}
 	}

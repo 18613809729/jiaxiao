@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-	<title>佣金结算</title>
+	<title>佣金历史</title>
 	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
 	<link rel="stylesheet" href="http://localhost/jiaxiao/css/main.css">
@@ -76,14 +76,14 @@
 			}
 		}
 
-		$.getJSON("/teacher/seller/fee/history/data.json").done(function(res){
+		$.getJSON("/teacher/seller/info/history/fee/paied/${sellerId}/data.json").done(function(res){
         	res.code == '0' && render(res.data);             
         }).fail(function() {
 			$("#container").html(template(document.getElementById('error').innerHTML, {}));
   		});
 
   		$("body").on("click", function(){
-  			$.getJSON("/teacher/seller/fee/history/data.json?offset=" + sellers.length).done(function(res){
+  			$.getJSON("/teacher/seller/info/history/fee/paied/${sellerId}/data.json?offset=" + sellers.length).done(function(res){
         		res.code == '0' && render(res.data);             
         	}).fail(function() {
 				$.toast("请求出错，请稍候再试", "cancel");

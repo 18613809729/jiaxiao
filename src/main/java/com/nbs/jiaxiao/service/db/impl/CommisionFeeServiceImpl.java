@@ -139,6 +139,11 @@ public class CommisionFeeServiceImpl implements CommisionFeeService{
 	}
 	
 	@Override
+	public List<CommisionFeeInfo> queryPayCommisionFeeInfo(Integer payId) {
+		return commisionFeeMapper.queryPayCommisionFeeInfo(payId);
+	}
+	
+	@Override
 	public List<CommisionFeeInfo> queryNotPayCommisionFeeInfo(Integer sellerId) {
 		return commisionFeeMapper.queryCommisionFeeInfo(sellerId).stream()
 				.filter(info -> CommisionFeeInfo.NOT_PAY.equals(info.getStatus())).collect(Collectors.toList());

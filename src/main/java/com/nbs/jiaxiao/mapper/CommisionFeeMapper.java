@@ -89,6 +89,8 @@ public interface CommisionFeeMapper {
 	
 	public List<CommisionFeeInfo>  queryCommisionFeeInfo(Integer sellerId);
 	
+	public List<CommisionFeeInfo>  queryPayCommisionFeeInfo(Integer payId);
+	
 	/* customized code end */
 
 }
