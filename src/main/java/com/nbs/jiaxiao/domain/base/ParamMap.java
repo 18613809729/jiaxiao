@@ -13,47 +13,56 @@ public class ParamMap extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 	
 	/* offset */
-	public void appointOffset(Integer offset) {
+	public ParamMap appointOffset(Integer offset) {
 		put("offset", offset);
+		return this;
 	}
 	
 	/* offset */
-	public void appointLimit(Integer limit) {
+	public ParamMap appointLimit(Integer limit) {
 		put("limit", limit);
+		return this;
 	}
 
 	/* 创建时间开始 */
-	public void appointCreatedTimeStart(Date createdTimeStart) {
+	public ParamMap appointCreatedTimeStart(Date createdTimeStart) {
 		put("createdTimeStart", createdTimeStart);
+		return this;
 	}
 
 	/* 创建时间结束 */
-	public void appointCreatedTimeEnd(Date createdTimeEnd) {
+	public ParamMap appointCreatedTimeEnd(Date createdTimeEnd) {
 		put("createdTimeEnd", createdTimeEnd);
+		return this;
 	}
 
 	/* 修改时间开始 */
-	public void appointModifiedTimeStart(Date modifiedTimeStart) {
+	public ParamMap appointModifiedTimeStart(Date modifiedTimeStart) {
 		put("modifiedTimeStart", modifiedTimeStart);
+		return this;
 	}
 
 	/* 修改时间结束 */
-	public void appointModifiedTimeEnd(Date modifiedTimeEnd) {
+	public ParamMap appointModifiedTimeEnd(Date modifiedTimeEnd) {
 		put("modifiedTimeEnd", modifiedTimeEnd);
+		return this;
 	}
 
 	/* 创建次数开始 */
-	public void appointLastUpdateNoStart(int lastUpdateNoStart) {
+	public ParamMap appointLastUpdateNoStart(int lastUpdateNoStart) {
 		put("lastUpdateNoStart", lastUpdateNoStart);
+		return this;
 	}
 
 	/* 创建次数结束 */
-	public void appointLastUpdateNoEnd(int lastUpdateNoEnd) {
+	public ParamMap appointLastUpdateNoEnd(int lastUpdateNoEnd) {
 		put("lastUpdateNoEnd", lastUpdateNoEnd);
+		return this;
 	}
 
 	/* 设置排序字段 */
-	public void appointColumnSort(String columnSort) {
+	public ParamMap appointColumnSort(String columnSort) {
 		put("columnSort", columnSort);
+		return this;
 	}
 }

@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.service.db;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.CommisionAccount;
+import com.nbs.jiaxiao.domain.vo.PaySellerInfo;
 
 
 public interface CommisionAccountService {
@@ -83,8 +84,12 @@ public interface CommisionAccountService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(CommisionAccount con);
-	
+
 	/* customized code start */
+	
+	List<PaySellerInfo> queryPayFeeHistory(Integer offset);
+
+	List<PaySellerInfo> queryPayFeeHistory(Integer sellerId, Integer offset);
 	
 	/* customized code end */
 

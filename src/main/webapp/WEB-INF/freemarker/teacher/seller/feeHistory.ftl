@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-	<title>销售员</title>
+	<title>佣金结算</title>
 	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
 	<link rel="stylesheet" href="http://localhost/jiaxiao/css/main.css">
@@ -36,26 +36,23 @@
         </div>
 	</script>
 	<script id="sellerLst" type="text/html">
-			<%for (var j = 0; j < datas.length; j++){%>
-				<div class="weui-cells__title"><%=datas[j].lettel%></div>
+			<%for (var i = 0; i < datas.length; i++){%>
 				<div class="weui-cells">
-	   				<%for (var i = 0; i < datas[j]['data'].length; i++){%>
-	   				<a class="weui-cell weui-cell_access" href="/teacher/seller/fee/settle/<%=datas[j]['data'][i].id%>">
+	   				<a class="weui-cell weui-cell_access" href="/fee/history/detail/<%=datas[i].payId%>">
 						<div class="weui-cell__hd">
-							<%if(datas[j]['data'][i].headImg != null){%>
-								<img src="<%=datas[j]['data'][i].headImg%>" width="60px">
+							<%if(datas[i].headImg != null){%>
+								<img src="<%=datas[i].headImg%>" width="60px">
 							<%} else {%>
 								<img src="https://static.newbs.xyz/jiaxiao/image/default_head_img.jpg" width="60px">
 							<%}%>
 						</div>
 						<div class="weui-cell__bd">
-							<p><%=datas[j]['data'][i].username%> &nbsp;&nbsp;&nbsp;&nbsp; 金额：<%=datas[j]['data'][i].totalMoney%></p>
-							<p class="sub_content">手机号：<%=datas[j]['data'][i].mobile%></p>
+							<p><%=datas[i].username%> &nbsp;&nbsp;&nbsp;&nbsp; 支付金额：<%=datas[i].totalMoney%></p>
+							<p class="sub_content">支付时间：<%=datas[i].payTime%></p>
 						</div>
 						<div class="weui-cell__ft">
 						</div>
 					</a>
-					<%}%>
 				</div>
 			<%}%>
 			<br>
@@ -66,13 +63,13 @@
 		function render(sellers){
 			if(sellers.length){
 				var tpl = template(document.getElementById('sellerLst').innerHTML);
-				$("#container").html(tpl({"datas":$.groupByPinyin(sellers, "username")}));
+				$("#container").html(tpl({"datas":sellers}));
 			} else {
 				$("#container").html(template(document.getElementById('empty').innerHTML, {}));
 			}
 		}
 
-		$.getJSON("/teacher/seller/fee/all.json").done(function(res){
+		$.getJSON("/teacher/seller/fee/history/data.json").done(function(res){
         	res.code == '0' && render(res.data);             
         }).fail(function() {
 			$("#container").html(template(document.getElementById('error').innerHTML, {}));

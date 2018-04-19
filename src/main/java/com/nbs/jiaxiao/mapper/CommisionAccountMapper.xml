@@ -119,5 +119,12 @@
 	
 	<!-- customized code start -->
 	
+	<select id="queryPayFeeHistory" resultType="com.nbs.jiaxiao.domain.vo.PaySellerInfo">
+		SELECT a.id as pay_id, a.seller_id as id, b.username, b.mobile, c.head_img, a.amount, a.total_money, a.created_time as pay_time FROM jiaxiao.commision_account as a inner join seller as b on a.seller_id = b.id left join user as c on c.open_id = b.open_id where a.deleted = 0 and b.deleted = 0 
+		<if test="sellerId != null"> AND a.SELLER_ID = #{sellerId} </if>
+		order by a.created_time desc	
+		<if test="param.limit != null"> limit ${param.offset}, ${param.limit} </if>   
+	</select>
+	
 	<!-- customized code end -->
 </mapper>

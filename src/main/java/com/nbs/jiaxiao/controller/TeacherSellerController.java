@@ -27,11 +27,13 @@ import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
+import com.nbs.jiaxiao.domain.vo.PaySellerInfo;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.domain.vo.SellerInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.CommisionAccountService;
 import com.nbs.jiaxiao.service.db.CommisionFeeService;
 import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
@@ -58,6 +60,9 @@ public class TeacherSellerController {
 	
 	@Autowired
 	private CommisionFeeService commisionFeeService;
+	
+	@Autowired
+	private CommisionAccountService commisionAccountService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -226,8 +231,8 @@ public class TeacherSellerController {
 	} 
 	
 	@GetMapping("/fee/history/data.json")
-	public ModelAndView feeHistoryData() {
-		return new ModelAndView(FTL_PREFIX + "/feeIndex");
+	public @ResponseBody BaseRes<List<PaySellerInfo>> feeHistoryData(Integer offset) {
+		return BaseRes.buildSuccess(commisionAccountService.queryPayFeeHistory(offset));
 	} 
 	
 	@GetMapping("/fee/history/detail")

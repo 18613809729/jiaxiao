@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.mapper;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.CommisionAccount;
+import com.nbs.jiaxiao.domain.vo.PaySellerInfo;
 
 
 public interface CommisionAccountMapper {
@@ -85,6 +86,8 @@ public interface CommisionAccountMapper {
 	public Integer exist(CommisionAccount con);
 	
 	/* customized code start */
+	
+	public List<PaySellerInfo> queryPayFeeHistory(CommisionAccount con);
 	
 	/* customized code end */
 

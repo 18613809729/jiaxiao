@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.nbs.jiaxiao.domain.po.CommisionAccount;
+import com.nbs.jiaxiao.domain.vo.PaySellerInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.CommisionAccountMapper;
 import com.nbs.jiaxiao.service.db.CommisionAccountService;
@@ -119,6 +120,21 @@ public class CommisionAccountServiceImpl implements CommisionAccountService{
 	
 	/* customized code start */
 	
+	@Override
+	public List<PaySellerInfo> queryPayFeeHistory(Integer offset){
+		CommisionAccount con = new CommisionAccount();
+		con.getParam().appointOffset( offset == null  ? 0 : offset).appointLimit(30);
+		return commisionAccountMapper.queryPayFeeHistory(con);
+	}
+	
+	@Override
+	public List<PaySellerInfo> queryPayFeeHistory(Integer sellerId, Integer offset){
+		CommisionAccount con = new CommisionAccount();
+		con.setSellerId(sellerId);
+		con.getParam().appointOffset( offset == null  ? 0 : offset).appointLimit(30);
+		return commisionAccountMapper.queryPayFeeHistory(con);
+	}
+ 
 	/* customized code end */
 
 }
