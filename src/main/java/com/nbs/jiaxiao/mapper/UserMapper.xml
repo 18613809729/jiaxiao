@@ -154,7 +154,7 @@
 		   <include refid="whereCondition"/> 
 		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
 		   <if test="param.columnSort == null">ORDER BY ID </if>   
-		   <if test="param.limit != null">limit param.offset, param.limit </if>   
+		   <if test="param.limit != null">limit ${param.offset}, ${param.limit} </if>   
 	</select>
 	
 	<select id="selectCount" resultType="long">

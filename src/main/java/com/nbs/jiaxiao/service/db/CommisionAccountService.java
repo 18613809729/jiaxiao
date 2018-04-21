@@ -84,7 +84,7 @@ public interface CommisionAccountService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(CommisionAccount con);
-
+	
 	/* customized code start */
 	
 	List<PaySellerInfo> queryPayFeeHistory(Integer offset);

@@ -5,13 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.nbs.jiaxiao.domain.po.CommisionAccount;
 import com.nbs.jiaxiao.domain.po.CommisionFee;
 import com.nbs.jiaxiao.domain.vo.CommisionFeeInfo;

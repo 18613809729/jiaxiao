@@ -84,7 +84,7 @@ public interface CommisionFeeService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(CommisionFee con);
-
+	
 	/* customized code start */
 	
 	List<CommisionFeeInfo> queryCommisionFeeInfo(Integer sellerId);
