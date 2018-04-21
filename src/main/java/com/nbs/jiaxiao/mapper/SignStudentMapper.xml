@@ -6,6 +6,7 @@
   		<result property="username" column="USERNAME"/>
   		<result property="openId" column="OPEN_ID"/>
   		<result property="mobile" column="MOBILE"/>
+  		<result property="sellerId" column="SELLER_ID"/>
   		<result property="remark" column="REMARK"/>
   		<result property="state" column="STATE"/>
   		<result property="createdTime" column="CREATED_TIME"/>
@@ -15,7 +16,7 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, USERNAME, OPEN_ID, MOBILE, REMARK, STATE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, USERNAME, OPEN_ID, MOBILE, SELLER_ID, REMARK, STATE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
@@ -24,6 +25,7 @@
 	 			<if test="username != null"> AND USERNAME = #{username}</if> 
 	 			<if test="openId != null"> AND OPEN_ID = #{openId}</if> 
 	 			<if test="mobile != null"> AND MOBILE = #{mobile}</if> 
+	 			<if test="sellerId != null"> AND SELLER_ID = #{sellerId}</if> 
 	 			<if test="remark != null"> AND REMARK = #{remark}</if> 
 	 			<if test="state != null"> AND STATE = #{state}</if> 
 	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
@@ -43,6 +45,7 @@
 				<if test="username != null">USERNAME,</if> 
 				<if test="openId != null">OPEN_ID,</if> 
 				<if test="mobile != null">MOBILE,</if> 
+				<if test="sellerId != null">SELLER_ID,</if> 
 				<if test="remark != null">REMARK,</if> 
 				<if test="state != null">STATE,</if> 
 				<if test="createdTime != null">CREATED_TIME,</if> 
@@ -56,6 +59,7 @@
 			<if test="username != null">#{username},</if> 
 			<if test="openId != null">#{openId},</if> 
 			<if test="mobile != null">#{mobile},</if> 
+			<if test="sellerId != null">#{sellerId},</if> 
 			<if test="remark != null">#{remark},</if> 
 			<if test="state != null">#{state},</if> 
 			<if test="createdTime != null">#{createdTime},</if> 
@@ -71,6 +75,7 @@
 				<if test="username != null">USERNAME=#{username},</if>
 				<if test="openId != null">OPEN_ID=#{openId},</if>
 				<if test="mobile != null">MOBILE=#{mobile},</if>
+				<if test="sellerId != null">SELLER_ID=#{sellerId},</if>
 				<if test="remark != null">REMARK=#{remark},</if>
 				<if test="state != null">STATE=#{state},</if>
 				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
@@ -130,7 +135,7 @@
 	<!-- customized code start -->
 	
 	<select id="selectRecentInfos" resultType="com.nbs.jiaxiao.domain.vo.SignStudentInfo">
-		select a.id, a.username, a.mobile, a.state, a.created_time, b.nick_name, b.head_img from sign_student as a inner join user as b on a.open_id = b.open_id 
+		select a.id, a.username, a.mobile, a.state, a.created_time, b.nick_name, b.head_img from sign_student as a left join user as b on a.open_id = b.open_id 
 		where a.DELETED = 0 AND a.STATE != -1 order by id desc limit 0, 100
 	</select>
 	

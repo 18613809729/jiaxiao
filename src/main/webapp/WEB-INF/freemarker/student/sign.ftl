@@ -26,9 +26,9 @@
                 </div>
 
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label" for="parentId">分销员</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label" for="sellerId">分销员</label></div>
                     <div class="weui-cell__bd">
-                        <input type="hidden" name="parentId" value="${seller.id}">
+                        <input type="hidden" name="sellerId" value="${seller.id}">
                         <input class="weui-input" type="text" id="sellerInput" placeholder="分销员(选填)" <#if seller??> value="${seller.username}  ${seller.mobile}"</#if> readonly>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                  	return;
                 }
                 $.searchDialog({"datas":sellerLst, "itemClickCallback":function(data){
-                    $('[name="parentId"]').val(data.id);
+                    $('[name="sellerId"]').val(data.id);
                     $("#sellerInput").val(data.username + "  " + data.mobile);
                 }});
             });

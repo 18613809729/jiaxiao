@@ -3,7 +3,6 @@ package com.nbs.jiaxiao.service.db;
 
 import java.util.List;
 import java.util.Map;
-
 import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 
@@ -86,7 +85,7 @@ public interface SignStudentService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(SignStudent con);
-
+	
 	/* customized code start */
 	
 	SignStudent queryByKey(String username, String mobile);

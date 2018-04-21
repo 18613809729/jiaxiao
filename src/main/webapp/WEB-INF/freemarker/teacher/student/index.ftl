@@ -31,7 +31,7 @@
 			        </div>
 
 					<div class="weui-cells">
-						<a class="weui-cell weui-cell_access" href="ybm.html">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/join/list">
 							<div class="weui-cell__bd">
 								<span>报名预约</span>
 								<#if (unReadSignStudentCount > 0) >

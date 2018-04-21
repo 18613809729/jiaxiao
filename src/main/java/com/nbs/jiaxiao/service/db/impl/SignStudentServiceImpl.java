@@ -7,11 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.SignStudent;

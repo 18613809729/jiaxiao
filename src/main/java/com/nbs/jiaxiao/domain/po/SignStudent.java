@@ -19,6 +19,8 @@ public class SignStudent extends Base{
 	private java.lang.String openId;
 	/* 手机号 */
 	private java.lang.String mobile;
+	/* 销售员Id */
+	private java.lang.Integer sellerId;
 	/* 备注 */
 	private java.lang.String remark;
 	/* 状态, 0:未查看， 1：已查看 */
@@ -62,6 +64,14 @@ public class SignStudent extends Base{
 		if (mobile != null) {
 			this.mobile = mobile.trim();
 		}
+	}
+	
+	public java.lang.Integer getSellerId() {
+		return sellerId;
+	}
+
+	public void setSellerId(java.lang.Integer sellerId) {
+		this.sellerId = sellerId;
 	}
 	
 	public java.lang.String getRemark() {
