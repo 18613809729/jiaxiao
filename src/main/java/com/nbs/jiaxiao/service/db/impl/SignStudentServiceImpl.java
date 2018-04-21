@@ -1,12 +1,21 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.nbs.jiaxiao.common.NbsUtils;
+import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.SignStudent;
+import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.SignStudentMapper;
 import com.nbs.jiaxiao.service.db.SignStudentService;
@@ -129,6 +138,24 @@ public class SignStudentServiceImpl implements SignStudentService{
 		return NbsUtils.getFirst(signStudentMapper.selectList(con)); 
 	}
 	
+	@Override
+	public long queryUnReadCount() {
+		SignStudent con = new SignStudent();
+		con.setState(State.UN_READ.getCode());
+		return selectCount(con);
+	}
+	
+	@Override
+	public Map<String, List<SignStudentInfo>> queryRecent() {
+		Map<String, List<SignStudentInfo>> map = new HashMap<String, List<SignStudentInfo>>();
+		LocalDateTime localDateTime = LocalDate.now().minusDays(2).atStartOfDay();
+		List<SignStudentInfo> recentInfos = signStudentMapper.selectRecentInfos();
+		List<SignStudentInfo> recentLst = recentInfos.stream().filter(info -> info.getCreatedTime().compareTo(localDateTime) >= 0).collect(Collectors.toList());
+		List<SignStudentInfo> beforeLst = recentInfos.stream().filter(info -> info.getCreatedTime().compareTo(localDateTime) < 0).collect(Collectors.toList());
+		map.put("recentLst", recentLst);
+		map.put("beforeLst", beforeLst);
+		return map;
+	}
 	/* customized code end */
 
 }

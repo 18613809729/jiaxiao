@@ -2,7 +2,10 @@ package com.nbs.jiaxiao.service.db;
 
 
 import java.util.List;
+import java.util.Map;
+
 import com.nbs.jiaxiao.domain.po.SignStudent;
+import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 
 
 public interface SignStudentService {
@@ -87,6 +90,10 @@ public interface SignStudentService {
 	/* customized code start */
 	
 	SignStudent queryByKey(String username, String mobile);
+
+	long queryUnReadCount();
+
+	Map<String, List<SignStudentInfo>> queryRecent();
 
 	
 	/* customized code end */

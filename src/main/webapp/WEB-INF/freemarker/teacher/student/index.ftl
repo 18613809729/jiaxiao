@@ -33,7 +33,14 @@
 					<div class="weui-cells">
 						<a class="weui-cell weui-cell_access" href="ybm.html">
 							<div class="weui-cell__bd">
-								<span>报名预约</span><span class="weui-badge">8</span>
+								<span>报名预约</span>
+								<#if (unReadSignStudentCount > 0) >
+									<#if unReadSignStudentCount < 100>
+										<span class="weui-badge">${unReadSignStudentCount}</span>
+									<#else>
+										<span class="weui-badge weui-badge_dot"></span>
+									</#if>
+								</#if>
 							</div>
 							<div class="weui-cell__ft">
 							</div>

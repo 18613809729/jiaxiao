@@ -129,5 +129,10 @@
 	
 	<!-- customized code start -->
 	
+	<select id="selectRecentInfos" resultType="com.nbs.jiaxiao.domain.vo.SignStudentInfo">
+		select a.id, a.username, a.mobile, a.state, a.created_time, b.nick_name, b.head_img from sign_student as a inner join user as b on a.open_id = b.open_id 
+		where a.DELETED = 0 AND a.STATE != -1 order by id desc limit 0, 100
+	</select>
+	
 	<!-- customized code end -->
 </mapper>

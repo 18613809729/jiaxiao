@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.mapper;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.SignStudent;
+import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 
 
 public interface SignStudentMapper {
@@ -86,6 +87,7 @@ public interface SignStudentMapper {
 	
 	/* customized code start */
 	
+	public List<SignStudentInfo> selectRecentInfos();
 	/* customized code end */
 
 }
