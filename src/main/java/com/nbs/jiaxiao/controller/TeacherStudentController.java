@@ -1,7 +1,10 @@
 package com.nbs.jiaxiao.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -191,6 +194,7 @@ public class TeacherStudentController {
 		}
 		mv.addObject("payFee", payFee);
 		mv.addObject("feeLst", feeLst);
+		mv.addObject("needPay", payFee.compareTo(student.getTotalFee()) < 0);
 		return mv;
 	}
 
@@ -209,5 +213,47 @@ public class TeacherStudentController {
 		return BaseRes.buildSuccess(student);
 	}
 	
+	
+	@GetMapping("/info/{id}/fee")
+	public ModelAndView studentFee(@PathVariable("id") int id) {
+		Student student = studentService.selectByPriKey(id);
+		NbsUtils.assertNotNull(student, "student {0} not found", id);
+		if(StringUtils.isNotBlank(student.getOpenId())) {
+			User user = userService.queryByOpenId(student.getOpenId());
+			student.setUser(user);
+		}
+		List<Fee> feeLst = feeService.queryByStudentId(student.getId());
+		BigDecimal payFee = new BigDecimal(0);
+		for (Fee fee : feeLst) {
+			payFee = payFee.add(fee.getMoney());
+		}
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/addFee");
+		mv.addObject("payFee", payFee);
+		mv.addObject("feeLst", feeLst);
+		mv.addObject("info", student);
+		return mv;
+	}
+	
+	@PostMapping("/info/{id}/fee")
+	public @ResponseBody BaseRes<Fee> addFee(@RequestAttribute("openId") String openId, @PathVariable("id") int id, BigDecimal money, String payDate) {
+		if(money.doubleValue() <= 0) {
+			throw new InvalidParamException("fee money is invalid:" + money);
+		}
+		Student student = studentService.selectByPriKey(id);
+		NbsUtils.assertNotNull(student, "student {0} not found", id);
+		List<Fee> feeLst = feeService.queryByStudentId(student.getId());
+		BigDecimal payFee = new BigDecimal(0);
+		for (Fee fee : feeLst) {
+			payFee = payFee.add(fee.getMoney());
+		}
+		int compareRes = payFee.add(money).compareTo(student.getTotalFee());
+		if(compareRes > 0) {
+			return BaseRes.build("over", "缴费总金额超过应缴学费");
+		}
+		if(compareRes == 0) {
+			student.setIsArrearage(false);
+		}
+		return BaseRes.buildSuccess(feeService.addFee(openId, money, LocalDate.parse(payDate, FORMAT), student));
+	}
 	
 }

@@ -1,8 +1,13 @@
 package com.nbs.jiaxiao.service.db;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.Fee;
+import com.nbs.jiaxiao.domain.po.Student;
 
 
 public interface FeeService {
@@ -87,6 +92,8 @@ public interface FeeService {
 	/* customized code start */
 	
 	List<Fee> queryByStudentId(Integer studentId);
+
+	Fee addFee(String opeOpenId, BigDecimal money, LocalDate payDate, Student student);
 
 	
 	/* customized code end */

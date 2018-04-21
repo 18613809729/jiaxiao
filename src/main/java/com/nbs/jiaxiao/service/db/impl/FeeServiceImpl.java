@@ -1,13 +1,24 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.nbs.jiaxiao.constant.FeeType;
+import com.nbs.jiaxiao.constant.PayType;
 import com.nbs.jiaxiao.domain.po.Fee;
+import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.FeeMapper;
 import com.nbs.jiaxiao.service.db.FeeService;
+import com.nbs.jiaxiao.service.db.StudentService;
 
 
 @Service
@@ -119,11 +130,30 @@ public class FeeServiceImpl implements FeeService{
 	
 	/* customized code start */
 	
+	@Autowired
+	private StudentService studentService;
+	
 	@Override
 	public List<Fee> queryByStudentId(Integer studentId){
 		Fee fee = new Fee();
 		fee.setUserId(studentId);
 		return selectList(fee);
+	}
+	
+	@Transactional
+	@Override
+	public Fee addFee(String opeOpenId, BigDecimal money, LocalDate payDate, Student student){
+		Fee fee = new Fee();
+		fee.setUserId(student.getId());
+		fee.setLastUpdateNoUserId(opeOpenId);
+		fee.setMoney(money);
+		fee.setPayDate(java.sql.Date.valueOf(payDate));
+		fee.setPayType(PayType.ADD.getCode());
+		fee.setType(FeeType.TUITION.getCode());
+		student.setLastUpdateNoUserId(opeOpenId);
+		studentService.updateByPriKey(student);
+		insert(fee);
+		return fee;
 	}
 	
 	/* customized code end */

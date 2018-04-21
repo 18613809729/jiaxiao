@@ -193,7 +193,9 @@
 	   	<br>
 	   	<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" href="javascript:history.back();"><i></i>确定</a>
-			<a class="weui-btn weui-btn_default" href="javascript:history.back();"><i></i>缴费</a>
+			<#if needPay>
+				<a class="weui-btn weui-btn_default" href="/teacher/student/info/${info.id}/fee"><i></i>缴费</a>
+			</#if>
 		</div>
 	   	<br>
 	</div>
