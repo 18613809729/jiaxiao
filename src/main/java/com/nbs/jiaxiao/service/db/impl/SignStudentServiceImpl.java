@@ -4,6 +4,8 @@ package com.nbs.jiaxiao.service.db.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.SignStudentMapper;
@@ -118,6 +120,14 @@ public class SignStudentServiceImpl implements SignStudentService{
 	}
 	
 	/* customized code start */
+	
+	@Override
+	public SignStudent queryByKey(String username, String mobile){
+		SignStudent con = new SignStudent();
+		con.setUsername(username);
+		con.setMobile(mobile);;
+		return NbsUtils.getFirst(signStudentMapper.selectList(con)); 
+	}
 	
 	/* customized code end */
 

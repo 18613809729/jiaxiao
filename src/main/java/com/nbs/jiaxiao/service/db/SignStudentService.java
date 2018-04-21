@@ -83,8 +83,11 @@ public interface SignStudentService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(SignStudent con);
-	
+
 	/* customized code start */
+	
+	SignStudent queryByKey(String username, String mobile);
+
 	
 	/* customized code end */
 

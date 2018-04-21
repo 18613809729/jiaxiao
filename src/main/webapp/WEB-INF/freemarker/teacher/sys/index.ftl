@@ -78,6 +78,13 @@
 							<div class="weui-cell__ft">
 							</div>
 						</a>
+						 <a class="weui-cell weui-cell_access" href="/student/join">
+							<div class="weui-cell__bd">
+								<span>预约报名</span>
+							</div>
+							<div class="weui-cell__ft">
+							</div>
+						</a>
 			        </div>
 				</div>
 				<div class="weui-tabbar">

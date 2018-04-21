@@ -135,6 +135,14 @@ public class SellerServiceImpl implements SellerService{
 		return null;
 	}
 	
+	public Seller queryValidSeller(Integer id) {
+		Seller seller = selectByPriKey(id);
+		if(seller != null && seller.isValid()) {
+			return seller;
+		}
+		return null;
+	}
+	
 	@Override
 	public List<Seller> queryAllValidSellers(){
 		Seller seller = new Seller();
