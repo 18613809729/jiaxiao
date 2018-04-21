@@ -21,19 +21,19 @@
 			                <div class="weui-cell__bd">
 			                    <p>一级</p>
 			                </div>
-			                <div class="weui-cell__ft">80人</div>
+			                <div class="weui-cell__ft">${lv1Count}人</div>
 			            </div>
 			            <div class="weui-cell">
 			                <div class="weui-cell__bd">
 			                    <p>二级</p>
 			                </div>
-			                <div class="weui-cell__ft">80人</div>
+			                <div class="weui-cell__ft">${lv2Count}人</div>
 			            </div>
 			            <div class="weui-cell">
 			                <div class="weui-cell__bd">
 			                    <p>三级</p>
 			                </div>
-			                <div class="weui-cell__ft">80人</div>
+			                <div class="weui-cell__ft">${lv3Count}人</div>
 			            </div>
 			        </div>
 

@@ -172,6 +172,14 @@ public class SellerServiceImpl implements SellerService{
 	public List<SellerInfo> queryNotPayFeeSumInfo() {
 		return sellerMapper.queryNotPayFeeSumInfo();
 	}
+	
+	@Override
+	public long queryCount(int level) {
+		Seller con = new Seller();
+		con.setLevel(level);
+		con.setStatus(Status.VALID.getCode());
+		return sellerMapper.selectCount(con);
+	}
 	/* customized code end */
 
 }

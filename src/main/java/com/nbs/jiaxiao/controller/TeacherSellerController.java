@@ -72,6 +72,9 @@ public class TeacherSellerController {
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/index");
 		mv.addObject("unReadCount", preSellerService.queryUnReadCount());
+		mv.addObject("lv1Count", sellerService.queryCount(1));
+		mv.addObject("lv2Count", sellerService.queryCount(2));
+		mv.addObject("lv3Count", sellerService.queryCount(3));
 		return mv;
 	}
 	

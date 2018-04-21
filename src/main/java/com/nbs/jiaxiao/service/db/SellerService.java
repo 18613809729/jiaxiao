@@ -120,6 +120,8 @@ public interface SellerService {
 
 	List<SellerInfo> queryNotPayFeeSumInfo();
 
+	long queryCount(int level);
+
 	/* customized code end */
 
 }
