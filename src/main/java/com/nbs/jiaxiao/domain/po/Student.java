@@ -29,6 +29,8 @@ public class Student extends Base{
 	private java.sql.Date signDate;
 	/* 分销员 */
 	private java.lang.Integer sellerId;
+	/*  */
+	private java.lang.Integer schoolId;
 	/* 学车阶段 */
 	private java.lang.String stage;
 	/* 是否欠费 */
@@ -118,6 +120,14 @@ public class Student extends Base{
 
 	public void setSellerId(java.lang.Integer sellerId) {
 		this.sellerId = sellerId;
+	}
+	
+	public java.lang.Integer getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(java.lang.Integer schoolId) {
+		this.schoolId = schoolId;
 	}
 	
 	public java.lang.String getStage() {
