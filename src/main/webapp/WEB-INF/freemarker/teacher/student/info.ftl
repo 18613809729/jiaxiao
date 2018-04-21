@@ -145,7 +145,7 @@
 			
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
-					报名事件
+					报名时间
 				</div>
 				<div class="weui-cell__ft">
 					${info.signDate}
@@ -190,9 +190,10 @@
 				</div>
 			</#list>
 		</div>
-	   	
+	   	<br>
 	   	<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" href="javascript:history.back();"><i></i>确定</a>
+			<a class="weui-btn weui-btn_default" href="javascript:history.back();"><i></i>缴费</a>
 		</div>
 	   	<br>
 	</div>
@@ -217,7 +218,7 @@
 				  		return false;
 				  	}
 
-			  		input != "${info.username}" && $.singlePut($(this), "/teacher/seller/info/${info.id}", {"username":input}).done(function(res){
+			  		input != "${info.username}" && $.singlePut($(this), "/teacher/student/info/${info.id}", {"username":input}).done(function(res){
 			  			res.code == "0" && location.reload();
 			  		});
 				  }
@@ -236,27 +237,11 @@
 				  		return false;
 				  	}
 
-			  		input != "${info.mobile}" && $.singlePut($(this), "/teacher/seller/info/${info.id}", {"mobile":input}).done(function(res){
+			  		input != "${info.mobile}" && $.singlePut($(this), "/teacher/student/info/${info.id}", {"mobile":input}).done(function(res){
 			  			res.code == "0" && location.reload();
 			  		});
 				  }
 				});
-			});
-
-			$("#status").click(function(){
-				if('${info.status}' == '0'){
-					$.confirm("确认将${info.username}置为有效?", function(){
-						 $.singlePut($(this), "/teacher/seller/info/${info.id}", {"status":"1"}).done(function(res){
-			  				res.code == "0" && location.reload();
-			  			});
-					});
-				}else{
-					$.confirm("确认将${info.username}置为失效,失效后其将不能获取佣金奖励?", "确认失效?", function(){
-						 $.singlePut($(this), "/teacher/seller/info/${info.id}", {"status":"0"}).done(function(res){
-			  				res.code == "0" && location.reload();
-			  			});
-					});
-				} 
 			});
 		});
 	</script>

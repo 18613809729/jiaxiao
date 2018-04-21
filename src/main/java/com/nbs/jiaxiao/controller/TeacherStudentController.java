@@ -195,21 +195,18 @@ public class TeacherStudentController {
 	}
 
 	@PutMapping("/info/{id}")
-	public @ResponseBody BaseRes<Seller> sellerInfo(@PathVariable("id") int id, Seller info) {
-		Seller seller = sellerService.selectByPriKey(id);
-		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
+	public @ResponseBody BaseRes<Student> sellerInfo(@RequestAttribute("openId") String openId, @PathVariable("id") int id, Student info) {
+		Student student = studentService.selectByPriKey(id);
+		NbsUtils.assertNotNull(student, "student {0} not found", id);
+		student.setLastUpdateNoUserId(openId);
 		if(StringUtils.isNotBlank(info.getMobile())) {
-			seller.setMobile(info.getMobile());
+			student.setMobile(info.getMobile());
 		}
 		if(StringUtils.isNotBlank(info.getUsername())) {
-			seller.setUsername(info.getUsername());
+			student.setUsername(info.getUsername());
 		}
-		if(StringUtils.isNotBlank(info.getStatus())) {
-			Status.assertLegalCode(info.getStatus());
-			seller.setStatus(info.getStatus());
-		}
-		sellerService.updateByPriKey(seller);
-		return BaseRes.buildSuccess(seller);
+		studentService.updateByPriKey(student);
+		return BaseRes.buildSuccess(student);
 	}
 	
 	
