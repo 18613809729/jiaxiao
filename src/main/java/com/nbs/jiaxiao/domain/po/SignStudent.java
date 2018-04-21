@@ -14,7 +14,7 @@ public class SignStudent extends Base{
 	/*  */
 	private java.lang.Integer id;
 	/* 用户姓名 */
-	private java.lang.String userName;
+	private java.lang.String username;
 	/* 微信号openId */
 	private java.lang.String openId;
 	/* 手机号 */
@@ -22,7 +22,7 @@ public class SignStudent extends Base{
 	/* 备注 */
 	private java.lang.String remark;
 	/* 状态, 0:未查看， 1：已查看 */
-	private java.lang.String status;
+	private java.lang.String state;
 	
 	
 	
@@ -34,13 +34,13 @@ public class SignStudent extends Base{
 		this.id = id;
 	}
 	
-	public java.lang.String getUserName() {
-		return userName;
+	public java.lang.String getUsername() {
+		return username;
 	}
 
-	public void setUserName(java.lang.String userName) {
-		if (userName != null) {
-			this.userName = userName.trim();
+	public void setUsername(java.lang.String username) {
+		if (username != null) {
+			this.username = username.trim();
 		}
 	}
 	
@@ -74,13 +74,13 @@ public class SignStudent extends Base{
 		}
 	}
 	
-	public java.lang.String getStatus() {
-		return status;
+	public java.lang.String getState() {
+		return state;
 	}
 
-	public void setStatus(java.lang.String status) {
-		if (status != null) {
-			this.status = status.trim();
+	public void setState(java.lang.String state) {
+		if (state != null) {
+			this.state = state.trim();
 		}
 	}
 	
