@@ -119,6 +119,13 @@ public class FeeServiceImpl implements FeeService{
 	
 	/* customized code start */
 	
+	@Override
+	public List<Fee> queryByStudentId(Integer studentId){
+		Fee fee = new Fee();
+		fee.setUserId(studentId);
+		return selectList(fee);
+	}
+	
 	/* customized code end */
 
 }

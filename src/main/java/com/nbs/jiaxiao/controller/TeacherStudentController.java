@@ -1,5 +1,6 @@
 package com.nbs.jiaxiao.controller;
 
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nbs.jiaxiao.common.NbsUtils;
+import com.nbs.jiaxiao.constant.Phase;
 import com.nbs.jiaxiao.constant.ResCode;
+import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.constant.Status;
+import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.domain.po.Student;
@@ -31,6 +35,8 @@ import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.FeeService;
+import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.SellerService;
 import com.nbs.jiaxiao.service.db.SignStudentService;
 import com.nbs.jiaxiao.service.db.StudentService;
@@ -56,7 +62,13 @@ public class TeacherStudentController {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private FeeService feeService;
 
+	@Autowired
+	private SchoolService schoolService;
+	
 	@GetMapping("/index")
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/index");
@@ -152,30 +164,33 @@ public class TeacherStudentController {
 	
 	
 	@GetMapping("/info/{id}")
-	public ModelAndView sellerInfo(@PathVariable("id") int id) {
-		Seller seller = sellerService.selectByPriKey(id);
-		NbsUtils.assertNotNull(seller, "teacher {0} not found", id);
+	public ModelAndView studentInfo(@PathVariable("id") int id) {
+		Student student = studentService.selectByPriKey(id);
+		NbsUtils.assertNotNull(student, "student {0} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
-		mv.addObject("info", seller);
+		mv.addObject("info", student);
 
-		if(StringUtils.isNotBlank(seller.getOpenId())) {
-			User user = userService.queryByOpenId(seller.getOpenId());
-			seller.setUser(user);
+		if(StringUtils.isNotBlank(student.getOpenId())) {
+			User user = userService.queryByOpenId(student.getOpenId());
+			student.setUser(user);
 		}
-		if(seller.getParentId() != null && seller.getParentId().intValue() != 0) {
-			Seller parentSeller = sellerService.selectByPriKey(seller.getParentId());
-			if(parentSeller != null) {
-				mv.addObject("parent", parentSeller);
+		if(student.getSellerId() != null && student.getSellerId().intValue() != 0) {
+			Seller seller = sellerService.selectByPriKey(student.getSellerId());
+			if(seller != null) {
+				mv.addObject("seller", seller);
 			}
 		}
-		mv.addObject("createdTime", seller.getCreatedTime().format(FORMAT));
-		if(seller.getLevel() != 3) {
-			List<Seller> childrenSellers = sellerService.queryChildrenSellers(seller.getId());
-			if(!childrenSellers.isEmpty()) {
-				mv.addObject("childrenSellers", childrenSellers);
-			}
+		mv.addObject("createdTime", student.getCreatedTime().format(FORMAT));
+		mv.addObject("school", schoolService.selectByPriKey(student.getSchoolId()));
+		mv.addObject("stage", Stage.valueOfByCode(student.getStage()).getDesc());
+		mv.addObject("phase", Phase.valueOfByCode(student.getPhase()));
+		List<Fee> feeLst = feeService.queryByStudentId(student.getId());
+		BigDecimal payFee = new BigDecimal(0);
+		for (Fee fee : feeLst) {
+			payFee = payFee.add(fee.getMoney());
 		}
-		
+		mv.addObject("payFee", payFee);
+		mv.addObject("feeLst", feeLst);
 		return mv;
 	}
 

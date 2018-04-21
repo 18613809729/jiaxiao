@@ -25,7 +25,7 @@ public enum Stage{
 	
 	
 	
-	public Stage valueOfByCode(String type) {
+	public static Stage valueOfByCode(String type) {
 		for (Stage stage : Stage.values()) {
 			if(stage.getCode().equalsIgnoreCase(type)) {
 				return stage;

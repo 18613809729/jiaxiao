@@ -24,7 +24,7 @@ public enum Phase{
 	
 	
 	
-	public Phase valueOfByCode(String type) {
+	public static Phase valueOfByCode(String type) {
 		for (Phase stage : Phase.values()) {
 			if(stage.getCode().equalsIgnoreCase(type)) {
 				return stage;
