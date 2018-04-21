@@ -29,10 +29,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="page mt50" id="container">
-		<div class="weui-loadmore">
-			<i class="weui-loading"></i>
-			<span class="weui-loadmore__tips">正在加载</span>
+	<div class="page mt50">
+		<div class="weui-cells weui-cells_form">
+			<div class="weui-cell">
+		        <div class="weui-cell__hd"><label for="name" class="weui-label">选择</label></div>
+		        <div class="weui-cell__bd">
+		          <input class="weui-input" id="type" type="text" value="学车中" readonly="" data-values="1">
+		        </div>
+      		</div>
+      	</div>
+      	<div id="container">
+			<div class="weui-loadmore">
+				<i class="weui-loading"></i>
+				<span class="weui-loadmore__tips">正在加载</span>
+			</div>
 		</div>
 	</div>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
@@ -55,12 +65,20 @@
             <span class="weui-loadmore__tips globl_bg_color">暂无数据</span>
         </div>
 	</script>
-	<script id="sellerLst" type="text/html">
+
+	<script id="loading" type="text/html">
+		<div class="weui-loadmore">
+			<i class="weui-loading"></i>
+			<span class="weui-loadmore__tips">正在加载</span>
+		</div>
+	</script>
+	
+	<script id="dataLst" type="text/html">
 			<%for (var j = 0; j < datas.length; j++){%>
 				<div class="weui-cells__title"><%=datas[j].lettel%></div>
 				<div class="weui-cells">
 	   				<%for (var i = 0; i < datas[j]['data'].length; i++){%>
-	   				<a class="weui-cell weui-cell_access" href="/teacher/seller/info/<%=datas[j]['data'][i].id%>">
+	   				<a class="weui-cell weui-cell_access" href="/teacher/student/info/<%=datas[j]['data'][i].id%>">
 						<div class="weui-cell__hd">
 							<%if(datas[j]['data'][i].headImg != null){%>
 								<img src="<%=datas[j]['data'][i].headImg%>" width="60px">
@@ -85,27 +103,67 @@
 	$(function(){
 		function render(sellers){
 			if(sellers.length){
-				var tpl = template(document.getElementById('sellerLst').innerHTML);
+				var tpl = template(document.getElementById('dataLst').innerHTML);
 				$("#container").html(tpl({"datas":$.groupByPinyin(sellers, "username")}));
 			} else {
 				$("#container").html(template(document.getElementById('empty').innerHTML, {}));
 			}
 		}
 
-		 $.getJSON("/seller/all.json").done(function(res){
+		function calUrl(type){
+			var url = "/teacher/student/data.json";
+			if(type == "1"){
+				return url + "?type=inLearn";
+			}
+			if(type == "21" || type == "22" || type == "23" || type == "24"){
+				return url + "?type=stage&stage=" + parseInt(type) % 10;
+			}
+			if(type == "3"){
+				return url + "?type=stage&stage=10";
+			}
+			if(type == "4"){
+				return url + "?type=arrearage";
+			}
+		}
+
+		function loadData(url){
+			$("#container").html(template(document.getElementById('loading').innerHTML, {}));
+			$.getJSON(url).done(function(res){
+	        	if(res.code == '0'){
+	                render(res.data);
+	            } else {
+	                $.toast(res.msg, "cancel");
+	            }
+	        }).fail(function() {
+				$("#container").html(template(document.getElementById('error').innerHTML, {}));
+	  		});
+		}
+
+		loadData(calUrl("1"));
+  		$("#type").select({
+	        title: "筛选条件",
+	        items: [{title: "学车中",value: "1"},{title: "科目一",value: "21"},{title: "科目二",value: "22"},{title: "科目三",value: "23"},{title: "科目四",value: "24"},{title: "已毕业",value: "3"},{title: "欠费中",value: "4"}]
+      	});
+      	var preType = "1";
+      	$("#type").on("change", function(){
+      		var type = $(this).data("values");
+      		if(preType != type){
+				preType = type;
+				loadData(calUrl(type));
+      		}
+      	});
+
+      	$.getJSON("/teacher/student/search.json").done(function(res){
         	if(res.code == '0'){
-                var sellerLst = res.data;
-                $("#searchPannel").userSearchBar({"datas":sellerLst, "itemClickCallback":function(data){
-                	location.href = "/teacher/seller/info/" + data.id;
-                	this.cancelSearch();
-                }});
-                render(sellerLst);
-            } else {
-                $.toast(res.msg, "cancel");
+                $("#searchPannel").userSearchBar({"datas":res.data, "itemClickCallback":function(data){
+        			location.href = "/teacher/student/info/" + data.id;
+        			this.cancelSearch();
+        		}});
             }
         }).fail(function() {
-			$("#container").html(template(document.getElementById('error').innerHTML, {}));
+			$.toast("加载学员搜索信息失败", "cancel");
   		});
+      	
 	});
 	</script>
 </body>

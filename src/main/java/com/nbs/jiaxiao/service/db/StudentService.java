@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.service.db;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.vo.StudentInfo;
 
 
 public interface StudentService {
@@ -83,9 +84,17 @@ public interface StudentService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(Student con);
-	
+
 	/* customized code start */
 	
+	List<StudentInfo> selectStageStudent(String stage);
+
+	List<StudentInfo> selectInLearnStudent();
+
+	List<StudentInfo> selectArrearageStudent();
+
+	List<Student> selectSearchInfo(Student con);
+
 	/* customized code end */
 
 }

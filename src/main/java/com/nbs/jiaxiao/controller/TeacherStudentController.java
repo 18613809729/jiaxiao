@@ -27,10 +27,13 @@ import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
+import com.nbs.jiaxiao.domain.vo.StudentInfo;
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.SellerService;
 import com.nbs.jiaxiao.service.db.SignStudentService;
+import com.nbs.jiaxiao.service.db.StudentService;
 import com.nbs.jiaxiao.service.db.UserService;
 
 @Controller
@@ -50,6 +53,9 @@ public class TeacherStudentController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private StudentService studentService;
 
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -119,15 +125,36 @@ public class TeacherStudentController {
 		return new ModelAndView(FTL_PREFIX + "/retrieve");
 	} 
 	
-	@GetMapping("/all.json")
-	public ModelAndView allStudent() {
-		return new ModelAndView(FTL_PREFIX + "/retrieve");
+	@GetMapping("/data.json")
+	public @ResponseBody BaseRes<List<StudentInfo>> studentInfo(String type, String stage) {
+		List<StudentInfo> data = null;
+		switch (type) {
+		case "inLearn":
+			data = studentService.selectInLearnStudent();
+			break;
+		case "stage":
+			data = studentService.selectStageStudent(stage);
+			break;
+		case "arrearage":
+			data = studentService.selectArrearageStudent();
+			break;
+		default:
+			throw new InvalidParamException("unknow query type" + type);
+		}
+		return BaseRes.buildSuccess(data);
 	} 
+	
+	@GetMapping("/search.json")
+	public @ResponseBody BaseRes<List<Student>> searchStudentInfo(Student con) {
+		return BaseRes.buildSuccess(studentService.selectSearchInfo(con));
+	}
+	
+	
 	
 	@GetMapping("/info/{id}")
 	public ModelAndView sellerInfo(@PathVariable("id") int id) {
 		Seller seller = sellerService.selectByPriKey(id);
-		NbsUtils.assertNotNull(seller, "seller {0} not found", id);
+		NbsUtils.assertNotNull(seller, "teacher {0} not found", id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
 		mv.addObject("info", seller);
 

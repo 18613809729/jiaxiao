@@ -53,7 +53,7 @@
 							</div>
 						</a>
 
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/retrieve">
 							<div class="weui-cell__bd">
 								<p>学员查询</p>
 							</div>

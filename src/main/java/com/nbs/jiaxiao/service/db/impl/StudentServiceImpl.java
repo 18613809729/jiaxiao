@@ -1,10 +1,14 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.StudentMapper;
 import com.nbs.jiaxiao.service.db.StudentService;
@@ -118,6 +122,34 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	/* customized code start */
+	@Override
+	public List<StudentInfo> selectStageStudent(String stage){
+		Student con = new Student();
+		con.setStage(stage);
+		return studentMapper.selectAllInfo(con);
+	}
+	
+	@Override
+	public List<StudentInfo> selectInLearnStudent(){
+		List<StudentInfo> res = new ArrayList<StudentInfo>();
+		res.addAll(selectStageStudent(Stage.STAGE_1.getCode()));
+		res.addAll(selectStageStudent(Stage.STAGE_2.getCode()));
+		res.addAll(selectStageStudent(Stage.STAGE_3.getCode()));
+		res.addAll(selectStageStudent(Stage.STAGE_4.getCode()));
+		return res;
+	}
+	
+	@Override
+	public List<StudentInfo> selectArrearageStudent(){
+		Student con = new Student();
+		con.setIsArrearage(true);
+		return studentMapper.selectAllInfo(con);
+	}
+	
+	@Override
+	public List<Student> selectSearchInfo(Student con){
+		return studentMapper.selectSearchInfo(con == null ? new Student() : con);
+	}
 	
 	/* customized code end */
 
