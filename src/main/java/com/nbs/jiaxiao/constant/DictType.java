@@ -3,7 +3,8 @@ package com.nbs.jiaxiao.constant;
 public enum DictType{
 	
 	TYPE("type", "类型"),
-	COMMISSION("COMMISSION", "佣金");
+	COMMISSION("COMMISSION", "佣金"),
+	SCHOOL("SCHOOL", "驾校");
 	String code;
 	String desc;
 	

@@ -4,6 +4,9 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 
 public class NbsUtils {
@@ -37,6 +40,12 @@ public class NbsUtils {
 	public static void assertNotEmpty(Collection<? extends Object> collection, String msg, Object ... args) {
 		if(collection == null || collection.size() == 0) {
 			throw new NotFoundException(MessageFormat.format(msg, args));
+		}
+	}
+	
+	public static void assertNotBlank(String str, String msg, Object ... args) {
+		if(StringUtils.isBlank(str)) {
+			throw new InvalidParamException(MessageFormat.format(msg, args));
 		}
 	}
 	

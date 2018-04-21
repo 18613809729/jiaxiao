@@ -163,6 +163,16 @@
 	</select>
 	
 	<!-- customized code start -->
+	<select id="selectAllInfo" resultType="com.nbs.jiaxiao.domain.vo.StudentInfo">
+		select a.id, a.username, a.mobile, a.stage, b.nick_name, b.head_img from student as a left join user as b on a.open_id = b.open_id 
+		where a.DELETED = 0 
+		<if test="stage != null"> AND a.stage = #{stage}</if> 
+		<if test="isArrearage != null"> AND a.is_arrearage = #{isArrearage}</if> 
+		order by id desc
+	</select>
 	
+	<select id="selectSearchInfo" resultMap="studentResultMap">
+		select id, username, mobile from student  <include refid="whereCondition"/>  order by id desc
+	</select>
 	<!-- customized code end -->
 </mapper>

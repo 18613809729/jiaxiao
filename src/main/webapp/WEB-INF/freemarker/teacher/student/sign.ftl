@@ -42,6 +42,17 @@
                     </div>
                 </div>
 
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd"><label class="weui-label">驾校</label></div>
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="schoolId" required>
+                        </select>
+                    </div>
+                </div>
+                <a href="javascript:void(0);" id="addSchool" class="weui-cell weui-cell_link">
+                    <div class="weui-cell__bd">添加驾校&gt;&gt;</div>
+                </a>
+
                  <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="signDate">报名日期</label></div>
                     <div class="weui-cell__bd">
@@ -143,6 +154,34 @@
             $("#clearSellerId").on("click", function(){
                 $('[name="sellerId"]').val("");
                 $("#sellerInput").val("");
+            });
+
+            function loadSchool(schools){
+                var options = '<option value=""></option>';
+                for (var i = 0; i < schools.length; i++) {
+                    options += '<option value="' + schools[i].id + '">' + schools[i].name + '</option>';
+                }
+                $('[name="schoolId"]').html(options);
+            }
+
+             $.getJSON("/teacher/sys/school/all.json").done(function(res){
+                loadSchool(res.data);
+            });
+            $("#addSchool").on("click", function(){
+                $.prompt({
+                    title: '添加驾校',
+                    input: '驾校名称',
+                    empty: false, // 是否允许为空
+                    onOK: function (input) {
+                        if(!/^[\u4E00-\u9FA5\uf900-\ufa2d]{2,8}$/.test(input)){
+                            $.toast("驾校名称格式错误", "cancel");
+                            return false;
+                        }
+                        $.singlePost($(this), "/teacher/sys/school/info", {"schoolName":input}).done(function(res){
+                            res.code == "0" && loadSchool(res.data);
+                        });
+                    }
+                });
             });
         });
 	</script>

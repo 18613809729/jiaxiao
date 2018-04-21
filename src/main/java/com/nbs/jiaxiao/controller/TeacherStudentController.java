@@ -21,7 +21,6 @@ import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.constant.Status;
-import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.domain.po.Student;
@@ -75,17 +74,6 @@ public class TeacherStudentController {
 		}
 	}
 	
-	@GetMapping("/info/{id}")
-	public ModelAndView studentInfo(@PathVariable("id") int id) {
-		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/info");
-		Student student = teacherService.queryStudent(id);
-		if (student == null) {
-			throw new NotFoundException("student not found id:" + id);
-		}
-		mv.addObject("student", student);
-		return mv;
-	}
-	
 	@GetMapping("/join/list")
 	public ModelAndView joinList() {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/join");
@@ -128,6 +116,11 @@ public class TeacherStudentController {
 
 	@GetMapping("/retrieve")
 	public ModelAndView retrieve() {
+		return new ModelAndView(FTL_PREFIX + "/retrieve");
+	} 
+	
+	@GetMapping("/all.json")
+	public ModelAndView allStudent() {
 		return new ModelAndView(FTL_PREFIX + "/retrieve");
 	} 
 	
