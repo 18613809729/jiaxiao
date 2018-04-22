@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbs.jiaxiao.mapper.TrainMapper">
+	<resultMap id="trainResultMap" type="com.nbs.jiaxiao.domain.po.Train">
+  		<result property="id" column="ID"/>
+  		<result property="studentId" column="STUDENT_ID"/>
+  		<result property="stage" column="STAGE"/>
+  		<result property="phase" column="PHASE"/>
+  		<result property="createdTime" column="CREATED_TIME"/>
+  		<result property="modifiedTime" column="MODIFIED_TIME"/>
+  		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
+  		<result property="lastUpdateNoUserId" column="LAST_UPDATE_NO_USER_ID"/>
+	</resultMap>
+
+	<sql id="commonSelect">
+		ID, STUDENT_ID, STAGE, PHASE, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+	</sql>
+	
+	<sql id="whereCondition">
+		WHERE DELETED = 0 
+	 			<if test="id != null"> AND ID = #{id}</if> 
+	 			<if test="studentId != null"> AND STUDENT_ID = #{studentId}</if> 
+	 			<if test="stage != null"> AND STAGE = #{stage}</if> 
+	 			<if test="phase != null"> AND PHASE = #{phase}</if> 
+	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
+	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
+	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
+	 			<if test="param.modifiedTimeEnd != null"> AND MODIFIED_TIME <![CDATA[<=]]> #{param.modifiedTimeEnd} </if>
+				<if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo}</if> 
+	 			<if test="param.lastUpdateNoStart != null"> AND LAST_UPDATE_NO <![CDATA[>=]]> #{param.lastUpdateNoStart} </if> 
+	 			<if test="param.lastUpdateNoEnd != null"> AND LAST_UPDATE_NO <![CDATA[<=]]> #{param.lastUpdateNoEnd} </if>
+	 			<if test="lastUpdateNoUserId != null"> AND LAST_UPDATE_NO_USER_ID = #{lastUpdateNoUserId}</if> 
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	 	INSERT  INTO  train 
+	 	<trim prefix="(" suffixOverrides="," suffix=")">
+				<if test="id != null">ID,</if> 
+				<if test="studentId != null">STUDENT_ID,</if> 
+				<if test="stage != null">STAGE,</if> 
+				<if test="phase != null">PHASE,</if> 
+				<if test="createdTime != null">CREATED_TIME,</if> 
+				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
+				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID,</if> 
+	 	</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">#{id},</if> 
+			<if test="studentId != null">#{studentId},</if> 
+			<if test="stage != null">#{stage},</if> 
+			<if test="phase != null">#{phase},</if> 
+			<if test="createdTime != null">#{createdTime},</if> 
+			<if test="modifiedTime != null">#{modifiedTime},</if> 
+			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
+			<if test="lastUpdateNoUserId != null">#{lastUpdateNoUserId},</if> 
+		</trim>
+	</insert>
+	
+	<update id="updateByPriKey">
+		UPDATE   train 
+		<set>
+				<if test="studentId != null">STUDENT_ID=#{studentId},</if>
+				<if test="stage != null">STAGE=#{stage},</if>
+				<if test="phase != null">PHASE=#{phase},</if>
+				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
+				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
+				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID=#{lastUpdateNoUserId},</if>
+    	</set>
+    	WHERE ID = #{id}  <if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo} </if>  AND DELETED = 0 
+    </update>
+	
+	<update id="delete">
+		UPDATE  train SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+	</update>
+	
+	<update id="deleteByPriKey">
+		UPDATE  train SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+	</update>
+	
+	<delete id="deleteActual">
+		DELETE FROM train <include refid="whereCondition"/>
+	</delete>
+	
+	<delete id="deleteActualByPriKey">
+		DELETE FROM train WHERE ID = #{id}
+	</delete>
+	
+	<delete id="clean">
+		DELETE FROM train WHERE ID > #{id} and DELETED != 0 
+	</delete>
+	
+	<select id="selectByPriKey" resultMap="trainResultMap">
+		   SELECT   
+		   <include refid="commonSelect" />
+		   FROM   train WHERE ID = #{id}
+	</select>
+	
+	<select id="selectList" resultMap="trainResultMap">
+		   SELECT   
+		   <include refid="commonSelect"/>
+		   FROM   train
+		   <include refid="whereCondition"/> 
+		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
+		   <if test="param.columnSort == null">ORDER BY ID </if>   
+		   <if test="param.limit != null">limit ${param.offset}, ${param.limit} </if>   
+	</select>
+	
+	<select id="selectCount" resultType="long">
+	 	SELECT  COUNT(1) CNT FROM   train
+		<include refid="whereCondition"/> 
+	</select>
+	
+	<select id="exist" resultType="int">
+	 	SELECT  ID FROM   train
+		<include refid="whereCondition"/> limit 1
+	</select>
+	
+	<!-- customized code start -->
+	
+	<select id="queryInfo" resultType="com.nbs.jiaxiao.domain.vo.TrainInfo">
+		select b.username, b.mobile, b.school_id, c.name as school_name, a.stage, a.phase from train as a inner join student as b on a.student_id = b.id inner join school as c on c.id = b.school_id where a.deleted =0 and a.stage = #{stage} order by b.school_id desc 
+	</select>
+	
+	<!-- customized code end -->
+</mapper>

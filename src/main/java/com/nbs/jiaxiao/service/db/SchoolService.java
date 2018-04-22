@@ -83,9 +83,11 @@ public interface SchoolService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(School con);
-	
+
 	/* customized code start */
 	
+	String queryName(Integer id);
+
 	/* customized code end */
 
 }

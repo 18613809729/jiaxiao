@@ -181,8 +181,12 @@
 		order by id desc
 	</select>
 	
-	<select id="selectSearchInfo" resultMap="studentResultMap">
-		select id, username, mobile from student  <include refid="whereCondition"/>  order by id desc
+	<select id="selectSearchInfo" resultType="com.nbs.jiaxiao.domain.vo.StudentInfo">
+		select id, username, mobile, school_id from student  <include refid="whereCondition"/>  order by id desc
+	</select>
+	
+	<select id="selectTrainInfo" resultType="com.nbs.jiaxiao.domain.vo.StudentInfo">
+			select a.id, a.username, a.mobile, a.school_id, b.name as school_name from student as a inner join school as b on b.id = a.school_id where a.deleted = 0 and a.stage = #{stage} and a.id not in (select c.student_id from train as c where c.deleted = 0 and c.stage = #{stage}) order by a.id desc
 	</select>
 	<!-- customized code end -->
 </mapper>

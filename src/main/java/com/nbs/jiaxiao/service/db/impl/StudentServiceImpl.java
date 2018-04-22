@@ -4,12 +4,15 @@ package com.nbs.jiaxiao.service.db.impl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.StudentMapper;
+import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.StudentService;
 
 
@@ -121,6 +124,10 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	/* customized code start */
+	
+	@Autowired
+	private SchoolService schoolService;
+	
 	@Override
 	public List<StudentInfo> selectStageStudent(String stage){
 		Student con = new Student();
@@ -146,10 +153,16 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public List<Student> selectSearchInfo(Student con){
-		return studentMapper.selectSearchInfo(con == null ? new Student() : con);
+	public List<StudentInfo> selectSearchInfo(Student con){
+		List<StudentInfo> lst = studentMapper.selectSearchInfo(con == null ? new Student() : con);
+		lst.forEach(student -> student.setSchoolName(schoolService.queryName(student.getSchoolId())));
+		return lst;
 	}
 	
+	@Override
+	public List<StudentInfo> selectTrainInfo(String stage){
+		return studentMapper.selectTrainInfo(stage);
+	}
 	/* customized code end */
 
 }

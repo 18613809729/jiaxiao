@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +32,16 @@ import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.po.Train;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.ExamInterval;
 import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
+import com.nbs.jiaxiao.domain.vo.TrainInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
+import com.nbs.jiaxiao.exception.ResException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.FeeService;
@@ -45,6 +49,7 @@ import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.SellerService;
 import com.nbs.jiaxiao.service.db.SignStudentService;
 import com.nbs.jiaxiao.service.db.StudentService;
+import com.nbs.jiaxiao.service.db.TrainService;
 import com.nbs.jiaxiao.service.db.UserService;
 
 @Controller
@@ -76,6 +81,9 @@ public class TeacherStudentController {
 	
 	@Autowired
 	private DictService dictService;
+	
+	@Autowired
+	private TrainService trainService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -165,11 +173,24 @@ public class TeacherStudentController {
 	} 
 	
 	@GetMapping("/search.json")
-	public @ResponseBody BaseRes<List<Student>> searchStudentInfo(Student con) {
+	public @ResponseBody BaseRes<List<StudentInfo>> searchStudentInfo(Student con) {
 		return BaseRes.buildSuccess(studentService.selectSearchInfo(con));
 	}
 	
-	
+	@GetMapping("/search/inlearn.json")
+	public @ResponseBody BaseRes<List<StudentInfo>> searchInLearnStudentInfo() {
+		List<StudentInfo> lst = new ArrayList<StudentInfo>();
+		Student con = new Student();
+		con.setStage(Stage.STAGE_1.getCode());
+		lst.addAll(studentService.selectSearchInfo(con));
+		con.setStage(Stage.STAGE_2.getCode());
+		lst.addAll(studentService.selectSearchInfo(con));
+		con.setStage(Stage.STAGE_3.getCode());
+		lst.addAll(studentService.selectSearchInfo(con));
+		con.setStage(Stage.STAGE_4.getCode());
+		lst.addAll(studentService.selectSearchInfo(con));
+		return BaseRes.buildSuccess(lst);
+	}
 	
 	@GetMapping("/info/{id}")
 	public ModelAndView studentInfo(@PathVariable("id") int id) {
@@ -275,4 +296,61 @@ public class TeacherStudentController {
 		dictService.saveOrUpdateExamInterval(openId, examInterval);
 		return BaseRes.buildSuccess(null);
 	}
+	
+	
+	@GetMapping("/train/{stage}")
+	public ModelAndView trainIndex(@PathVariable("stage") String stage) {
+		assertValidTrainStage(stage);
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/trainIndex");
+		mv.addObject("stage", stage);
+		mv.addObject("stageInfo", Stage.valueOfByCode(stage));
+		return mv;
+	}
+	
+	@GetMapping("/train/{stage}/data.json")
+	public @ResponseBody BaseRes<List<TrainInfo>> trainData(@PathVariable("stage") String stage) {
+		assertValidTrainStage(stage);
+		return BaseRes.buildSuccess(trainService.queryByStage(stage));
+	}
+	
+	@GetMapping("/train/{stage}/add")
+	public ModelAndView trainAdd(@PathVariable("stage") String stage) {
+		assertValidTrainStage(stage);
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/trainAdd");
+		mv.addObject("stage", stage);
+		mv.addObject("stageInfo", Stage.valueOfByCode(stage));
+		return mv;
+	}
+	
+	@GetMapping("/train/{stage}/add/data.json")
+	public @ResponseBody BaseRes<List<StudentInfo>> trainAddData(@PathVariable("stage") String stage) {
+		assertValidTrainStage(stage);
+		return BaseRes.buildSuccess(studentService.selectTrainInfo(stage));
+	}
+	
+	@PostMapping("/train/{stage}")
+	public @ResponseBody BaseRes<Object> trainIndex(@RequestAttribute("openId") String openId, @PathVariable("stage") String stage, int[] studentIds) {
+		assertValidTrainStage(stage);
+		try {
+			trainService.addTrain(openId, stage, studentIds);
+			return BaseRes.buildSuccess(null);
+		} catch (ResException e) {
+			return e.getRes();
+		}
+	}
+	
+	@DeleteMapping("/train/{stage}")
+	public @ResponseBody BaseRes<Object> trainIndex(@RequestAttribute("openId") String openId, @PathVariable("stage") String stage, Integer studentId) {
+		assertValidTrainStage(stage);
+		Train train = trainService.queryByUk(stage, studentId);
+		NbsUtils.assertNotNull(train, "this train {0} {1} not exist", stage, studentId);
+		trainService.deleteByPriKey(train.getId());
+		return BaseRes.buildSuccess(null);
+	}
+	
+	private void assertValidTrainStage(String stage) {
+		if(!stage.equals(Stage.STAGE_1.getCode()) && !stage.equals(Stage.STAGE_2.getCode()) && !stage.equals(Stage.STAGE_3.getCode()) && !stage.equals(Stage.STAGE_4.getCode())) {
+			throw new InvalidParamException("invalid stage " + stage);
+		}
+	} 
 }

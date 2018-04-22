@@ -17,6 +17,9 @@ public class StudentInfo extends Student {
 	private java.lang.String address;
 	/* 图像 */
 	private java.lang.String headImg;
+	
+	private java.lang.String schoolName;
+
 	public java.lang.String getNickName() {
 		return nickName;
 	}
@@ -58,5 +61,11 @@ public class StudentInfo extends Student {
 	}
 	public void setHeadImg(java.lang.String headImg) {
 		this.headImg = headImg;
+	}
+	public java.lang.String getSchoolName() {
+		return schoolName;
+	}
+	public void setSchoolName(java.lang.String schoolName) {
+		this.schoolName = schoolName;
 	}
 }

@@ -93,7 +93,9 @@ public interface StudentService {
 
 	List<StudentInfo> selectArrearageStudent();
 
-	List<Student> selectSearchInfo(Student con);
+	List<StudentInfo> selectSearchInfo(Student con);
+
+	List<StudentInfo> selectTrainInfo(String stage);
 
 	/* customized code end */
 

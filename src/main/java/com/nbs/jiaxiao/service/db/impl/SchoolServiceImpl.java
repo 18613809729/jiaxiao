@@ -1,7 +1,10 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.nbs.jiaxiao.domain.po.School;
@@ -15,6 +18,8 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	@Resource
 	private SchoolMapper schoolMapper;
+	
+	private Map<Integer, String> map = new HashMap<Integer, String>();
 	
 	/**
 	 * 保存
@@ -118,6 +123,16 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	/* customized code start */
+	
+	@Override
+	public String queryName(Integer id) {
+		String name = map.get(id);
+		if(name == null) {
+			name = selectByPriKey(id).getName();
+			map.put(id, name);
+		}
+		return name;
+	}
 	
 	/* customized code end */
 

@@ -1,33 +1,36 @@
-package com.nbs.jiaxiao.mapper;
+package com.nbs.jiaxiao.service.db;
 
 
 import java.util.List;
+
 import com.nbs.jiaxiao.domain.po.Student;
-import com.nbs.jiaxiao.domain.vo.StudentInfo;
+import com.nbs.jiaxiao.domain.po.Train;
+import com.nbs.jiaxiao.domain.vo.TrainInfo;
+import com.nbs.jiaxiao.exception.ResException;
 
 
-public interface StudentMapper {
+public interface TrainService {
 	
 	/**
 	 * 保存
-	 * @param student
+	 * @param train
 	 * @return
 	 */
-	public int insert(Student student);
+	public int insert(Train train);
 	
 	/**
 	 * 根据主键更新
-	 * @param student
+	 * @param train
 	 * @return
 	 */
-	public int updateByPriKey(Student student);
+	public void updateByPriKey(Train train);
 	
 	/**
 	 * 根据条件逻辑删除 慎用
 	 * @param con 条件
 	 * @return
 	 */
-	public int delete(Student con);
+	public int delete(Train con);
 	
 	/**
 	 * 根据主键逻辑删除
@@ -41,7 +44,7 @@ public interface StudentMapper {
 	 * @param con
 	 * @return
 	 */
-	public int deleteActual(Student con);
+	public int deleteActual(Train con);
 	
 	/**
 	 * 根据主键物理删除 慎用
@@ -62,36 +65,38 @@ public interface StudentMapper {
 	 * @param id
 	 * @return
 	 */
-	public Student selectByPriKey(Integer id);
+	public Train selectByPriKey(Integer id);
 	
 	/**
 	 * 根据条件查询
 	 * @param con
 	 * @return
 	 */
-	public List<Student> selectList(Student con);
+	public List<Train> selectList(Train con);
 	
 	/**
 	 * 根据条件计数
 	 * @param con
 	 * @return
 	 */
-	public long selectCount(Student con);
+	public long selectCount(Train con);
 	
 	/**
 	 * 根据条件判断是否存在
 	 * @param con 条件
 	 * @return 存在的第一个值的主键
 	 */
-	public Integer exist(Student con);
-	
-	/* customized code start */
-	public List<StudentInfo> selectAllInfo(Student con);
+	public boolean exist(Train con);
 
-	public List<StudentInfo> selectSearchInfo(Student con);
+	/* customized code start */
 	
-	public List<StudentInfo> selectTrainInfo(String stage);
+	List<TrainInfo> queryByStage(String stage);
 	
+	Train queryByUk(String stage, Integer studentId);
+
+
+	void addTrain(String openId, String stage, int[] studentIds) throws ResException;
+
 	/* customized code end */
 
 }

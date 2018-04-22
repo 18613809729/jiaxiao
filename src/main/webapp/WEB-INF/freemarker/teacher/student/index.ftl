@@ -71,7 +71,7 @@
 					</div>
 
 					<div class="weui-cells">
-						<a class="weui-cell weui-cell_access" href="xunlian.html">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/train/2">
 							<div class="weui-cell__bd">
 								<span>每日训练</span>
 							</div>
