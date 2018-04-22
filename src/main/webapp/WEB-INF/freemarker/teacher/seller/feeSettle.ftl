@@ -26,7 +26,7 @@
 			</a>
 		</div>
 		<form id="form">
-			<div class="weui-cells__title">学生姓名/直销人员/佣金金额</div>
+			<div class="weui-cells__title">学员姓名/直销人员/佣金金额</div>
 			<div class="weui-cells weui-cells_checkbox">
 				<#list feeList as feeInfo>
 				<label class="weui-cell weui-check__label" for="${feeInfo.id}">

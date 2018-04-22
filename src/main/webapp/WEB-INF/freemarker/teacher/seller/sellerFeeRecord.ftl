@@ -26,7 +26,7 @@
 			</a>
 		</div>
 		<form id="form">
-			<div class="weui-cells__title">学生姓名/直销人员/佣金金额/状态</div>
+			<div class="weui-cells__title">学员姓名/直销人员/佣金金额/状态</div>
 			<div class="weui-cells">
 				<#list feeList as feeInfo>
 				<a class="weui-cell weui-cell_access" href="/teacher/student/info/${feeInfo.studentId}">
