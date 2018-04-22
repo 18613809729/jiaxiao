@@ -70,6 +70,7 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 		student.setLastUpdateNoUserId(opeOpenId);
 		student.setStage(Stage.STAGE_1.getCode());
 		student.setIsArrearage(student.getTotalFee().doubleValue() > payFee); //是否欠费
+		student.setExamDate(student.getSignDate());
 		studentService.insert(student);
 		if(payFee != null && payFee.doubleValue() != 0.0d) {
 			Fee fee = new Fee();

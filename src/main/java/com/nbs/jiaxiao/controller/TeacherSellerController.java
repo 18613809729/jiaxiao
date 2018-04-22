@@ -308,7 +308,7 @@ public class TeacherSellerController {
 			seller.setUser(user);
 		}
 		List<CommisionFeeInfo> feeList = commisionFeeService.queryCommisionFeeInfo(id);
-		feeList.removeIf(fee -> fee.getTopSellerId().intValue() == id);
+		feeList.removeIf(fee -> fee.getTopSellerId().intValue() != id);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sellerFeeOrder");
 		mv.addObject("feeList", feeList);
 		mv.addObject("info", seller);

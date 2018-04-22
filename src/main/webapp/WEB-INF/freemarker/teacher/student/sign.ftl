@@ -124,7 +124,7 @@
                             $.toSuccess({
                                 "title":"登记成功",
                                 "primary_btn_msg":"查看信息",
-                                "primary_btn_url":"index",
+                                "primary_btn_url":"/teacher/student/info/"+res.data.id,
                                 "default_btn_msg":"继续添加",
                                 "default_btn_url":"javascript:location.reload();"
                             });
