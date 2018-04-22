@@ -10,6 +10,7 @@
   		<result property="driveType" column="DRIVE_TYPE"/>
   		<result property="totalFee" column="TOTAL_FEE"/>
   		<result property="signDate" column="SIGN_DATE"/>
+  		<result property="examDate" column="EXAM_DATE"/>
   		<result property="sellerId" column="SELLER_ID"/>
   		<result property="schoolId" column="SCHOOL_ID"/>
   		<result property="stage" column="STAGE"/>
@@ -23,7 +24,7 @@
 	</resultMap>
 
 	<sql id="commonSelect">
-		ID, OPEN_ID, USERNAME, MOBILE, CERT_NO, DRIVE_TYPE, TOTAL_FEE, SIGN_DATE, SELLER_ID, SCHOOL_ID, STAGE, IS_ARREARAGE, PHASE, REMARK, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+		ID, OPEN_ID, USERNAME, MOBILE, CERT_NO, DRIVE_TYPE, TOTAL_FEE, SIGN_DATE, EXAM_DATE, SELLER_ID, SCHOOL_ID, STAGE, IS_ARREARAGE, PHASE, REMARK, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
 	</sql>
 	
 	<sql id="whereCondition">
@@ -36,6 +37,7 @@
 	 			<if test="driveType != null"> AND DRIVE_TYPE = #{driveType}</if> 
 	 			<if test="totalFee != null"> AND TOTAL_FEE = #{totalFee}</if> 
 	 			<if test="signDate != null"> AND SIGN_DATE = #{signDate}</if> 
+	 			<if test="examDate != null"> AND EXAM_DATE = #{examDate}</if> 
 	 			<if test="sellerId != null"> AND SELLER_ID = #{sellerId}</if> 
 	 			<if test="schoolId != null"> AND SCHOOL_ID = #{schoolId}</if> 
 	 			<if test="stage != null"> AND STAGE = #{stage}</if> 
@@ -63,6 +65,7 @@
 				<if test="driveType != null">DRIVE_TYPE,</if> 
 				<if test="totalFee != null">TOTAL_FEE,</if> 
 				<if test="signDate != null">SIGN_DATE,</if> 
+				<if test="examDate != null">EXAM_DATE,</if> 
 				<if test="sellerId != null">SELLER_ID,</if> 
 				<if test="schoolId != null">SCHOOL_ID,</if> 
 				<if test="stage != null">STAGE,</if> 
@@ -84,6 +87,7 @@
 			<if test="driveType != null">#{driveType},</if> 
 			<if test="totalFee != null">#{totalFee},</if> 
 			<if test="signDate != null">#{signDate},</if> 
+			<if test="examDate != null">#{examDate},</if> 
 			<if test="sellerId != null">#{sellerId},</if> 
 			<if test="schoolId != null">#{schoolId},</if> 
 			<if test="stage != null">#{stage},</if> 
@@ -107,6 +111,7 @@
 				<if test="driveType != null">DRIVE_TYPE=#{driveType},</if>
 				<if test="totalFee != null">TOTAL_FEE=#{totalFee},</if>
 				<if test="signDate != null">SIGN_DATE=#{signDate},</if>
+				<if test="examDate != null">EXAM_DATE=#{examDate},</if>
 				<if test="sellerId != null">SELLER_ID=#{sellerId},</if>
 				<if test="schoolId != null">SCHOOL_ID=#{schoolId},</if>
 				<if test="stage != null">STAGE=#{stage},</if>

@@ -27,6 +27,8 @@ public class Student extends Base{
 	private java.math.BigDecimal totalFee;
 	/*  */
 	private java.sql.Date signDate;
+	/* 考试日期计算开始 */
+	private java.sql.Date examDate;
 	/* 分销员 */
 	private java.lang.Integer sellerId;
 	/*  */
@@ -112,6 +114,14 @@ public class Student extends Base{
 
 	public void setSignDate(java.sql.Date signDate) {
 		this.signDate = signDate;
+	}
+	
+	public java.sql.Date getExamDate() {
+		return examDate;
+	}
+
+	public void setExamDate(java.sql.Date examDate) {
+		this.examDate = examDate;
 	}
 	
 	public java.lang.Integer getSellerId() {
