@@ -20,8 +20,16 @@ public class Dict extends Base{
 	/* 名称 */
 	private java.lang.String value;
 	
+	public Dict() {
+	}
+
 	
-	
+	public Dict(String type, String code, String value) {
+		this.type = type;
+		this.code = code;
+		this.value = value;
+	}
+
 	public java.lang.Integer getId() {
 		return id;
 	}

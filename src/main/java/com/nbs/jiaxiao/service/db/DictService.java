@@ -2,7 +2,12 @@ package com.nbs.jiaxiao.service.db;
 
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.nbs.jiaxiao.constant.DictType;
 import com.nbs.jiaxiao.domain.po.Dict;
+import com.nbs.jiaxiao.domain.vo.ExamInterval;
 
 
 public interface DictService {
@@ -83,8 +88,16 @@ public interface DictService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(Dict con);
-	
+
 	/* customized code start */
+	
+	List<Dict> queryDictByType(String type);
+
+	Map<String, Dict> queryDictMapByType(String type);
+
+	void saveOrUpdateExamInterval(String opeOpenId, ExamInterval examInterval);
+
+	ExamInterval queryExamInterval();
 	
 	/* customized code end */
 

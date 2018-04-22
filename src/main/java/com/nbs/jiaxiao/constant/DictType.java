@@ -4,7 +4,8 @@ public enum DictType{
 	
 	TYPE("type", "类型"),
 	COMMISSION("COMMISSION", "佣金"),
-	SCHOOL("SCHOOL", "驾校");
+	SCHOOL("SCHOOL", "驾校"),
+	EXAM_INTERVAL("EXAM_INTERVAL", "考试间隔");
 	String code;
 	String desc;
 	

@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
-                    <div class="weui-cell__hd"><label class="weui-label">驾校</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label" for="schoolId">驾校</label></div>
                     <div class="weui-cell__bd">
                         <select class="weui-select" name="schoolId" required>
                         </select>

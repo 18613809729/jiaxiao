@@ -33,11 +33,13 @@ import com.nbs.jiaxiao.domain.po.SignStudent;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
+import com.nbs.jiaxiao.domain.vo.ExamInterval;
 import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
+import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.FeeService;
 import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.SellerService;
@@ -71,6 +73,9 @@ public class TeacherStudentController {
 
 	@Autowired
 	private SchoolService schoolService;
+	
+	@Autowired
+	private DictService dictService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -256,4 +261,18 @@ public class TeacherStudentController {
 		return BaseRes.buildSuccess(feeService.addFee(openId, money, LocalDate.parse(payDate, FORMAT), student));
 	}
 	
+	
+	@GetMapping("/exam/interval")
+	public ModelAndView examInterval() {
+		ExamInterval examInterval = dictService.queryExamInterval();
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/examInterval");
+		mv.addObject("interval", examInterval);
+		return mv;
+	}
+	
+	@PutMapping("/exam/interval")
+	public @ResponseBody BaseRes<Object> updateExamInterval(@RequestAttribute("openId") String openId, ExamInterval examInterval) {
+		dictService.saveOrUpdateExamInterval(openId, examInterval);
+		return BaseRes.buildSuccess(null);
+	}
 }

@@ -61,9 +61,9 @@
 							</div>
 						</a>
 
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/exam/interval">
 							<div class="weui-cell__bd">
-								<p>缴费登记</p>
+								<p>考试间隔</p>
 							</div>
 							<div class="weui-cell__ft">
 							</div>
