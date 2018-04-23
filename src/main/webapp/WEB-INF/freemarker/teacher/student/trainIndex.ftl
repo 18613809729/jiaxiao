@@ -51,6 +51,12 @@
             <span class="weui-loadmore__tips globl_bg_color">数据加载失败</span>
         </div>
 	</script>
+	<script id="loading" type="text/html">
+		<div class="weui-loadmore">
+			<i class="weui-loading"></i>
+			<span class="weui-loadmore__tips">正在加载</span>
+		</div>
+	</script>
 	<script id="empty" type="text/html">
 		<div class="weui-loadmore weui-loadmore_line">
             <span class="weui-loadmore__tips globl_bg_color">暂无数据</span>
@@ -126,6 +132,7 @@
 		}
 
 		function load(stage){
+			$("#container").html(template(document.getElementById('loading').innerHTML, {}));
 			$.getJSON("/teacher/student/train/" + stage + "/data.json").done(function(res){
 	        	if(res.code == '0'){
 	                render(res.data, stage);
