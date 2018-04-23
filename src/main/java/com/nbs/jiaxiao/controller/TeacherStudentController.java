@@ -298,12 +298,12 @@ public class TeacherStudentController {
 	}
 	
 	
-	@GetMapping("/train/{stage}")
-	public ModelAndView trainIndex(@PathVariable("stage") String stage) {
-		assertValidTrainStage(stage);
+	@GetMapping("/train/index")
+	public ModelAndView trainIndex() {
+		//assertValidTrainStage(stage);
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/trainIndex");
-		mv.addObject("stage", stage);
-		mv.addObject("stageInfo", Stage.valueOfByCode(stage));
+		//mv.addObject("stage", stage);
+		//mv.addObject("stageInfo", Stage.valueOfByCode(stage));
 		return mv;
 	}
 	

@@ -12,16 +12,16 @@
 	<div class="page">
 		<div class="weui-tab">
 				<div class="weui-navbar">
-					<a class="weui-navbar__item <#if stage=="1">weui-bar__item_on</#if>" href="/teacher/student/train/1">
+					<a class="weui-navbar__item" data-id="1">
 						科目一
 					</a>
-					<a class="weui-navbar__item <#if stage=="2">weui-bar__item_on</#if>" href="/teacher/student/train/2">
+					<a class="weui-navbar__item weui-bar__item_on" data-id="2">
 						科目二
 					</a>
-					<a class="weui-navbar__item <#if stage=="3">weui-bar__item_on</#if>" href="/teacher/student/train/3">
+					<a class="weui-navbar__item" data-id="3">
 						科目三
 					</a>
-					<a class="weui-navbar__item <#if stage=="4">weui-bar__item_on</#if>" href="/teacher/student/train/4">
+					<a class="weui-navbar__item" data-id="4">
 						科目四
 					</a>
 				</div>
@@ -34,7 +34,7 @@
 					</div>
 					
 					<div class="weui-btn-area">
-						<a href="/teacher/student/train/${stage}/add" class="weui-btn weui-btn_primary">添加学员</a>
+						<a class="weui-btn weui-btn_primary" id="addBtn">添加学员</a>
 					</div>
 				</div>
 			</div>
@@ -66,8 +66,7 @@
 	    </div>
 	</script>
 
-	<#if stage=="2">
-		<script id="cellTpl" type="text/html">
+	<script id="cellTpl2" type="text/html">
 			<div class="weui-cell weui-cell_swiped">
 				<div class="weui-cell__bd">
 					<div class="weui-cell item" data-id="<%=data.studentId%>">
@@ -89,8 +88,9 @@
 				</div>
 			</div>
 		</script>
-	<#else>
-		<script id="cellTpl" type="text/html">
+
+
+		<script id="cellTpl1" type="text/html">
 			<div class="weui-cell weui-cell_swiped">
 				<div class="weui-cell__bd">
 					<div class="weui-cell item" data-id="<%=data.studentId%>">
@@ -108,33 +108,52 @@
 					<a class="weui-swiped-btn weui-swiped-btn_warn del_btn" href="javascript:" data-id="<%=data.studentId%>">删除</a>
 				</div>
 			</div>
-		</script>
-	</#if>
-	
+		</script>	
 
 
 	<script type="text/javascript">
 	$(function(){
-		function render(dataInfos){
+		var curStage = "";
+		function render(dataInfos, stage){
 			if(dataInfos.length){
 				var tpl = template(document.getElementById('dataLst').innerHTML);
-    			var cellTpl = template(document.getElementById('cellTpl').innerHTML);
+    			var cellTpl = template(document.getElementById(stage == 2 ? 'cellTpl2':'cellTpl1').innerHTML);
     			$("#container").html(tpl({"cellTpl":cellTpl, "datas":dataInfos}))
 			} else {
 				$("#container").html(template(document.getElementById('empty').innerHTML, {}));
 			}
 			$('.weui-cell_swiped').swipeout();
 		}
-		
-		$.getJSON("/teacher/student/train/${stage}/data.json").done(function(res){
-        	if(res.code == '0'){
-                render(res.data);
-            } else {
-                $.toast(res.msg, "cancel");
-            }
-        }).fail(function() {
-			$("#container").html(template(document.getElementById('error').innerHTML, {}));
-  		});
+
+		function load(stage){
+			$.getJSON("/teacher/student/train/" + stage + "/data.json").done(function(res){
+	        	if(res.code == '0'){
+	                render(res.data, stage);
+	            } else {
+	                $.toast(res.msg, "cancel");
+	            }
+	        }).fail(function() {
+				$("#container").html(template(document.getElementById('error').innerHTML, {}));
+	  		});
+		}
+
+		function navbarFun(_this){
+			var stage = _this.data("id");
+			if(curStage != stage){
+				$(".weui-navbar__item").removeClass("weui-bar__item_on");
+				_this.addClass("weui-bar__item_on");
+				curStage = stage;
+				$("#addBtn").attr("href", "/teacher/student/train/" + stage + "/add");
+				load(stage);
+			}
+		}
+
+		$(".weui-navbar__item").click(function(){
+			navbarFun($(this));
+		});
+
+		navbarFun($(".weui-bar__item_on"));
+
 
         $("body").on("click", ".item", function(){
   			 	location.href = "/teacher/student/info/" + $(this).data("id");
@@ -145,7 +164,7 @@
 				    text: "确认删除",
 				    className: "color-danger",
 				    onClick: function() {
-				      	$.singleDelete(_this, "/teacher/student/train/${stage}/" + _this.data("id")).done(function(res){
+				      	$.singleDelete(_this, "/teacher/student/train/" + curStage + "/" + _this.data("id")).done(function(res){
   							res.code == "0" && _this.parents(".weui-cell_swiped").remove();
   						});
 				    }

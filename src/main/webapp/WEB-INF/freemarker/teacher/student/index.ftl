@@ -71,7 +71,7 @@
 					</div>
 
 					<div class="weui-cells">
-						<a class="weui-cell weui-cell_access" href="/teacher/student/train/2">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/train/index">
 							<div class="weui-cell__bd">
 								<span>每日训练</span>
 							</div>

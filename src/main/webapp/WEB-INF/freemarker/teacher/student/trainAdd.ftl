@@ -146,7 +146,7 @@
       				if(res.code == "0"){
       					$.toSuccess({
                             "title":"添加成功",
-                            "primary_btn_url":"/teacher/student/train/${stage}"
+                            "primary_btn_url":"javascript:history.back();"
                         });
       				} else if(res.code == "101"){
 						$.toast('学员' + res.data.username + "已在训练中", "cancel");
