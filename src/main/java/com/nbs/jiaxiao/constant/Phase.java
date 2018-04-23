@@ -6,7 +6,8 @@ public enum Phase{
 	JUNIOR_2("2", "初级整套"),
 	MIDDLE_1("3", "中级"),
 	MIDDLE_2("4", "中级整套"),
-	EXAM("5", "考试级");
+	EXAM("5", "考试级"),
+	REACH("9", "科二达标");
 	String code;
 	String desc;
 	

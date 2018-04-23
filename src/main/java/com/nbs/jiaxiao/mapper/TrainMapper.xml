@@ -120,7 +120,7 @@
 	<!-- customized code start -->
 	
 	<select id="queryInfo" resultType="com.nbs.jiaxiao.domain.vo.TrainInfo">
-		select b.username, b.mobile, b.school_id, c.name as school_name, a.stage, a.phase from train as a inner join student as b on a.student_id = b.id inner join school as c on c.id = b.school_id where a.deleted =0 and a.stage = #{stage} order by b.school_id desc 
+		select a.student_id, b.username, b.mobile, b.school_id, c.name as school_name, a.stage, a.phase from train as a inner join student as b on a.student_id = b.id inner join school as c on c.id = b.school_id where a.deleted =0 and a.stage = #{stage} order by b.school_id desc 
 	</select>
 	
 	<!-- customized code end -->

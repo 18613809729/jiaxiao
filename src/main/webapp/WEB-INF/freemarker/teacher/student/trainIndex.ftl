@@ -70,20 +70,22 @@
 		<script id="cellTpl" type="text/html">
 			<div class="weui-cell weui-cell_swiped">
 				<div class="weui-cell__bd">
-					<div class="weui-cell">
+					<div class="weui-cell item" data-id="<%=data.studentId%>">
 						<div class="weui-cell__bd">
 							<div class="weui-flex">
 					            <div class="weui-flex__item"><%=data.schoolName%></div>
 					            <div class="weui-flex__item"><%=data.username%></div>
-					            <div class="weui-flex__item"><%=data.phaseName%></div>
+					            <div class="weui-flex__item phase_name"><%=data.phaseName%></div>
 					        </div>
 						</div>
 						<div class="weui-cell__ft"></div>
 					</div>
 				</div>
 				<div class="weui-cell__ft">
-					<a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
-					<a class="weui-swiped-btn weui-swiped-btn_default" href="javascript:">达标</a>
+					<%if(data.phase != 9){%>
+						<a class="weui-swiped-btn weui-swiped-btn_default reach_btn" href="javascript:" data-id="<%=data.studentId%>">达标</a>
+					<%}%>
+					<a class="weui-swiped-btn weui-swiped-btn_warn del_btn" href="javascript:" data-id="<%=data.studentId%>">删除</a>
 				</div>
 			</div>
 		</script>
@@ -91,7 +93,7 @@
 		<script id="cellTpl" type="text/html">
 			<div class="weui-cell weui-cell_swiped">
 				<div class="weui-cell__bd">
-					<div class="weui-cell">
+					<div class="weui-cell item" data-id="<%=data.studentId%>">
 						<div class="weui-cell__bd">
 							<div class="weui-flex">
 					            <div class="weui-flex__item"><%=data.schoolName%></div>
@@ -103,7 +105,7 @@
 					</div>
 				</div>
 				<div class="weui-cell__ft">
-					<a class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
+					<a class="weui-swiped-btn weui-swiped-btn_warn del_btn" href="javascript:" data-id="<%=data.studentId%>">删除</a>
 				</div>
 			</div>
 		</script>
@@ -135,12 +137,40 @@
   		});
 
         $("body").on("click", ".item", function(){
-  			 	location.href = "/teacher/student/join/info/" + $(this).data("id");
+  			 	location.href = "/teacher/student/info/" + $(this).data("id");
   			}).on("click", ".del_btn", function(){
   				var _this = $(this);
-  				$.singleDelete(_this, "/teacher/student/join/info/" + _this.parents("[data-id]").data("id")).done(function(res){
-  					res.code == "0" && _this.parents("[data-id]").remove();
-  				});
+  				$.actions({
+				  actions: [{
+				    text: "确认删除",
+				    className: "color-danger",
+				    onClick: function() {
+				      	$.singleDelete(_this, "/teacher/student/train/${stage}/" + _this.data("id")).done(function(res){
+  							res.code == "0" && _this.parents(".weui-cell_swiped").remove();
+  						});
+				    }
+				  }]
+				});
+  			}).on("click", ".reach_btn", function(){
+  				var _this = $(this);
+  				$.actions({
+				  actions: [{
+				    text: "确认达标",
+				    className: "color-primary",
+				    onClick: function() {
+				      $.singlePut(_this, "/teacher/student/train/2/" + _this.data("id") + "/reach").done(function(res){
+		  					if(res.code == "0"){
+		  						if(res.data.phase == "9"){
+									_this.parents(".weui-cell_swiped").remove();
+		  						} else {
+		  							_this.parents(".weui-cell_swiped").find(".phase_name").text(res.data.phaseName);
+		  							$('.weui-cell_swiped').swipeout('close');
+		  						}
+		  					}
+  						});
+				    }
+				  }]
+				});
   			});
 	});
 	</script>

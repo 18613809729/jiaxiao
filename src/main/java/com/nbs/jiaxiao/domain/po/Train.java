@@ -1,6 +1,7 @@
 package com.nbs.jiaxiao.domain.po;
 
 
+import com.nbs.jiaxiao.constant.Phase;
 import com.nbs.jiaxiao.domain.base.Base;
 
 
@@ -59,6 +60,11 @@ public class Train extends Base{
 	}
 	
 	/* customized code start */
+	
+	public java.lang.String getPhaseName() {
+		Phase phase = Phase.valueOfByCode(getPhase());
+		return phase == null ? "" : phase.getDesc();
+	}
 	
 	/* customized code end */
 }

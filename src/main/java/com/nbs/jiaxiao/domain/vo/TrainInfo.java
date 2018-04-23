@@ -47,6 +47,7 @@ public class TrainInfo extends Train{
 	}
 	
 	public java.lang.String getPhaseName() {
-		return Phase.valueOfByCode(getPhase()).getDesc();
+		Phase phase = Phase.valueOfByCode(getPhase());
+		return phase == null ? "" : phase.getDesc();
 	}
 }

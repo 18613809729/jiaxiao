@@ -1,8 +1,8 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
-import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 
 import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.Phase;
@@ -22,6 +20,7 @@ import com.nbs.jiaxiao.domain.po.Train;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.TrainInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.exception.ResException;
 import com.nbs.jiaxiao.mapper.TrainMapper;
 import com.nbs.jiaxiao.service.db.StudentService;
@@ -182,6 +181,31 @@ public class TrainServiceImpl implements TrainService{
 		train.setStage(stage);
 		train.setStudentId(studentId);
 		return NbsUtils.getFirst(selectList(train));
+	}
+	
+	@Transactional
+	@Override
+	public Train reach(String openId, Integer studentId) {
+		Train train = queryByUk(Stage.STAGE_2.getCode(), studentId);
+		NbsUtils.assertNotNull(train, "this train {0} not exist", studentId);
+		Student student = studentService.selectByPriKey(studentId);
+		student.setRemark("phase change");
+		student.setLastUpdateNoUserId(openId);
+		train.setLastUpdateNoUserId(openId);
+
+		Phase phase = Phase.valueOfByCode(train.getPhase());
+		if(phase == Phase.EXAM) {
+			student.setPhase(Phase.REACH.getCode());
+			train.setPhase(Phase.REACH.getCode());
+			deleteByPriKey(train.getId());
+		} else {
+			String nextPhase = String.valueOf(Integer.valueOf(train.getPhase()) + 1);
+			student.setPhase(nextPhase);
+			train.setPhase(nextPhase);
+			updateByPriKey(train);
+		}
+		studentService.updateByPriKey(student);
+		return train;
 	}
 	
 	/* customized code end */

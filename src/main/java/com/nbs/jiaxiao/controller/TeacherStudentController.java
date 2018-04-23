@@ -339,13 +339,18 @@ public class TeacherStudentController {
 		}
 	}
 	
-	@DeleteMapping("/train/{stage}")
-	public @ResponseBody BaseRes<Object> trainIndex(@RequestAttribute("openId") String openId, @PathVariable("stage") String stage, Integer studentId) {
+	@DeleteMapping("/train/{stage}/{studentId}")
+	public @ResponseBody BaseRes<Object> trainIndex(@RequestAttribute("openId") String openId, @PathVariable("stage") String stage, @PathVariable("studentId") Integer studentId) {
 		assertValidTrainStage(stage);
 		Train train = trainService.queryByUk(stage, studentId);
 		NbsUtils.assertNotNull(train, "this train {0} {1} not exist", stage, studentId);
 		trainService.deleteByPriKey(train.getId());
 		return BaseRes.buildSuccess(null);
+	}
+	
+	@PutMapping("/train/2/{studentId}/reach")
+	public @ResponseBody BaseRes<Train> trainReach(@RequestAttribute("openId") String openId, @PathVariable("studentId") Integer studentId) {
+		return BaseRes.buildSuccess(trainService.reach(openId, studentId));
 	}
 	
 	private void assertValidTrainStage(String stage) {

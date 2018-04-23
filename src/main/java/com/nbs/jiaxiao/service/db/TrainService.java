@@ -97,6 +97,8 @@ public interface TrainService {
 
 	void addTrain(String openId, String stage, int[] studentIds) throws ResException;
 
+	Train reach(String openId, Integer studentId);
+
 	/* customized code end */
 
 }
