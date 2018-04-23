@@ -3,6 +3,8 @@ package com.nbs.jiaxiao.service.db;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import com.nbs.jiaxiao.domain.po.Exam;
 import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 
@@ -99,6 +101,8 @@ public interface StudentService {
 	List<StudentInfo> selectTrainInfo(String stage);
 
 	List<Student> queryExamData(String stage, LocalDate examDate);
+
+	Exam addExam(String openId, String stage, LocalDate examDate, int[] studentIds);
 
 	/* customized code end */
 

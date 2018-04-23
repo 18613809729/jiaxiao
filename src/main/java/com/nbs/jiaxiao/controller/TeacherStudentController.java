@@ -2,10 +2,8 @@ package com.nbs.jiaxiao.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +25,7 @@ import com.nbs.jiaxiao.constant.Phase;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.State;
-import com.nbs.jiaxiao.constant.Status;
+import com.nbs.jiaxiao.domain.po.Exam;
 import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.SignStudent;
@@ -40,10 +38,11 @@ import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.domain.vo.TrainInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
-import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.exception.ResException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.DictService;
+import com.nbs.jiaxiao.service.db.ExamInfoService;
+import com.nbs.jiaxiao.service.db.ExamService;
 import com.nbs.jiaxiao.service.db.FeeService;
 import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.SellerService;
@@ -84,6 +83,12 @@ public class TeacherStudentController {
 	
 	@Autowired
 	private TrainService trainService;
+	
+	@Autowired
+	private ExamService examService;
+	
+	@Autowired
+	private ExamInfoService examInfoService;
 	
 	@GetMapping("/index")
 	public ModelAndView index() {
@@ -359,10 +364,28 @@ public class TeacherStudentController {
 		}
 	} 
 	
+	@GetMapping("/exam/index")
+	public ModelAndView examData() {
+		return  new ModelAndView(FTL_PREFIX + "/examIndex");
+	} 
 	
 	@GetMapping("/exam/{stage}/data.json")
-	public @ResponseBody BaseRes<List<TrainInfo>> examData(@PathVariable("stage") String stage) {
+	public @ResponseBody BaseRes<List<Student>> examData(@PathVariable("stage") String stage, String examDate) {
 		assertValidTrainStage(stage);
-		return BaseRes.buildSuccess(trainService.queryByStage(stage));
+		return BaseRes.buildSuccess(studentService.queryExamData(stage, LocalDate.parse(examDate, FORMAT)));
+	} 
+	
+	@PostMapping("/exam/{stage}")
+	public @ResponseBody BaseRes<Exam> addExam(@RequestAttribute("openId") String openId, @PathVariable("stage") String stage, String examDate, int[] studentIds) {
+		assertValidTrainStage(stage);
+		Exam exam = studentService.addExam(openId, stage, LocalDate.parse(examDate, FORMAT), studentIds);
+		return BaseRes.buildSuccess(exam);
+	} 
+	
+	@GetMapping("/exam/notify/{id}")
+	public ModelAndView examNotify(Integer id) {
+		Exam exam = examService.selectByPriKey(id);
+		
+		return  new ModelAndView(FTL_PREFIX + "/examNotify");
 	} 
 }

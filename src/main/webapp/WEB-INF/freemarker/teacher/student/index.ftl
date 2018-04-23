@@ -78,7 +78,7 @@
 							<div class="weui-cell__ft">
 							</div>
 						</a>
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/exam/index">
 							<div class="weui-cell__bd">
 								<p>预约考试</p>
 							</div>

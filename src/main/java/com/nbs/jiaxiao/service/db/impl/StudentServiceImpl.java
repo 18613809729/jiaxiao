@@ -1,23 +1,35 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nbs.jiaxiao.constant.Phase;
+import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.Stage;
+import com.nbs.jiaxiao.domain.po.Exam;
+import com.nbs.jiaxiao.domain.po.ExamInfo;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.po.Train;
+import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.ExamInterval;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
+import com.nbs.jiaxiao.exception.ResException;
 import com.nbs.jiaxiao.mapper.StudentMapper;
 import com.nbs.jiaxiao.service.db.DictService;
+import com.nbs.jiaxiao.service.db.ExamInfoService;
+import com.nbs.jiaxiao.service.db.ExamService;
 import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.StudentService;
 
@@ -137,6 +149,12 @@ public class StudentServiceImpl implements StudentService{
 	@Autowired
 	private DictService dictService;
 	
+	@Autowired
+	private ExamService examService;
+	
+	@Autowired
+	private ExamInfoService examInfoService;
+	
 	@Override
 	public List<StudentInfo> selectStageStudent(String stage){
 		Student con = new Student();
@@ -183,13 +201,30 @@ public class StudentServiceImpl implements StudentService{
 		List<Student> lst = selectList(con);
 		Integer interval = dictService.queryExamInterval().getIntervalByStage(stage);
 		lst.removeIf(student -> {
-			LocalDate date = LocalDate.ofEpochDay(student.getExamDate().getTime());
-			return date.plusDays(interval).compareTo(examDate) <= 0;
+			LocalDate date = student.getExamDate().toLocalDate();
+			return date.plusDays(interval).compareTo(examDate) > 0;
 		});
 		lst.forEach(student -> student.setSchoolName(schoolService.queryName(student.getSchoolId())));
 		return lst;
 	}
 	
+	@Transactional
+	@Override
+	public Exam addExam(String openId, String stage, LocalDate examDate, int[] studentIds) {
+		Exam exam = new Exam();
+		exam.setLastUpdateNoUserId(openId);
+		exam.setExamDate(Date.valueOf(examDate));
+		exam.setStage(stage);
+		examService.insert(exam);
+		for (int studentId : studentIds) {
+			ExamInfo examInfo = new ExamInfo();
+			examInfo.setExamId(exam.getId());
+			examInfo.setStudentId(studentId);
+			examInfo.setLastUpdateNoUserId(openId);;
+			examInfoService.insert(examInfo);
+		}
+		return exam;
+	}
 	/* customized code end */
 
 }
