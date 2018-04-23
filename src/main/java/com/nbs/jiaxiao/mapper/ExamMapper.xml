@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbs.jiaxiao.mapper.ExamMapper">
+	<resultMap id="examResultMap" type="com.nbs.jiaxiao.domain.po.Exam">
+  		<result property="id" column="ID"/>
+  		<result property="stage" column="STAGE"/>
+  		<result property="examDate" column="EXAM_DATE"/>
+  		<result property="status" column="STATUS"/>
+  		<result property="createdTime" column="CREATED_TIME"/>
+  		<result property="modifiedTime" column="MODIFIED_TIME"/>
+  		<result property="lastUpdateNo" column="LAST_UPDATE_NO"/>
+  		<result property="lastUpdateNoUserId" column="LAST_UPDATE_NO_USER_ID"/>
+	</resultMap>
+
+	<sql id="commonSelect">
+		ID, STAGE, EXAM_DATE, STATUS, CREATED_TIME, MODIFIED_TIME, LAST_UPDATE_NO, LAST_UPDATE_NO_USER_ID
+	</sql>
+	
+	<sql id="whereCondition">
+		WHERE DELETED = 0 
+	 			<if test="id != null"> AND ID = #{id}</if> 
+	 			<if test="stage != null"> AND STAGE = #{stage}</if> 
+	 			<if test="examDate != null"> AND EXAM_DATE = #{examDate}</if> 
+	 			<if test="status != null"> AND STATUS = #{status}</if> 
+	 			<if test="param.createdTimeStart != null"> AND CREATED_TIME <![CDATA[>=]]> #{param.createdTimeStart} </if> 
+	 			<if test="param.createdTimeEnd != null"> AND CREATED_TIME <![CDATA[<=]]> #{param.createdTimeEnd} </if>
+	 			<if test="param.modifiedTimeStart != null"> AND MODIFIED_TIME <![CDATA[>=]]> #{param.modifiedTimeStart} </if> 
+	 			<if test="param.modifiedTimeEnd != null"> AND MODIFIED_TIME <![CDATA[<=]]> #{param.modifiedTimeEnd} </if>
+				<if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo}</if> 
+	 			<if test="param.lastUpdateNoStart != null"> AND LAST_UPDATE_NO <![CDATA[>=]]> #{param.lastUpdateNoStart} </if> 
+	 			<if test="param.lastUpdateNoEnd != null"> AND LAST_UPDATE_NO <![CDATA[<=]]> #{param.lastUpdateNoEnd} </if>
+	 			<if test="lastUpdateNoUserId != null"> AND LAST_UPDATE_NO_USER_ID = #{lastUpdateNoUserId}</if> 
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	 	INSERT  INTO  exam 
+	 	<trim prefix="(" suffixOverrides="," suffix=")">
+				<if test="id != null">ID,</if> 
+				<if test="stage != null">STAGE,</if> 
+				<if test="examDate != null">EXAM_DATE,</if> 
+				<if test="status != null">STATUS,</if> 
+				<if test="createdTime != null">CREATED_TIME,</if> 
+				<if test="modifiedTime != null">MODIFIED_TIME,</if> 
+				<if test="lastUpdateNo != null">LAST_UPDATE_NO,</if> 
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID,</if> 
+	 	</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">#{id},</if> 
+			<if test="stage != null">#{stage},</if> 
+			<if test="examDate != null">#{examDate},</if> 
+			<if test="status != null">#{status},</if> 
+			<if test="createdTime != null">#{createdTime},</if> 
+			<if test="modifiedTime != null">#{modifiedTime},</if> 
+			<if test="lastUpdateNo != null">#{lastUpdateNo},</if> 
+			<if test="lastUpdateNoUserId != null">#{lastUpdateNoUserId},</if> 
+		</trim>
+	</insert>
+	
+	<update id="updateByPriKey">
+		UPDATE   exam 
+		<set>
+				<if test="stage != null">STAGE=#{stage},</if>
+				<if test="examDate != null">EXAM_DATE=#{examDate},</if>
+				<if test="status != null">STATUS=#{status},</if>
+				<if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
+				<if test="modifiedTime != null">MODIFIED_TIME=#{modifiedTime},</if>
+				LAST_UPDATE_NO = LAST_UPDATE_NO + 1,
+				<if test="lastUpdateNoUserId != null">LAST_UPDATE_NO_USER_ID=#{lastUpdateNoUserId},</if>
+    	</set>
+    	WHERE ID = #{id}  <if test="lastUpdateNo != null"> AND LAST_UPDATE_NO = #{lastUpdateNo} </if>  AND DELETED = 0 
+    </update>
+	
+	<update id="delete">
+		UPDATE  exam SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  <include refid="whereCondition"/>
+	</update>
+	
+	<update id="deleteByPriKey">
+		UPDATE  exam SET DELETED = ID , LAST_UPDATE_NO = LAST_UPDATE_NO + 1  WHERE ID = #{id}  AND DELETED = 0 
+	</update>
+	
+	<delete id="deleteActual">
+		DELETE FROM exam <include refid="whereCondition"/>
+	</delete>
+	
+	<delete id="deleteActualByPriKey">
+		DELETE FROM exam WHERE ID = #{id}
+	</delete>
+	
+	<delete id="clean">
+		DELETE FROM exam WHERE ID > #{id} and DELETED != 0 
+	</delete>
+	
+	<select id="selectByPriKey" resultMap="examResultMap">
+		   SELECT   
+		   <include refid="commonSelect" />
+		   FROM   exam WHERE ID = #{id}
+	</select>
+	
+	<select id="selectList" resultMap="examResultMap">
+		   SELECT   
+		   <include refid="commonSelect"/>
+		   FROM   exam
+		   <include refid="whereCondition"/> 
+		   <if test="param.columnSort != null">ORDER BY ${param.columnSort} </if>  
+		   <if test="param.columnSort == null">ORDER BY ID </if>   
+		   <if test="param.limit != null">limit ${param.offset}, ${param.limit} </if>   
+	</select>
+	
+	<select id="selectCount" resultType="long">
+	 	SELECT  COUNT(1) CNT FROM   exam
+		<include refid="whereCondition"/> 
+	</select>
+	
+	<select id="exist" resultType="int">
+	 	SELECT  ID FROM   exam
+		<include refid="whereCondition"/> limit 1
+	</select>
+	
+	<!-- customized code start -->
+	
+	<!-- customized code end -->
+</mapper>
