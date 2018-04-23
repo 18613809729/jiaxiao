@@ -1,6 +1,7 @@
 package com.nbs.jiaxiao.service.db.impl;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,14 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nbs.jiaxiao.constant.Phase;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.vo.ExamInterval;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.mapper.StudentMapper;
+import com.nbs.jiaxiao.service.db.DictService;
 import com.nbs.jiaxiao.service.db.SchoolService;
 import com.nbs.jiaxiao.service.db.StudentService;
 
@@ -130,6 +134,9 @@ public class StudentServiceImpl implements StudentService{
 	@Autowired
 	private SchoolService schoolService;
 	
+	@Autowired
+	private DictService dictService;
+	
 	@Override
 	public List<StudentInfo> selectStageStudent(String stage){
 		Student con = new Student();
@@ -164,6 +171,23 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public List<StudentInfo> selectTrainInfo(String stage){
 		return studentMapper.selectTrainInfo(stage);
+	}
+	
+	@Override
+	public List<Student> queryExamData(String stage, LocalDate examDate){
+		Student con = new Student();
+		con.setStage(stage);
+		if(Stage.STAGE_2.getCode().equals(stage)) {
+			con.setPhase(Phase.REACH.getCode());
+		}
+		List<Student> lst = selectList(con);
+		Integer interval = dictService.queryExamInterval().getIntervalByStage(stage);
+		lst.removeIf(student -> {
+			LocalDate date = LocalDate.ofEpochDay(student.getExamDate().getTime());
+			return date.plusDays(interval).compareTo(examDate) <= 0;
+		});
+		lst.forEach(student -> student.setSchoolName(schoolService.queryName(student.getSchoolId())));
+		return lst;
 	}
 	
 	/* customized code end */

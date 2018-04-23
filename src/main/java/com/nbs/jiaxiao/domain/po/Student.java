@@ -182,6 +182,7 @@ public class Student extends Base{
 	
 	private User user;
 
+	private java.lang.String schoolName;
 
 
 	public User getUser() {
@@ -190,6 +191,14 @@ public class Student extends Base{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public java.lang.String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(java.lang.String schoolName) {
+		this.schoolName = schoolName;
 	}
 	
 	/* customized code end */

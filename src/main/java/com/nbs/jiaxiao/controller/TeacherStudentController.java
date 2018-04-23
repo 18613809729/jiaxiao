@@ -358,4 +358,11 @@ public class TeacherStudentController {
 			throw new InvalidParamException("invalid stage " + stage);
 		}
 	} 
+	
+	
+	@GetMapping("/exam/{stage}/data.json")
+	public @ResponseBody BaseRes<List<TrainInfo>> examData(@PathVariable("stage") String stage) {
+		assertValidTrainStage(stage);
+		return BaseRes.buildSuccess(trainService.queryByStage(stage));
+	} 
 }
