@@ -119,6 +119,13 @@ public class ExamServiceImpl implements ExamService{
 	
 	/* customized code start */
 	
+	@Override
+	public List<Exam> queryExam(int offset){
+		Exam con = new Exam();
+		con.getParam().appointColumnSort(" id desc ").appointOffset(offset).appointLimit(10);
+		return selectList(con);
+	}
+	
 	/* customized code end */
 
 }

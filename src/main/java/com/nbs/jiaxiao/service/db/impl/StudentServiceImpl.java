@@ -225,6 +225,12 @@ public class StudentServiceImpl implements StudentService{
 		}
 		return exam;
 	}
+	
+	@Override
+	public List<StudentInfo> selectExamInfo(Integer examId){
+		return studentMapper.selectExamInfo(examId);
+	}
+
 	/* customized code end */
 
 }

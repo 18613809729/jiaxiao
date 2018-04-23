@@ -188,5 +188,10 @@
 	<select id="selectTrainInfo" resultType="com.nbs.jiaxiao.domain.vo.StudentInfo">
 			select a.id, a.username, a.mobile, a.school_id, b.name as school_name from student as a inner join school as b on b.id = a.school_id where a.deleted = 0 and a.stage = #{stage} and a.id not in (select c.student_id from train as c where c.deleted = 0 and c.stage = #{stage}) order by a.id desc
 	</select>
+	
+	<select id="selectExamInfo" resultType="com.nbs.jiaxiao.domain.vo.StudentInfo">
+		select id, username, mobile, school_id from student where deleted = 0 and id in (select student_id from exam_info where deleted = 0 and exam_id = #{examId})
+	</select>
+	
 	<!-- customized code end -->
 </mapper>

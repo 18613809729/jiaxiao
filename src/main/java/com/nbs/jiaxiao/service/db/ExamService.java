@@ -83,8 +83,11 @@ public interface ExamService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(Exam con);
-	
+
 	/* customized code start */
+	
+	List<Exam> queryExam(int offset);
+
 	
 	/* customized code end */
 

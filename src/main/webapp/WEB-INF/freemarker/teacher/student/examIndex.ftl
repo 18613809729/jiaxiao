@@ -150,7 +150,9 @@
       				if(res.code == "0"){
       					$.toSuccess({
                             "title":"约考成功",
-                            "primary_btn_url":"/teacher/student/index"
+                            "primary_btn_url":"/teacher/student/index",
+                            "default_btn_msg":"邀请考试",
+    						"default_btn_url":"/teacher/student/exam/notify/" + res.data.id
                         });
       				} else {
 						$.toast(res.msg, "cancel");

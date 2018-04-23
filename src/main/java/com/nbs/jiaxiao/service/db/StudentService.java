@@ -104,6 +104,8 @@ public interface StudentService {
 
 	Exam addExam(String openId, String stage, LocalDate examDate, int[] studentIds);
 
+	List<StudentInfo> selectExamInfo(Integer examId);
+
 	/* customized code end */
 
 }

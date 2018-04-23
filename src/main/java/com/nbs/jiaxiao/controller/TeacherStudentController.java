@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,8 @@ import com.nbs.jiaxiao.service.db.UserService;
 public class TeacherStudentController {
 	public static final String FTL_PREFIX = "teacher/student";
 	private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private static final DateTimeFormatter FORMAT_CN = DateTimeFormatter.ofPattern("yyyy年M月d日");
+
 
 	@Autowired
 	private TeacherBizService teacherService;
@@ -383,9 +386,51 @@ public class TeacherStudentController {
 	} 
 	
 	@GetMapping("/exam/notify/{id}")
-	public ModelAndView examNotify(Integer id) {
+	public ModelAndView examNotify(@PathVariable("id") Integer id) {
 		Exam exam = examService.selectByPriKey(id);
-		
-		return  new ModelAndView(FTL_PREFIX + "/examNotify");
+		NbsUtils.assertNotNull(exam, "the exam {0} not exist", id);
+		Stage stage = Stage.valueOfByCode(exam.getStage());
+		ModelAndView mv =  new ModelAndView(FTL_PREFIX + "/examNotify");
+		mv.addObject("exam", exam);
+		mv.addObject("stage", stage);
+		mv.addObject("examInfos", studentService.selectExamInfo(id));
+		mv.addObject("examDate", exam.getExamDate().toLocalDate().format(FORMAT_CN));
+		return mv;
 	} 
+	
+	
+	@GetMapping("/exam/history")
+	public ModelAndView examHistory(Integer offset) {
+		return new ModelAndView(FTL_PREFIX + "/examHistory");
+	} 
+	
+	@GetMapping("/exam/history")
+	public @ResponseBody BaseRes<List<Map<String, Object>>> examHistoryData(Integer offset) {
+		List<Map<String, Object>> resLst = new ArrayList<Map<String,Object>>();
+		List<Exam> examLst = examService.queryExam(offset == null ? 0 : offset);
+		for (Exam exam : examLst) {
+			List<StudentInfo> studentLst = studentService.selectExamInfo(exam.getId());
+			if(studentLst.size() > 0) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("id", exam.getId());
+				map.put("stageName", exam.getStageName());
+				map.put("examDate", exam.getExamDate());
+				map.put("createDate", exam.getCreatedTime());
+				String studentNames = "";
+				for (int i = 0; i < studentLst.size(); i++) {
+					studentNames += studentLst.get(i).getUsername();
+					if(i != studentLst.size() && i < 2) {
+						studentNames += "、";
+					} else {
+						studentNames += "等";
+						break;
+					}
+				}
+				map.put("studentNames", studentNames);
+				resLst.add(map);
+			}
+		}
+		return BaseRes.buildSuccess(resLst);
+	} 
+	
 }

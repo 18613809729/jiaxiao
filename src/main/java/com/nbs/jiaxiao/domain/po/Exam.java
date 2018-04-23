@@ -1,6 +1,8 @@
 package com.nbs.jiaxiao.domain.po;
 
 
+import com.nbs.jiaxiao.constant.Phase;
+import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.domain.base.Base;
 
 
@@ -59,6 +61,11 @@ public class Exam extends Base{
 	}
 	
 	/* customized code start */
+	
+	public java.lang.String getStageName() {
+		Stage stage = Stage.valueOfByCode(getStage());
+		return stage == null ? "" : stage.getDesc();
+	}
 	
 	/* customized code end */
 }
