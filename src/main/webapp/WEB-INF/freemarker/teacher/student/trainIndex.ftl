@@ -15,7 +15,7 @@
 					<a class="weui-navbar__item" data-id="1">
 						科目一
 					</a>
-					<a class="weui-navbar__item weui-bar__item_on" data-id="2">
+					<a class="weui-navbar__item" data-id="2">
 						科目二
 					</a>
 					<a class="weui-navbar__item" data-id="3">
@@ -113,7 +113,7 @@
 
 	<script type="text/javascript">
 	$(function(){
-		var curStage = "";
+		var curStage = location.hash ? location.hash.substring(1) : "2";
 		function render(dataInfos, stage){
 			if(dataInfos.length){
 				var tpl = template(document.getElementById('dataLst').innerHTML);
@@ -138,8 +138,8 @@
 		}
 
 		function navbarFun(_this){
-			var stage = _this.data("id");
-			if(curStage != stage){
+			if(!_this.hasClass("weui-bar__item_on")){
+				var stage = _this.data("id");
 				$(".weui-navbar__item").removeClass("weui-bar__item_on");
 				_this.addClass("weui-bar__item_on");
 				curStage = stage;
@@ -152,7 +152,7 @@
 			navbarFun($(this));
 		});
 
-		navbarFun($(".weui-bar__item_on"));
+		navbarFun($('.weui-navbar__item[data-id="' + curStage + '"]'));
 
 
         $("body").on("click", ".item", function(){
