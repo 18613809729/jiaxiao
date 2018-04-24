@@ -6,7 +6,7 @@
 	<title>佣金结算</title>
 	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-	<link rel="stylesheet" href="http://localhost/jiaxiao/css/main.css">
+	<link rel="stylesheet" href="https://static.xxwkj.club/jiaxiao/css/main.css">
 </head>
 <body ontouchstart>
 	<div class="page" id="container">
@@ -68,11 +68,11 @@
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script>
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script>
 	<script src="https://cdn.bootcss.com/mootools/1.6.0/mootools-core.min.js"></script>
-	<script src="http://localhost/jiaxiao/js/pinyin.js"></script>
-	<script src="http://localhost/jiaxiao/js/formValidate.js"></script>
-	<script src="http://localhost/jiaxiao/js/search.js"></script>
-	<script src="http://localhost/jiaxiao/js/template.js"></script>
-	<script src="http://localhost/jiaxiao/js/main.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/pinyin.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/formValidate.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/search.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/template.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/main.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			function calSum(){
