@@ -35,17 +35,17 @@
         <div class="weui-cells__title">学员信息</div>
 		<div class="weui-cells">
            <#list studentLst as student>
-           		<#if student.status??>
-					<a class="weui-cell item weui-cell_access" href="/teacher/student/info/${student.id}">
+           		<#if student.examStatus??>
+					<a class="weui-cell item weui-cell_access item" href="/teacher/student/info/${student.id}">
 		                <div class="weui-cell__bd">
 		                    <div class="weui-flex">
-					            <div class="weui-flex__item">${student.schoolName}</div>
-					            <div class="weui-flex__item">${student.username}</div>
+<!-- 					            <div class="weui-flex__item">${student.schoolName}</div>
+ -->					            <div class="weui-flex__item">${student.username}</div>
 					            <div class="weui-flex__item">${student.mobile}</div>
-					            <div class="weui-flex__item"><#if student.status == "1"> 通过 <#else> 未通过 </#if></div>
+					            <div class="weui-flex__item"></div>
     						</div>
 		                </div>
-		                <div class="weui-cell__ft"></div>
+		                <div class="weui-cell__ft"><#if student.examStatus == "1"> <span class="font_green">通过</span> <#else> <span class="font_warn">未通过</span> </#if></div>
             		</a>
             	<#else>
             		<div class="weui-cell weui-cell_swiped">
@@ -53,8 +53,8 @@
 							<a class="weui-cell item weui-cell_access" href="/teacher/student/info/${student.id}">
 								<div class="weui-cell__bd">
 									<div class="weui-flex">
-							            <div class="weui-flex__item">${student.schoolName}</div>
-					            		<div class="weui-flex__item">${student.username}</div>
+<!-- 							            <div class="weui-flex__item">${student.schoolName}</div>
+ -->					            		<div class="weui-flex__item">${student.username}</div>
 					            		<div class="weui-flex__item">${student.mobile}</div>
 					            		<div class="weui-flex__item"></div>
 							        </div>
@@ -69,6 +69,11 @@
            		</#if>
            </#list>
         </div>
+
+        <div class="weui-btn-area">
+			<a class="weui-btn weui-btn_primary" id="addBtn">添加学员</a>
+		</div>
+		<br>
 	</div>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
@@ -77,6 +82,9 @@
 	<script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.js"></script>
 	<script src="http://localhost/jiaxiao/js/template.js"></script>
 	<script type="text/javascript" src="http://localhost/jiaxiao/js/main.js"></script>
+	<script type="text/javascript">
+    	$(".item:odd").css("background", "#fcfcfc");
+	</script>
 	
 </body>
 </html>
