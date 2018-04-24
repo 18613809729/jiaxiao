@@ -495,4 +495,40 @@ public class TeacherStudentController {
 		return BaseRes.buildSuccess(examInfo);
 	}
 	
+	
+	@GetMapping("/exam/{id}/add/more")
+	public ModelAndView examAddMorePage(@PathVariable("id") Integer id) {
+		Exam exam =  examService.selectByPriKey(id);
+		NbsUtils.assertNotNull(exam, "this exam {0} not exist", id);
+		List<Student> studentLst = studentService.queryExamData(exam.getStage(), exam.getExamDate().toLocalDate());
+		List<ExamStudentInfo> existStudentLst = studentService.selectExamStudentInfo(exam.getId());
+		studentLst.removeIf(student -> {
+			for (ExamStudentInfo examStudentInfo : existStudentLst) {
+				if(student.getId().equals(examStudentInfo.getId())) {
+					return true;
+				}
+			}
+			return false;
+		});
+		
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/examAddMore");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", exam.getId());
+		map.put("stageName", exam.getStageName());
+		map.put("examDate",  exam.getExamDate().toLocalDate());
+		map.put("createDate", exam.getCreatedTime().format(DT_FORMAT));
+		mv.addObject("exam", map);
+		mv.addObject("studentLst", studentLst);
+		return mv;
+	} 
+	
+	
+	@PostMapping("/exam/{id}/add/more")
+	public @ResponseBody BaseRes<Exam> examAddMore(@RequestAttribute("openId") String openId, @PathVariable("id") Integer id, int[] studentIds) {
+		Exam exam =  examService.selectByPriKey(id);
+		NbsUtils.assertNotNull(exam, "this exam {0} not exist", id);
+		studentService.examAddMore(openId, id, studentIds);
+		return BaseRes.buildSuccess(exam);
+	} 
+	
 }

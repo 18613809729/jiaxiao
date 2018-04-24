@@ -109,6 +109,8 @@ public interface StudentService {
 
 	List<ExamStudentInfo> selectExamStudentInfo(Integer examId);
 
+	void examAddMore(String openId, Integer examId, int[] studentIds);
+
 	/* customized code end */
 
 }

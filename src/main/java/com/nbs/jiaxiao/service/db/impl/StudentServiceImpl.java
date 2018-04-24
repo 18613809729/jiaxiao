@@ -227,6 +227,18 @@ public class StudentServiceImpl implements StudentService{
 		return exam;
 	}
 	
+	@Transactional
+	@Override
+	public void examAddMore(String openId, Integer examId, int[] studentIds) {
+		for (int studentId : studentIds) {
+			ExamInfo examInfo = new ExamInfo();
+			examInfo.setExamId(examId);
+			examInfo.setStudentId(studentId);
+			examInfo.setLastUpdateNoUserId(openId);;
+			examInfoService.insert(examInfo);
+		}
+	}
+	
 	@Override
 	public List<StudentInfo> selectExamInfo(Integer examId){
 		return studentMapper.selectExamInfo(examId);
