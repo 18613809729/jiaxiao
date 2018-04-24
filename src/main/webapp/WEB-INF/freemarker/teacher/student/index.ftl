@@ -99,15 +99,15 @@
 
 			<div class="weui-tabbar">
 				<a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
-					<img src="https://static.newbs.xyz/common/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+					<img src="https://static.xxwkj.club/jiaxiao/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 					<p class="weui-tabbar__label">学员</p>
 				</a>
 				<a href="/teacher/seller/index" class="weui-tabbar__item">
-					<img src="https://static.newbs.xyz/common/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+					<img src="https://static.xxwkj.club/jiaxiao/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 					<p class="weui-tabbar__label">分销员</p>
 				</a>
 				<a href="/teacher/sys/index" class="weui-tabbar__item">
-					<img src="https://static.newbs.xyz/common/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+					<img src="https://static.xxwkj.club/jiaxiao/image/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 					<p class="weui-tabbar__label">系统</p>
 				</a>
 			</div>
