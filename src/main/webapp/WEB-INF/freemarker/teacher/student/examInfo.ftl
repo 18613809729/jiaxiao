@@ -70,7 +70,7 @@
         </div>
 
         <div class="weui-btn-area">
-			<a class="weui-btn weui-btn_primary" id="addBtn">添加学员</a>
+			<a class="weui-btn weui-btn_primary" href="/teacher/student/exam/${exam.id}/add/more">添加学员</a>
 		</div>
 		<br>
 	</div>
