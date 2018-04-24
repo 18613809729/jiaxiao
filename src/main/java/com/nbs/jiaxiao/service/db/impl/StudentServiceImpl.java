@@ -23,6 +23,7 @@ import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.domain.po.Train;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.ExamInterval;
+import com.nbs.jiaxiao.domain.vo.ExamStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.exception.ConcurrentException;
 import com.nbs.jiaxiao.exception.ResException;
@@ -231,6 +232,12 @@ public class StudentServiceImpl implements StudentService{
 		return studentMapper.selectExamInfo(examId);
 	}
 
+	@Override
+	public List<ExamStudentInfo> selectExamStudentInfo(Integer examId){
+		List<ExamStudentInfo> lst = studentMapper.selectExamStudentInfo(examId);
+		lst.forEach(student -> student.setSchoolName(schoolService.queryName(student.getSchoolId())));
+		return lst;
+	}
 	/* customized code end */
 
 }

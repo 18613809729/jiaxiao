@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.nbs.jiaxiao.domain.po.Exam;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.vo.ExamStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 
 
@@ -105,6 +106,8 @@ public interface StudentService {
 	Exam addExam(String openId, String stage, LocalDate examDate, int[] studentIds);
 
 	List<StudentInfo> selectExamInfo(Integer examId);
+
+	List<ExamStudentInfo> selectExamStudentInfo(Integer examId);
 
 	/* customized code end */
 

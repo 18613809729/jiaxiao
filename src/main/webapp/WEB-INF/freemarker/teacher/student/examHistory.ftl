@@ -78,7 +78,7 @@
 			</div>
 			<div class="weui-form-preview__ft">
 				<a class="weui-form-preview__btn weui-form-preview__btn_default" href="/teacher/student/exam/notify/<%=data.id%>">邀请考试</a>
-				<button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="/teacher/student/exam/<%=data.id%>/info">结果登记</button>
+				<a  class="weui-form-preview__btn weui-form-preview__btn_primary" href="/teacher/student/exam/<%=data.id%>/info">结果登记</a>
 			</div>
 		</div>
 	</script>

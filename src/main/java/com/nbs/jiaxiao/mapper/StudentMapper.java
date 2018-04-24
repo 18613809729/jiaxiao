@@ -3,6 +3,7 @@ package com.nbs.jiaxiao.mapper;
 
 import java.util.List;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.vo.ExamStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 
 
@@ -93,6 +94,8 @@ public interface StudentMapper {
 	public List<StudentInfo> selectTrainInfo(String stage);
 	
 	public List<StudentInfo> selectExamInfo(Integer examId);
+	
+	public List<ExamStudentInfo> selectExamStudentInfo(Integer examId);
 	
 	/* customized code end */
 

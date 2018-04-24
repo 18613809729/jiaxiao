@@ -36,6 +36,7 @@ import com.nbs.jiaxiao.domain.po.Train;
 import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.ExamInterval;
+import com.nbs.jiaxiao.domain.vo.ExamStudentInfo;
 import com.nbs.jiaxiao.domain.vo.SignStudentInfo;
 import com.nbs.jiaxiao.domain.vo.StudentInfo;
 import com.nbs.jiaxiao.domain.vo.TrainInfo;
@@ -59,6 +60,8 @@ public class TeacherStudentController {
 	public static final String FTL_PREFIX = "teacher/student";
 	private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private static final DateTimeFormatter FORMAT_CN = DateTimeFormatter.ofPattern("yyyy年M月d日");
+	private static final DateTimeFormatter DT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
 
 	@Autowired
@@ -438,9 +441,14 @@ public class TeacherStudentController {
 	public ModelAndView examInfo(@PathVariable("id") Integer id) {
 		Exam exam =  examService.selectByPriKey(id);
 		NbsUtils.assertNotNull(exam, "this exam {0} not exist", id);
-		List<StudentInfo> studentLst = studentService.selectExamInfo(exam.getId());
+		List<ExamStudentInfo> studentLst = studentService.selectExamStudentInfo(exam.getId());
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/examInfo");
-		mv.addObject("exam", exam);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", exam.getId());
+		map.put("stageName", exam.getStageName());
+		map.put("examDate",  exam.getExamDate().toLocalDate());
+		map.put("createDate", exam.getCreatedTime().format(DT_FORMAT));
+		mv.addObject("exam", map);
 		mv.addObject("studentLst", studentLst);
 		return mv;
 	} 

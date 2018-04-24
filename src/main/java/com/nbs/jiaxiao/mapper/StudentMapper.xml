@@ -193,5 +193,10 @@
 		select id, username, mobile, school_id from student where deleted = 0 and id in (select student_id from exam_info where deleted = 0 and exam_id = #{examId})
 	</select>
 	
+	<select id="selectExamStudentInfo" resultType="com.nbs.jiaxiao.domain.vo.ExamStudentInfo">
+		SELECT b.id, b.username, b.mobile, b.school_id, a.status as exam_status FROM exam_info as a inner join student as b on a.student_id = b.id where a.deleted = 0 and b.deleted = 0 and a.exam_id = #{examId}
+	</select>
+	
+	
 	<!-- customized code end -->
 </mapper>
