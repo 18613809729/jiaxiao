@@ -83,8 +83,16 @@ public interface ExamInfoService {
 	 * @return 存在的第一个值的主键
 	 */
 	public boolean exist(ExamInfo con);
-	
+
 	/* customized code start */
+	
+	ExamInfo queryByUk(Integer examId, Integer studentId);
+
+	void pass(ExamInfo examInfo);
+
+	void noPass(ExamInfo examInfo);
+
+	ExamInfo delete(Integer examId, Integer studentId);
 	
 	/* customized code end */
 

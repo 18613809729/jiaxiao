@@ -70,5 +70,9 @@ public class ExamInfo extends Base{
 	
 	/* customized code start */
 	
+	public static final String PASS = "1";
+	
+	public static final String NO_PASS = "0";
+	
 	/* customized code end */
 }

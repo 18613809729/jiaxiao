@@ -86,7 +86,7 @@
 							</div>
 						</a>
 
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="/teacher/student/exam/history">
 							<div class="weui-cell__bd">
 								<p>参加考试</p>
 							</div>

@@ -3,11 +3,24 @@ package com.nbs.jiaxiao.service.db.impl;
 
 import java.util.List;
 import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.fastjson.JSON;
+import com.nbs.jiaxiao.common.NbsUtils;
+import com.nbs.jiaxiao.constant.Stage;
+import com.nbs.jiaxiao.domain.po.Exam;
 import com.nbs.jiaxiao.domain.po.ExamInfo;
+import com.nbs.jiaxiao.domain.po.Student;
 import com.nbs.jiaxiao.exception.ConcurrentException;
+import com.nbs.jiaxiao.exception.InvalidParamException;
 import com.nbs.jiaxiao.mapper.ExamInfoMapper;
 import com.nbs.jiaxiao.service.db.ExamInfoService;
+import com.nbs.jiaxiao.service.db.ExamService;
+import com.nbs.jiaxiao.service.db.StudentService;
 
 
 @Service
@@ -119,6 +132,76 @@ public class ExamInfoServiceImpl implements ExamInfoService{
 	
 	/* customized code start */
 	
+	@Autowired
+	private StudentService studentService;
+	
+	@Autowired
+	private ExamService examService;
+	
+	@Override
+	public ExamInfo queryByUk(Integer examId, Integer studentId) {
+		ExamInfo con = new ExamInfo();
+		con.setExamId(examId);
+		con.setStudentId(studentId);
+		return NbsUtils.getFirst(selectList(con));
+	}
+	
+	@Override
+	public ExamInfo delete(Integer examId, Integer studentId) {
+		ExamInfo examInfo = queryByUk(examId, studentId);
+		if(examInfo != null && StringUtils.isBlank(examInfo.getStatus())) {
+			deleteByPriKey(examInfo.getId());
+		}
+		return examInfo;
+	}
+	
+	@Transactional
+	@Override
+	public void pass(ExamInfo examInfo) {
+		if(examInfo != null && StringUtils.isBlank(examInfo.getStatus())) {
+			examInfo.setStatus(ExamInfo.PASS);
+			Student student = studentService.selectByPriKey(examInfo.getStudentId());
+			Exam exam = examService.selectByPriKey(examInfo.getExamId());
+			Stage stage = Stage.valueOfByCode(exam.getStage());
+			switch (stage) {
+			case STAGE_1:
+				student.setStage(Stage.STAGE_2.getCode());
+				break;
+			case STAGE_2:
+				student.setStage(Stage.STAGE_3.getCode());
+				break;
+			case STAGE_3:
+				student.setStage(Stage.STAGE_4.getCode());
+				break;
+			case STAGE_4:
+				student.setStage(Stage.GRADUATED.getCode());
+				break;
+
+			default:
+				throw new InvalidParamException("pass invalid stage:" + stage);
+			}
+			student.setExamDate(exam.getExamDate());
+			studentService.updateByPriKey(student);
+			updateByPriKey(examInfo);
+		} else {
+			throw new InvalidParamException("canot pass exam :" + JSON.toJSONString(examInfo));
+		}
+	}
+	
+	@Transactional
+	@Override
+	public void noPass(ExamInfo examInfo) {
+		if(examInfo != null && StringUtils.isBlank(examInfo.getStatus())) {
+			examInfo.setStatus(ExamInfo.NO_PASS);
+			Student student = studentService.selectByPriKey(examInfo.getStudentId());
+			Exam exam = examService.selectByPriKey(examInfo.getExamId());
+			student.setExamDate(exam.getExamDate());
+			studentService.updateByPriKey(student);
+			updateByPriKey(examInfo);
+		} else {
+			throw new InvalidParamException("canot pass exam :" + JSON.toJSONString(examInfo));
+		}
+	}
 	/* customized code end */
 
 }

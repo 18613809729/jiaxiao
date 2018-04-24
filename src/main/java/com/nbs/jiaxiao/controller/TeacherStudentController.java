@@ -27,6 +27,7 @@ import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.Exam;
+import com.nbs.jiaxiao.domain.po.ExamInfo;
 import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.SignStudent;
@@ -404,7 +405,7 @@ public class TeacherStudentController {
 		return new ModelAndView(FTL_PREFIX + "/examHistory");
 	} 
 	
-	@GetMapping("/exam/history")
+	@GetMapping("/exam/history/data.json")
 	public @ResponseBody BaseRes<List<Map<String, Object>>> examHistoryData(Integer offset) {
 		List<Map<String, Object>> resLst = new ArrayList<Map<String,Object>>();
 		List<Exam> examLst = examService.queryExam(offset == null ? 0 : offset);
@@ -414,12 +415,12 @@ public class TeacherStudentController {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("id", exam.getId());
 				map.put("stageName", exam.getStageName());
-				map.put("examDate", exam.getExamDate());
+				map.put("examDate", exam.getExamDate().toLocalDate());
 				map.put("createDate", exam.getCreatedTime());
 				String studentNames = "";
 				for (int i = 0; i < studentLst.size(); i++) {
 					studentNames += studentLst.get(i).getUsername();
-					if(i != studentLst.size() && i < 2) {
+					if(i != studentLst.size() -1 && i < 2) {
 						studentNames += "、";
 					} else {
 						studentNames += "等";
@@ -432,5 +433,58 @@ public class TeacherStudentController {
 		}
 		return BaseRes.buildSuccess(resLst);
 	} 
+	
+	@GetMapping("/exam/{id}/info")
+	public ModelAndView examInfo(@PathVariable("id") Integer id) {
+		Exam exam =  examService.selectByPriKey(id);
+		NbsUtils.assertNotNull(exam, "this exam {0} not exist", id);
+		List<StudentInfo> studentLst = studentService.selectExamInfo(exam.getId());
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/examInfo");
+		mv.addObject("exam", exam);
+		mv.addObject("studentLst", studentLst);
+		return mv;
+	} 
+	
+	
+	@DeleteMapping("/exam/{id}/info/{studentId}")
+	public @ResponseBody BaseRes<Object> examInfo(@PathVariable("id") Integer id,@PathVariable("studentId") Integer studentId) {
+		ExamInfo examInfo = examInfoService.delete(id, studentId);
+		NbsUtils.assertNotNull(examInfo, "the examinfo {0}, {1} not exist", id, studentId);
+		if(ExamInfo.PASS.equals(examInfo.getStatus())) {
+			return BaseRes.build("-1", "该用户为通过状态，无法删除", examInfo);
+		} else if(ExamInfo.NO_PASS.equals(examInfo.getStatus())) {
+			return BaseRes.build("-1", "该用户为未通过状态，无法删除", examInfo);
+		}
+		return BaseRes.buildSuccess(examInfo);
+	} 
+	
+	
+	@PutMapping("/exam/{id}/info/{studentId}/pass")
+	public @ResponseBody BaseRes<Object> examPass(@RequestAttribute("openId") String openId, @PathVariable("id") Integer id,@PathVariable("studentId") Integer studentId) {
+		ExamInfo examInfo = examInfoService.queryByUk(id, studentId);
+		NbsUtils.assertNotNull(examInfo, "the examinfo {0}, {1} not exist", id, studentId);
+		if(ExamInfo.PASS.equals(examInfo.getStatus())) {
+			return BaseRes.build("-1", "该用户已为通过状态", examInfo);
+		} else if(ExamInfo.NO_PASS.equals(examInfo.getStatus())) {
+			return BaseRes.build("-1", "该用户已标记为未通过，无法处理", examInfo);
+		}
+		examInfo.setLastUpdateNoUserId(openId);
+		examInfoService.pass(examInfo);
+		return BaseRes.buildSuccess(examInfo);
+	}
+	
+	@PutMapping("/exam/{id}/info/{studentId}/nopass")
+	public @ResponseBody BaseRes<Object> examNopass(@RequestAttribute("openId") String openId, @PathVariable("id") Integer id,@PathVariable("studentId") Integer studentId) {
+		ExamInfo examInfo = examInfoService.queryByUk(id, studentId);
+		NbsUtils.assertNotNull(examInfo, "the examinfo {0}, {1} not exist", id, studentId);
+		if(ExamInfo.PASS.equals(examInfo.getStatus())) {
+			return BaseRes.build("-1", "该用户已标记为通过，无法处理", examInfo);
+		} else if(ExamInfo.NO_PASS.equals(examInfo.getStatus())) {
+			return BaseRes.build("-1", "该用户已为未通过状态", examInfo);
+		}
+		examInfo.setLastUpdateNoUserId(openId);
+		examInfoService.noPass(examInfo);
+		return BaseRes.buildSuccess(examInfo);
+	}
 	
 }
