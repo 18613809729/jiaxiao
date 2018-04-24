@@ -83,7 +83,28 @@
 	<script src="http://localhost/jiaxiao/js/template.js"></script>
 	<script type="text/javascript" src="http://localhost/jiaxiao/js/main.js"></script>
 	<script type="text/javascript">
-    	$(".item:odd").css("background", "#fcfcfc");
+		$(function(){
+			$(".item:odd").css("background", "#fcfcfc");
+			$(".del_btn").click(function(){
+				var _this = $(this);
+				$.actions({
+				  actions: [{
+				    text: "确认删除",
+				    className: "color-danger",
+				    onClick: function() {
+				      	$.singleDelete(_this, "/teacher/student/exam/${exam.id}/info/" + _this.data("id")).done(function(res){
+				      		if(res.code == "0"){
+								_this.parents(".weui-cell_swiped").remove();
+				      		} else {
+				      			$.toast(res.msg, "cancel");
+				      		}
+  						});
+				    }
+				  }]
+				});
+			});
+			
+		});
 	</script>
 	
 </body>
