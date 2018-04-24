@@ -6,14 +6,14 @@
 	<title>佣金记录</title>
 	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-	<link rel="stylesheet" href="http://localhost/jiaxiao/css/main.css">
+	<link rel="stylesheet" href="https://static.xxwkj.club/jiaxiao/css/main.css">
 </head>
 <body ontouchstart>
 	<div class="page" id="container">
 		<div class="weui-cells">
 			<a class="weui-cell" href="/teacher/seller/info/${info.id}">
 				<div class="weui-cell__hd">
-					<img src="${info.user.headImg!"https://static.newbs.xyz/jiaxiao/image/default_head_img.jpg"}" width="60px">
+					<img src="${info.user.headImg!"https://static.xxwkj.club/jiaxiao/image/default_head_img.jpg"}" width="60px">
 				</div>
 				<div class="weui-cell__bd">
 					<p>&nbsp;&nbsp;${info.username}</p>
@@ -65,10 +65,10 @@
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script>
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script>
 	<script src="https://cdn.bootcss.com/mootools/1.6.0/mootools-core.min.js"></script>
-	<script src="http://localhost/jiaxiao/js/pinyin.js"></script>
-	<script src="http://localhost/jiaxiao/js/formValidate.js"></script>
-	<script src="http://localhost/jiaxiao/js/search.js"></script>
-	<script src="http://localhost/jiaxiao/js/template.js"></script>
-	<script src="http://localhost/jiaxiao/js/main.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/pinyin.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/formValidate.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/search.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/template.js"></script>
+	<script src="https://static.xxwkj.club/jiaxiao/js/main.js"></script>
 </body>
 </html>

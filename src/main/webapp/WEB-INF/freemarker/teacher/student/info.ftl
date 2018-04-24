@@ -15,7 +15,7 @@
 		<div class="weui-cells">
 	   		<div class="weui-cell">
 				<div class="weui-cell__hd">
-					<img src="${info.user.headImg!"https://static.newbs.xyz/jiaxiao/image/default_head_img.jpg"}" width="60px">
+					<img src="${info.user.headImg!"https://static.xxwkj.club/jiaxiao/image/default_head_img.jpg"}" width="60px">
 				</div>
 				<div class="weui-cell__bd">
 					<p>&nbsp;&nbsp;${info.username}</p>

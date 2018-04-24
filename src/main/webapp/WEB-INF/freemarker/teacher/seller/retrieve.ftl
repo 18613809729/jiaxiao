@@ -65,7 +65,7 @@
 							<%if(datas[j]['data'][i].headImg != null){%>
 								<img src="<%=datas[j]['data'][i].headImg%>" width="60px">
 							<%} else {%>
-								<img src="https://static.newbs.xyz/jiaxiao/image/default_head_img.jpg" width="60px">
+								<img src="https://static.xxwkj.club/jiaxiao/image/default_head_img.jpg" width="60px">
 							<%}%>
 						</div>
 						<div class="weui-cell__bd">
