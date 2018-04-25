@@ -172,7 +172,6 @@
 	   	<br>
 	</div>
 	<#include "/common.ftl">
-	<script type="text/javascript" src="https://static.xxwkj.club/jiaxiao/js/main.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			$("#username").click(function(){
