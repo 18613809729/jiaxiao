@@ -57,6 +57,7 @@
         <div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" id="addBtn">确定约考</a>
 		</div>
+		<br>
         <#else>
         <div class="weui-loadmore weui-loadmore_line">
             <span class="weui-loadmore__tips globl_bg_color">暂无数据</span>

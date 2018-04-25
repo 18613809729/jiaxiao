@@ -52,6 +52,7 @@
 		<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" href="javascript:history.back();"><i></i>确定</a>
 		</div>
+		<br>
 	</div>
 	<#include "/common.ftl">
 </body>

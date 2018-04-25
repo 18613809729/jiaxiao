@@ -62,6 +62,7 @@
 		<div class="weui-btn-area">
 			<a class="weui-btn weui-btn_primary" id="submitBtn"><i></i>结算</a>
 		</div>
+		<br>
 	</div>
 	<#include "/common.ftl">
 	<script type="text/javascript">

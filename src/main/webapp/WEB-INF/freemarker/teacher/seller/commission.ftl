@@ -66,6 +66,7 @@
 			<a class="weui-btn weui-btn_primary" id="submitBtn"><i></i>修改</a>
 			<a href="javascript:history.back();" class="weui-btn weui-btn_default" id="addMore">返回</a>
 		</div>
+		<br>
 	</div>
 	<#include "/common.ftl">
 	<script type="text/javascript">

@@ -113,7 +113,7 @@
 				<a href="/teacher/seller/join/list" class="weui-btn weui-btn_primary">返回</a>
 			</div>
 		</#if>
-	   
+	   <br>
 	</div>
 	<#include "/common.ftl">
 	<script type="text/javascript">

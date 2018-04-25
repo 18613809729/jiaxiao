@@ -45,6 +45,7 @@
 					<div class="weui-btn-area">
 						<a class="weui-btn weui-btn_primary" id="addBtn">确定约考</a>
 					</div>
+					<br>
 				</div>
 			</div>
 	</div>

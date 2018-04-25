@@ -73,7 +73,7 @@
 			$("#container").html(template(document.getElementById('error').innerHTML, {}));
   		});
 
-  		$("body").on("click", function(){
+  		$("body").on("click", "#loadMore", function(){
   			$.getJSON("/teacher/seller/fee/history/data.json?offset=" + sellers.length).done(function(res){
         		res.code == '0' && render(res.data);             
         	}).fail(function() {

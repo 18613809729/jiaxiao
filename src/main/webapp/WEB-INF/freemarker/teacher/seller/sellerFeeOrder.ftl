@@ -50,6 +50,7 @@
 			<a class="weui-btn weui-btn_primary" href="javascript:history.back();"><i></i>确定</a>
 			<#if needPay> <a class="weui-btn weui-btn_default" href="/teacher/seller/fee/settle/${info.id}"><i></i>结算佣金</a> </#if>
 		</div>
+		<br>
 	</div>
 	<#include "/common.ftl">
 </body>
