@@ -4,32 +4,17 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 	<title>销售员</title>
-	<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
-	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-	<link rel="stylesheet" href="https://static.xxwkj.club/jiaxiao/css/main.css">
+	<#include "/head.ftl">
 </head>
 <body ontouchstart>
-	<div class="page z_index100 fit_content">
-		<div id="searchPannel">
-			<div class="weui-search-bar" id="searchBar">
-				<form class="weui-search-bar__form">
-					<div class="weui-search-bar__box">
-						<i class="weui-icon-search"></i>
-						<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
-						<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-					</div>
-					<label class="weui-search-bar__label" id="searchText">
-						<i class="weui-icon-search"></i>
-						<span>搜索</span>
-					</label>
-				</form>
-				<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-			</div>
-			<div class="weui-cells searchbar-result" id="searchResult">
+	<div class="page">
+		<div class="search_bar">
+			<div class="search_label" id="search">
+				<i class="weui-icon-search"></i>
+				<span>搜索</span>
 			</div>
 		</div>
-	</div>
-	<div class="page mt50">
+
 		<div class="weui-cells weui-cells_form">
 			<div class="weui-cell">
 		        <div class="weui-cell__hd"><label for="name" class="weui-label">选择</label></div>
@@ -144,17 +129,22 @@
       		}
       	});
 
-      	$.getJSON("/teacher/student/search.json").done(function(res){
-        	if(res.code == '0'){
-                $("#searchPannel").userSearchBar({"datas":res.data, "itemClickCallback":function(data){
-        			location.href = "/teacher/student/info/" + data.id;
-        			this.cancelSearch();
-        		}});
-            }
-        }).fail(function() {
-			$.toast("加载学员搜索信息失败", "cancel");
-  		});
       	
+		var searchStudents;
+      	$.getJSON("/teacher/student/search.json").done(function(res){
+        	res.code == '0' && (searchStudents = res.data);
+        });
+
+  		$("body").on("click", "#search", function(){
+            if(searchStudents == undefined){
+                $.toast("加载学员搜索信息失败", "cancel");
+                return;
+            }
+            $.searchDialog({"datas":searchStudents,  "itemClickCallback":function(data){
+    			location.href = "/teacher/student/info/" + data.id;
+    			return false;
+        	}});
+        });
 	});
 	</script>
 </body>

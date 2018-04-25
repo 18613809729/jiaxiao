@@ -5,7 +5,7 @@
 <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script>
 <script src="https://cdn.bootcss.com/mootools/1.6.0/mootools-core.min.js"></script>
 <script src="https://static.xxwkj.club/jiaxiao/js/pinyin.js"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/formValidate.js"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/search.js"></script>
 <script src="https://static.xxwkj.club/jiaxiao/js/template.js"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/main.js"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/formValidate.js?v=1"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/search.js?v=1"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/main.js?v=1"></script>
