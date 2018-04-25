@@ -55,7 +55,7 @@
 
 						<a class="weui-cell weui-cell_access" href="join/list">
 							<div class="weui-cell__bd">
-								<span>推广报名</span>
+								<span>销售报名</span>
 								<#if (unReadCount > 0) >
 									<#if unReadCount < 100>
 										<span class="weui-badge">${unReadCount}</span>

@@ -20,13 +20,13 @@
 			                <div class="weui-cell__bd">
 			                    <p>学车中</p>
 			                </div>
-			                <div class="weui-cell__ft">80人</div>
+			                <div class="weui-cell__ft">${inlearnCount}人</div>
 			            </div>
 			            <div class="weui-cell">
 			                <div class="weui-cell__bd">
 			                    <p>历史总数</p>
 			                </div>
-			                <div class="weui-cell__ft">8000人</div>
+			                <div class="weui-cell__ft">${studentCount}人</div>
 			            </div>
 			        </div>
 

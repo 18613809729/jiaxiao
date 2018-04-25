@@ -101,6 +101,8 @@ public class TeacherStudentController {
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/index");
 		mv.addObject("unReadSignStudentCount", signStudentService.queryUnReadCount());
+		mv.addObject("inlearnCount", studentService.queryInLearnCount());
+		mv.addObject("studentCount", studentService.selectCount(new Student()));
 		return mv;
 	}
 	

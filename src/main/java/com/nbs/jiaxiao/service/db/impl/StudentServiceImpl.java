@@ -250,6 +250,23 @@ public class StudentServiceImpl implements StudentService{
 		lst.forEach(student -> student.setSchoolName(schoolService.queryName(student.getSchoolId())));
 		return lst;
 	}
+	
+	
+	@Override
+	public long queryInLearnCount(){
+		long count = 0;
+		Student con = new Student();
+		con.setStage(Stage.STAGE_1.getCode());
+		count += selectCount(con);
+		con.setStage(Stage.STAGE_2.getCode());
+		count += selectCount(con);
+		con.setStage(Stage.STAGE_3.getCode());
+		count += selectCount(con);
+		con.setStage(Stage.STAGE_4.getCode());
+		count += selectCount(con);
+		return count;
+	}
+	
 	/* customized code end */
 
 }

@@ -111,6 +111,8 @@ public interface StudentService {
 
 	void examAddMore(String openId, Integer examId, int[] studentIds);
 
+	long queryInLearnCount();
+
 	/* customized code end */
 
 }
