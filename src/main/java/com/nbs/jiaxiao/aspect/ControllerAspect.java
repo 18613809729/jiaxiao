@@ -1,11 +1,15 @@
 package com.nbs.jiaxiao.aspect;
 
+import java.util.UUID;
+
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 
@@ -27,5 +31,12 @@ public class ControllerAspect {
 		}
 		LOGGER.info("ControllerAspect sign:{}, res:{}", sign, JSON.toJSONString(returnValue));
 		return returnValue;
+	}
+	
+	
+	@AfterReturning(pointcut="execution(org.springframework.web.servlet.ModelAndView com.nbs.jiaxiao.controller.*.*(..))", returning="mv")
+	public Object setUUID(ModelAndView mv) throws Throwable {
+		mv.addObject("UUID", UUID.randomUUID().toString());
+		return mv;
 	}
 }

@@ -199,13 +199,7 @@
 		</div>
 	   	<br>
 	</div>
-	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script>
-	<script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.js"></script>
-	<script src="https://static.xxwkj.club/jiaxiao/js/template.js"></script>
-	<script type="text/javascript" src="https://static.xxwkj.club/jiaxiao/js/main.js"></script>
+	<#include "/common.ftl">
 	<script type="text/javascript">
 		$(function(){
 			$("#username").click(function(){
