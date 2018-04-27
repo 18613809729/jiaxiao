@@ -7,31 +7,20 @@
 	<#include "/head.ftl">
 </head>
 <body ontouchstart>
-	<div class="page z_index100 fit_content">
-		<div id="searchPannel">
-			<div class="weui-search-bar" id="searchBar">
-				<form class="weui-search-bar__form">
-					<div class="weui-search-bar__box">
-						<i class="weui-icon-search"></i>
-						<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
-						<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-					</div>
-					<label class="weui-search-bar__label" id="searchText">
-						<i class="weui-icon-search"></i>
-						<span>搜索</span>
-					</label>
-				</form>
-				<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-			</div>
-			<div class="weui-cells searchbar-result" id="searchResult">
+	<div class="page">
+		<div class="search_bar">
+			<div class="search_label" id="search">
+				<i class="weui-icon-search"></i>
+				<span>搜索</span>
 			</div>
 		</div>
-	</div>
-	<div class="page mt50" id="container">
-		<div class="weui-loadmore">
-			<i class="weui-loading"></i>
-			<span class="weui-loadmore__tips">正在加载</span>
+		<div id="container">
+			<div class="weui-loadmore">
+				<i class="weui-loading"></i>
+				<span class="weui-loadmore__tips">正在加载</span>
+			</div>
 		</div>
+		
 	</div>
 	<#include "/common.ftl">
 	<script id="error" type="text/html">
@@ -81,13 +70,11 @@
 			}
 		}
 
-		 $.getJSON("/seller/all.json").done(function(res){
+		var sellerLst;
+
+		$.getJSON("/seller/all.json").done(function(res){
         	if(res.code == '0'){
-                var sellerLst = res.data;
-                $("#searchPannel").userSearchBar({"datas":sellerLst, "itemClickCallback":function(data){
-                	location.href = "/teacher/seller/info/" + data.id;
-                	this.cancelSearch();
-                }});
+                sellerLst = res.data;
                 render(sellerLst);
             } else {
                 $.toast(res.msg, "cancel");
@@ -95,6 +82,19 @@
         }).fail(function() {
 			$("#container").html(template(document.getElementById('error').innerHTML, {}));
   		});
+
+
+  		$("body").on("click", "#search", function(){
+            if(sellerLst == undefined){
+                $.toast("加载销售员搜索信息失败", "cancel");
+                return;
+            }
+            $.searchDialog({"datas":sellerLst,  "itemClickCallback":function(data){
+    			location.href = "/teacher/seller/info/" + data.id;
+    			return false;
+        	}});
+        });
+
 	});
 	</script>
 </body>
