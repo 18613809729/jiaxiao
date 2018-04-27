@@ -7,30 +7,18 @@
 	<#include "/head.ftl">
 </head>
 <body ontouchstart>
-	<div class="page z_index100 fit_content">
-		<div id="searchPannel">
-			<div class="weui-search-bar" id="searchBar">
-				<form class="weui-search-bar__form">
-					<div class="weui-search-bar__box">
-						<i class="weui-icon-search"></i>
-						<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
-						<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-					</div>
-					<label class="weui-search-bar__label" id="searchText">
-						<i class="weui-icon-search"></i>
-						<span>搜索</span>
-					</label>
-				</form>
-				<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-			</div>
-			<div class="weui-cells searchbar-result" id="searchResult">
+	<div class="page">
+		<div class="search_bar">
+			<div class="search_label" id="search">
+				<i class="weui-icon-search"></i>
+				<span>搜索</span>
 			</div>
 		</div>
-	</div>
-	<div class="page mt50" id="container">
-		<div class="weui-loadmore">
-			<i class="weui-loading"></i>
-			<span class="weui-loadmore__tips">正在加载</span>
+		<div id="container">
+			<div class="weui-loadmore">
+				<i class="weui-loading"></i>
+				<span class="weui-loadmore__tips">正在加载</span>
+			</div>
 		</div>
 	</div>
 	<#include "/common.ftl">
@@ -107,27 +95,35 @@
 			$("#container").html(template(document.getElementById('error').innerHTML, {}));
   		});
 
+        var searchData;
       	$.getJSON("/teacher/student/search/inlearn.json").done(function(res){
         	if(res.code == '0'){
-                $("#searchPannel").userSearchBar({"datas":res.data, "itemClickCallback":function(data){
-                	this.cancelSearch();
-                	for (var i = 0; i < students.length; i++) {
-                		if(students[i].id == data.id){
-                			return;
-                		}
-                	}
-                	data.checked = true;
-                	students.push(data);
-                	if(students.length == 1){
-                		render(students);
-                	} else {
-						$("#items").append(template(document.getElementById('cellTpl').innerHTML, {"data":data}));
-                	}
-        		}});
+        		searchData = res.data;
             }
-        }).fail(function() {
-			$.toast("加载学员搜索信息失败", "cancel");
-  		});
+        });
+
+  		$("body").on("click", "#search", function(){
+            if(searchData == undefined){
+                $.toast("加载学员搜索信息失败", "cancel");
+                return;
+            }
+            $.searchDialog({"datas":searchData,  "itemClickCallback":function(data){
+    			this.cancelSearch();
+            	for (var i = 0; i < students.length; i++) {
+            		if(students[i].id == data.id){
+            			return;
+            		}
+            	}
+            	data.checked = true;
+            	students.push(data);
+            	if(students.length == 1){
+            		render(students);
+            	} else {
+					$("#items").append(template(document.getElementById('cellTpl').innerHTML, {"data":data}));
+            	}
+        	}});
+        });
+
       	
       	$("body").on("click", "#addBtn", function(){
       		var data = $("#form").serialize();
