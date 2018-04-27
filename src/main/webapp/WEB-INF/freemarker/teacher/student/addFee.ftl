@@ -55,7 +55,7 @@
                     <input class="weui-input" value="${(info.totalFee - payFee)?string('#.##')}" name="money" type="number" required min="0" max="20000" step="0.01" placeholder="请输入金额" maxlength="7">
                 </div>
             </div>
-            <a href="javascript:void(0);" class="weui-cell weui-cell_link">
+            <a href="javascript:;" class="weui-cell weui-cell_link">
                 <div class="weui-cell__bd">学费：${info.totalFee?string('#.##')},&nbsp; &nbsp;已缴：${payFee?string('#.##')},&nbsp; &nbsp;待缴：${(info.totalFee - payFee)?string('#.##')}</div>
             </a>
          </div>

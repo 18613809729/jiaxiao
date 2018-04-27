@@ -34,7 +34,7 @@
             </div>
             </form>
         <div class="weui-btn-area">
-			<a class="weui-btn weui-btn_primary" id="submit"><i></i>确定</a>
+			<a href="javascript:;" class="weui-btn weui-btn_primary" id="submit"><i></i>确定</a>
 		</div>
 		<br>
 	</div>

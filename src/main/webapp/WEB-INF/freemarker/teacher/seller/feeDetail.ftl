@@ -39,7 +39,7 @@
 					</div>
 				</a>
 				</#list>
-				<a href="javascript:void(0);" id="loadMore" class="weui-cell weui-cell_link">
+				<a href="javascript:;" id="loadMore" class="weui-cell weui-cell_link">
 					<div class="weui-cell__bd">
 					</div>
 	               	<div class="weui-cell__ft">支付金额：${feeSum}</div>

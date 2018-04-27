@@ -27,7 +27,7 @@
 		
 		<div class="weui-cells__title">基本信息</div>
 	   	<div class="weui-cells">
-	   		<a class="weui-cell weui-cell_access" id="username">
+	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="username">
 				<div class="weui-cell__bd">
 					姓名
 				</div>
@@ -51,7 +51,7 @@
 				</div>
 			</div>
 			
-			<a class="weui-cell weui-cell_access" id="mobile">
+			<a href="javascript:;" class="weui-cell weui-cell_access" id="mobile">
 				<div class="weui-cell__bd">
 					手机号
 				</div>
@@ -72,7 +72,7 @@
 		<div class="weui-cells__title">其他信息</div>
 	   	<div class="weui-cells">
 	   		
-	   		<a class="weui-cell weui-cell_access" id="status">
+	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="status">
 				<div class="weui-cell__bd">
 					状态
 				</div>

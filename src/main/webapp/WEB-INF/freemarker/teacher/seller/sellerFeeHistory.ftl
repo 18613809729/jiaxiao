@@ -44,7 +44,7 @@
 					</a>
 			<%}%>
 			<%if(hasMore){%>
-					<a href="javascript:void(0);" id="loadMore" class="weui-cell weui-cell_link">
+					<a href="javascript:;" id="loadMore" class="weui-cell weui-cell_link">
 	                	<div class="weui-cell__bd">查看更多</div>
 	            	</a>
 	        <%}%>

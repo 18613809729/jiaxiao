@@ -102,8 +102,8 @@
 	
 		<#if info.state != 3 && info.state != 4 >
 			<div class="weui-btn-area">
-				<a class="weui-btn weui-btn_primary" id="agreeBtn"><i></i>同意</a>
-				<a class="weui-btn weui-btn_default" id="rejectBtn"><i></i>拒绝</a>
+				<a href="javascript:;" class="weui-btn weui-btn_primary" id="agreeBtn"><i></i>同意</a>
+				<a href="javascript:;" class="weui-btn weui-btn_default" id="rejectBtn"><i></i>拒绝</a>
 			</div>
 		<#else>
 			<div class="weui-btn-area">

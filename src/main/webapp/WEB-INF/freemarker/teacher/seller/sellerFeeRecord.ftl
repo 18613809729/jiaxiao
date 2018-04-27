@@ -40,12 +40,12 @@
 					</div>
 				</a>
 				</#list>
-				<a href="javascript:void(0);" id="loadMore" class="weui-cell weui-cell_link">
+				<a href="javascript:;" id="loadMore" class="weui-cell weui-cell_link">
 					<div class="weui-cell__bd">
 					</div>
 	               	<div class="weui-cell__ft">佣金总额：${feeSum}</div>
 	            </a>
-	            <a href="javascript:void(0);" id="loadMore" class="weui-cell weui-cell_link">
+	            <a href="javascript:;" id="loadMore" class="weui-cell weui-cell_link">
 					<div class="weui-cell__bd">
 					</div>
 	               	<div class="weui-cell__ft">已付金额：${paySum}</div>

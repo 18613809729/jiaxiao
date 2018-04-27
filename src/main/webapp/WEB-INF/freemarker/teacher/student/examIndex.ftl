@@ -10,16 +10,16 @@
 	<div class="page">
 		<div class="weui-tab">
 				<div class="weui-navbar">
-					<a class="weui-navbar__item" data-id="1">
+					<a href="javascript:;" class="weui-navbar__item" data-id="1">
 						科目一
 					</a>
-					<a class="weui-navbar__item" data-id="2">
+					<a href="javascript:;" class="weui-navbar__item" data-id="2">
 						科目二
 					</a>
-					<a class="weui-navbar__item" data-id="3">
+					<a href="javascript:;" class="weui-navbar__item" data-id="3">
 						科目三
 					</a>
-					<a class="weui-navbar__item" data-id="4">
+					<a href="javascript:;" class="weui-navbar__item" data-id="4">
 						科目四
 					</a>
 				</div>
@@ -41,7 +41,7 @@
 					</div>
 					
 					<div class="weui-btn-area">
-						<a class="weui-btn weui-btn_primary" id="addBtn">确定约考</a>
+						<a href="javascript:;" class="weui-btn weui-btn_primary" id="addBtn">确定约考</a>
 					</div>
 					<br>
 				</div>

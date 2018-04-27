@@ -30,13 +30,13 @@
                         <input class="weui-input" type="text" id="sellerInput" placeholder="分销员(选填)" <#if seller??> value="${seller.username}  ${seller.mobile}"</#if> readonly>
                     </div>
                 </div>
-                <a href="javascript:void(0);" class="weui-cell weui-cell_link">
+                <a href="javascript:;" class="weui-cell weui-cell_link">
                     <div class="weui-cell__bd">预约成功，客服将会尽快联系您，<span class="font_warn">请确保手机号正确</span></div>
                 </a>
             </div>
             </form>
         <div class="weui-btn-area">
-			<a class="weui-btn weui-btn_primary" id="submit"><i></i>报名</a>
+			<a href="javascript:;" class="weui-btn weui-btn_primary" id="submit"><i></i>报名</a>
 		</div>
 		<br>
 	</div>

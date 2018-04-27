@@ -42,7 +42,7 @@
 		<%for (var i = 0; i < datas.length; i++){%>
     		<%:=cellTpl({"data":datas[i]})%>
     	<%}%>
-    	<a id="loadMore" class="weui-cell weui-cell_link">
+    	<a id="loadMore" class="weui-cell weui-cell_link" href="javascript:;">
             <div class="weui-cell__bd">查看更多</div>
         </a>
 	</script>
