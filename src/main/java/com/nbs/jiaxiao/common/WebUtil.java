@@ -25,4 +25,8 @@ public class WebUtil {
 		}
 		return sb.toString();
 	}
+	
+	public static boolean isAjax(HttpServletRequest request) {
+		return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+	}
 }

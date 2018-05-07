@@ -3,7 +3,7 @@ package com.nbs.jiaxiao.wx.vo;
 public class CommonRes extends BaseRes{
 	
 	private String access_token;
-	private int expires_in = SUCCESS;
+	private int expires_in;
 	private String refresh_token;
 	private String openid;
 	private String scope;
