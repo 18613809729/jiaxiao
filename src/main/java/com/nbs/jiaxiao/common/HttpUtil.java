@@ -100,7 +100,7 @@ public class HttpUtil {
 			if (HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
 				throw new HttpException("post error, url:" + url + ",status:" + response.getStatusLine().getStatusCode());
 			}
-			String result = EntityUtils.toString(response.getEntity());
+			String result = EntityUtils.toString(response.getEntity(),  Charset.forName("utf-8"));
 			logger.info("post url {} result:{}", url, result);
 			return result;
 		} catch (Exception e) {
@@ -119,7 +119,7 @@ public class HttpUtil {
 			if (HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
 				throw new HttpException("get error, url:" + url + ",status:" + response.getStatusLine().getStatusCode());
 			}
-			String res = EntityUtils.toString(response.getEntity());
+			String res = EntityUtils.toString(response.getEntity(), Charset.forName("utf-8"));
 			logger.info("get url {} res {}", url, res);
 			return res;
 		} catch (Exception e) {

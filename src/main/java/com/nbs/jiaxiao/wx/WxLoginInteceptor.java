@@ -126,7 +126,10 @@ public class WxLoginInteceptor implements HandlerInterceptor  {
 		user.setProvince(userInfo.getProvince());
 		user.setCity(userInfo.getCity());
 		user.setCountry(userInfo.getCountry());
-		user.setHeadImg(userInfo.getHeadimgurl());
+		if(StringUtils.isNotBlank(userInfo.getHeadimgurl())) {
+			user.setHeadImg(userInfo.getHeadimgurl().replace("http://", "//"));
+		}
+		
 		if(exist) {
 			userService.updateByPriKey(user);
 		} else {
