@@ -18,7 +18,7 @@ import com.nbs.jiaxiao.wx.WxLoginInteceptor;
 public class TeacheInteceptor implements HandlerInterceptor {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WxLoginInteceptor.class);
 
-	private List<String> teacherLst = Arrays.asList("test", "admin");
+	private List<String> teacherLst = Arrays.asList("oRKZ81lV_dhueAN--6d7ZwwSSqM4", "admin");
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3) throws Exception {
