@@ -18,11 +18,18 @@
 		</div>
 		<article class="weui-article">
             <section>
-                <h2 class="title" style="font-weight: bold;">驾校简介</h2>
                 <section>
-                    <p>
-                       安培驾校成立，拥有16台教学车辆，员工32人。场地位于炭步镇瓦步小学旧址，占地面积14800平方米，年培训学员728人。拥有教学车辆达40台，员工增至68人，当年培训学员达2800人。拥有教学车辆达80台，同时增加花都新华市区新都综合教练场，占地面积6000平方米，年培训学员5600人。拥有教学车辆达120台，年培训学员8400人。拥有教学车辆达150台，同时增加了皮革城狮岭片区综合教练场，占地面积14000平方米，年培训学员	历年荣誉奖牌10500人。拥有教学车辆达173台，同时增加了花东空港区综合教练场，占地面积6000平方米，年培训学员14800人。拥有教学车辆达204台，年培训学员8300人。
-                    </p>
+                	<p>报名学车，要注意如下几点――</p>
+                	<p>在哪儿训练，近县城吗？</p>
+                	<p>有几台车，要排队吗？</p>
+                	<p>服务怎么样？能接送吗？可以开冷气吗？</p>
+                	<p>教学怎么样？合格率高吗？</p>
+                	<p>收费怎么样？会乱收费吗？</p>
+                	<p>教练怎么样？有能力有素质吗？</p>
+                	<p>价位怎么样？有包补考费与包路考吗？</p>
+                 	<p>林教练教学宗旨：没有学不会的学员，只有不会教的教练！</p>
+                 	<p>无论你提出上面哪一个问题，我都一一给你满意的答复！</p>
+                 	<p>选择到我这报名学车准没错，4500包补考费，还包路考哦！<img src="//static.xxwkj.club/jiaxiao/image/icon/up.png"><img src="//static.xxwkj.club/jiaxiao/image/icon/up.png"><img src="//static.xxwkj.club/jiaxiao/image/icon/up.png"></p>
                 </section>
             </section>
 
@@ -41,7 +48,7 @@
                 </section>
             </section>
             <div class="weui-btn-area">
-            	<a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">立即报名</a>
+            	<a class="weui-btn weui-btn_primary" href="/student/join">立即报名</a>
         	</div>
         	<br>
         </article>
