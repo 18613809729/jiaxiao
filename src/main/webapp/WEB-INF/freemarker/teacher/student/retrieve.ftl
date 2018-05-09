@@ -16,12 +16,22 @@
 		</div>
 
 		<div class="weui-cells weui-cells_form">
-			<div class="weui-cell">
-		        <div class="weui-cell__hd"><label for="name" class="weui-label">选择</label></div>
-		        <div class="weui-cell__bd">
-		          <input class="weui-input" id="type" type="text" value="学车中" readonly="" data-values="1">
-		        </div>
-      		</div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">筛选条件</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" id="type">
+                        <option value="1" selected>学车中</option>
+		        		<option value="21">科目一</option>
+		        		<option value="22">科目二</option>
+		        		<option value="23">科目三</option>
+		        		<option value="24">科目四</option>
+		        		<option value="3">已毕业</option>
+		        		<option value="4">欠费中</option>
+                    </select>
+                </div>
+            </div>
       	</div>
       	<div id="container">
 			<div class="weui-loadmore">
@@ -116,19 +126,14 @@
 		}
 
 		loadData(calUrl("1"));
-  		$("#type").select({
-	        title: "筛选条件",
-	        items: [{title: "学车中",value: "1"},{title: "科目一",value: "21"},{title: "科目二",value: "22"},{title: "科目三",value: "23"},{title: "科目四",value: "24"},{title: "已毕业",value: "3"},{title: "欠费中",value: "4"}]
-      	});
       	var preType = "1";
       	$("#type").on("change", function(){
-      		var type = $(this).data("values");
+      		var type = $(this).val();
       		if(preType != type){
 				preType = type;
 				loadData(calUrl(type));
       		}
       	});
-
       	
 		var searchStudents;
       	$.getJSON("/teacher/student/search.json").done(function(res){

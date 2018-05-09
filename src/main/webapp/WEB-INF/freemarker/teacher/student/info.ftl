@@ -27,14 +27,22 @@
 		
 		<div class="weui-cells__title">基本信息</div>
 	   	<div class="weui-cells">
-	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="username">
+
+	   		<div class="weui-cell weui-cell_swiped">
 				<div class="weui-cell__bd">
-					姓名
+					<a class="weui-cell" id="username">
+						<div class="weui-cell__bd">
+							姓名
+						</div>
+						<div class="weui-cell__ft">
+							${info.username}
+						</div>
+					</a>
 				</div>
-				<div class="weui-cell__ft">
-					${info.username}
+				<div class="weui-cell__ft action">
+					<a class="weui-swiped-btn weui-swiped-btn_default" href="javascript:;" id="modifyUsername">修改</a>
 				</div>
-			</a>
+			</div>	   		
 				
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
@@ -51,14 +59,21 @@
 				</div>
 			</div>
 			
-			<a href="javascript:;" class="weui-cell weui-cell_access" id="mobile">
-				<div class="weui-cell__bd">
-					手机号
+			<div class="weui-cell weui-cell_swiped">
+				<div class="weui-cell__bd" id="mobile">
+					<a class="weui-cell" >
+						<div class="weui-cell__bd">
+							手机号
+						</div>
+						<div class="weui-cell__ft">
+							${info.mobile}<span style="color: #508CEE; margin-left: 10px;">复制</span>
+						</div>
+					</a>
 				</div>
-				<div class="weui-cell__ft">
-					${info.mobile}
+				<div class="weui-cell__ft action">
+					<a class="weui-swiped-btn weui-swiped-btn_default" href="javascript:;" id="modifyMobile">修改</a>
 				</div>
-			</a>
+			</div>
 			
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
@@ -69,12 +84,12 @@
 				</div>
 			</div>
 			
-			<div class="weui-cell">
+			<div class="weui-cell" id="certNo">
 				<div class="weui-cell__bd">
 					证件号
 				</div>
 				<div class="weui-cell__ft">
-					${info.certNo}
+					${info.certNo}<span style="color: #508CEE; margin-left: 10px;">复制</span>
 				</div>
 			</div>
 		</div>
@@ -199,7 +214,7 @@
 	<#include "/common.ftl">
 	<script type="text/javascript">
 		$(function(){
-			$("#username").click(function(){
+			$("#modifyUsername").click(function(){
 				$.prompt({
 				  title: '修改姓名',
 				  text: '',
@@ -218,7 +233,7 @@
 				});
 			});
 
-			$("#mobile").click(function(){
+			$("#modifyMobile").click(function(){
 				$.prompt({
 				  title: '修改手机号',
 				  text: '',
@@ -236,7 +251,26 @@
 				  }
 				});
 			});
+
+
+			new Clipboard("#mobile", {
+				text: function(trigger) {
+					return '${info.mobile}';
+				}
+			}).on("success", function() {
+				$.toast("复制成功");
+			});
+
+			new Clipboard("#certNo", {
+				text: function(trigger) {
+					return '${info.certNo}';
+				}
+			}).on("success", function() {
+				$.toast("复制成功");
+			})
 		});
+
+
 	</script>
 </body>
 </html>

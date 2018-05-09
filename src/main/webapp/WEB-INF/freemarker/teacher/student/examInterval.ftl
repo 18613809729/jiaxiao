@@ -13,25 +13,25 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="interval1">科目一</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="interval1" placeholder="科目一间隔" required type="number" min="0" step="1" max="99" value="${interval.interval1}">
+                        <input class="weui-input" name="interval1" placeholder="科目一间隔" required type="number" min="0" step="1" max="300" value="${interval.interval1}">
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="interval2">科目二</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="interval2" placeholder="科目二间隔" required type="number" min="0" max="99" step="1" value="${interval.interval2}">
+                        <input class="weui-input" name="interval2" placeholder="科目二间隔" required type="number" min="0" max="300" step="1" value="${interval.interval2}">
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="interval3">科目三</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="interval3" placeholder="科目三间隔" required type="number" min="0" max="99" step="1" value="${interval.interval3}">
+                        <input class="weui-input" name="interval3" placeholder="科目三间隔" required type="number" min="0" max="300" step="1" value="${interval.interval3}">
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label" for="interval4">科目四</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" name="interval4" placeholder="科目四间隔" required type="number" min="0" max="99" step="1" value="${interval.interval4}">
+                        <input class="weui-input" name="interval4" placeholder="科目四间隔" required type="number" min="0" max="300" step="1" value="${interval.interval4}">
                     </div>
                 </div>
      		</div>
