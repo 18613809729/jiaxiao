@@ -74,5 +74,15 @@ public class ExamInfo extends Base{
 	
 	public static final String NO_PASS = "0";
 	
+	private Exam exam;
+
+	public Exam getExam() {
+		return exam;
+	}
+
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+	
 	/* customized code end */
 }

@@ -94,6 +94,8 @@ public interface SignStudentService {
 
 	Map<String, List<SignStudentInfo>> queryRecent();
 
+	SignStudent queryByOpenId(String openId);
+
 	
 	/* customized code end */
 

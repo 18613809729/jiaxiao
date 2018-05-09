@@ -93,6 +93,8 @@ public interface ExamInfoService {
 	void noPass(ExamInfo examInfo);
 
 	ExamInfo delete(Integer examId, Integer studentId);
+
+	List<ExamInfo> queryStudentExam(Integer studentId);
 	
 	/* customized code end */
 

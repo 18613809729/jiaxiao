@@ -113,6 +113,10 @@ public interface StudentService {
 
 	long queryInLearnCount();
 
+	Student queryStudent(String username, String mobile);
+
+	List<Student> queryStudent(String openId);
+
 	/* customized code end */
 
 }

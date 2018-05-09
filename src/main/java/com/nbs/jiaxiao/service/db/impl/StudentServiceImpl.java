@@ -14,6 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.Phase;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.Stage;
@@ -266,6 +267,22 @@ public class StudentServiceImpl implements StudentService{
 		count += selectCount(con);
 		return count;
 	}
+	
+	
+	@Override
+	public Student queryStudent(String username, String mobile) {
+		Student con = new Student();
+		con.setUsername(username);
+		con.setMobile(mobile);
+		return NbsUtils.getFirst(selectList(con));
+	} 
+	
+	@Override
+	public List<Student> queryStudent(String openId) {
+		Student con = new Student();
+		con.setOpenId(openId);
+		return selectList(con);
+	} 
 	
 	/* customized code end */
 

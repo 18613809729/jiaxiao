@@ -153,6 +153,15 @@ public class SignStudentServiceImpl implements SignStudentService{
 		map.put("beforeLst", beforeLst);
 		return map;
 	}
+	
+	
+	@Override
+	public SignStudent queryByOpenId(String openId){
+		SignStudent con = new SignStudent();
+		con.setOpenId(openId);
+		return NbsUtils.getFirst(signStudentMapper.selectList(con)); 
+	}
+	
 	/* customized code end */
 
 }

@@ -202,6 +202,14 @@ public class ExamInfoServiceImpl implements ExamInfoService{
 			throw new InvalidParamException("canot pass exam :" + JSON.toJSONString(examInfo));
 		}
 	}
+	
+	
+	@Override
+	public List<ExamInfo>  queryStudentExam(Integer studentId) {
+		ExamInfo con = new ExamInfo();
+		con.setStudentId(studentId);
+		return selectList(con);
+	}
 	/* customized code end */
 
 }
