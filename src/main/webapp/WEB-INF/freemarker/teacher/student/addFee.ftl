@@ -75,6 +75,16 @@
 				var _this = $(this);
 				var money = $('[name="money"]').val();
 				var payDate = $('[name="payDate"]').val();
+				if(!payDate){
+					$.toast("请输入缴费日期", "cancel");
+					return;
+				}
+
+				if(!money){
+					$.toast("请输入缴费金额", "cancel");
+					return;
+				}
+
 			  	$.confirm('确定要给<span class="font_warn">${info.username}</span>缴纳<span class="font_warn">' + money + '</span>元?', "确认缴费?", function() {
 		         	$.singlePost(_this, "/teacher/student/info/${info.id}/fee", {"money":money, "payDate":payDate}).done(function(res){
 		         		if(res.code == "0"){
