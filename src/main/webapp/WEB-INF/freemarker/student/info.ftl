@@ -187,14 +187,17 @@
 					<div class="weui-cell__bd">
 						<div class="weui-flex">
 							<div class="weui-flex__item">${examInfo.exam.examDate}</div>
-	            			<div class="weui-flex__item">${examInfo.exam.stageName}</div>
-	            			<div class="weui-flex__item">
-	            			<#if examInfo.status == "1"> 
-								<span class="font_green">已通过</span> 
-							<#elseif examInfo.status == "0"> 
-								<span class="font_warn">未通过</span> 
-							</#if>
+							<div class="weui-flex weui-flex__item">
+								<div class="weui-flex__item">${examInfo.exam.stageName}</div>
+			            		<div class="weui-flex__item">
+			            			<#if examInfo.status == "1"> 
+										<span class="font_green">已通过</span> 
+									<#elseif examInfo.status == "0"> 
+										<span class="font_warn">未通过</span> 
+									</#if>
+								</div>
 							</div>
+	            			
         				</div>
 					</div>
 					<div class="weui-cell__ft">
