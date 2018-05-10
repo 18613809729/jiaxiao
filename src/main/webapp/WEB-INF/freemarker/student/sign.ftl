@@ -52,7 +52,8 @@
                         if(res.code == '0'){
                             $.toSuccess({
                             "title":"申请成功",
-                            "desc":"请耐心等候客服人员联系"
+                            "desc":"请耐心等候客服人员联系",
+                            "primary_btn_url":"/m/index"
                             })
                         } else {
                             $.toast(res.msg, "cancel");
