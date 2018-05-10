@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -65,7 +66,7 @@ public class StudentController {
 	private ExamInfoService examInfoService;
 	
 	@GetMapping("/join")
-	public ModelAndView join(Integer sellerId) {
+	public ModelAndView join(@RequestAttribute("openId") String openId, Integer sellerId) {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sign");
 		mv.addObject("seller", sellerService.queryParentSeller(sellerId));
 		return mv;
@@ -78,11 +79,7 @@ public class StudentController {
 		signStudent.setState(State.UN_READ.getCode());
 		SignStudent existSignStudent = signStudentService.queryByKey(signStudent.getUsername(), signStudent.getMobile());
 		if(existSignStudent != null) {
-			return BaseRes.build(ResCode.REPEATED, existSignStudent);
-		}
-		Student student = studentService.queryStudent(signStudent.getUsername(), signStudent.getMobile());
-		if(student != null) {
-			return BaseRes.build(ResCode.REPEATED, student);
+			return BaseRes.build("-1", "该身份已成功预约", existSignStudent);
 		}
 		return BaseRes.buildSuccess(signStudentService.insert(signStudent));
 	}
@@ -100,6 +97,9 @@ public class StudentController {
 		}
 		if(!StringUtils.isBlank(student.getOpenId())) {
 			return BaseRes.build("-1", "学员信息已被关联");
+		}
+		if(!CollectionUtils.isEmpty(studentService.queryStudent(openId))) {
+			return BaseRes.build("-1", "您的微信号已关联其他身份");
 		}
 		student.setOpenId(openId);
 		studentService.updateByPriKey(student);

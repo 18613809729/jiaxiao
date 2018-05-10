@@ -52,11 +52,9 @@
                         if(res.code == '0'){
                             $.toSuccess({
                             "title":"申请成功",
-                            "desc":"请耐心等候客服人员联系",
-                            "primary_btn_url":"index"
+                            "desc":"请耐心等候客服人员联系"
                             })
                         } else {
-                        	//TODO 数据重复处理
                             $.toast(res.msg, "cancel");
                         }
                     });
