@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
+import com.nbs.jiaxiao.domain.po.User;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.SellerInfo;
 import com.nbs.jiaxiao.service.db.PreSellerService;
 import com.nbs.jiaxiao.service.db.SellerService;
+import com.nbs.jiaxiao.service.db.UserService;
 
 @Controller
 @RequestMapping("/seller")
@@ -31,6 +34,9 @@ public class SellerController {
 	
 	@Autowired
 	private PreSellerService preSellerService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/valid.json")
 	public @ResponseBody BaseRes<List<Seller>> validSellers() {
@@ -99,6 +105,16 @@ public class SellerController {
 			return new ModelAndView(FTL_PREFIX + "/choose");
 		}
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/index");
+		mv.addObject("info", seller);
+		User user = userService.queryByOpenId(seller.getOpenId());
+		seller.setUser(user);
+		if(seller.getParentId() != null && seller.getParentId().intValue() != 0) {
+			Seller parentSeller = sellerService.selectByPriKey(seller.getParentId());
+			if(parentSeller != null) {
+				mv.addObject("parent", parentSeller);
+			}
+		}
+		
 		return mv;
 	}
 	

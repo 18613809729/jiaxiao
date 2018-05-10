@@ -9,7 +9,7 @@
 <body ontouchstart>
 	<div class="page" id="container">
 		<div class="weui-cells">
-			<a class="weui-cell" href="/teacher/seller/info/${info.id}">
+			<a class="weui-cell" style="color: #333;" href="/teacher/seller/info/${info.id}">
 				<div class="weui-cell__hd">
 					<img src="${info.user.headImg!"https://static.xxwkj.club/jiaxiao/image/default_head_img.jpg"}" width="60px">
 				</div>

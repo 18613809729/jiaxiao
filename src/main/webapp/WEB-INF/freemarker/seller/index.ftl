@@ -27,15 +27,14 @@
 		
 		<div class="weui-cells__title">基本信息</div>
 	   	<div class="weui-cells">
-
-	   		<a class="weui-cell">
+	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="username">
 				<div class="weui-cell__bd">
 					姓名
 				</div>
 				<div class="weui-cell__ft">
 					${info.username}
 				</div>
-			</a>	
+			</a>
 				
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
@@ -52,7 +51,7 @@
 				</div>
 			</div>
 			
-			<a class="weui-cell" >
+			<a href="javascript:;" class="weui-cell weui-cell_access" id="mobile">
 				<div class="weui-cell__bd">
 					手机号
 				</div>
@@ -69,143 +68,86 @@
 					${info.user.country}&nbsp;&nbsp;${info.user.province}&nbsp;&nbsp;${info.user.city}
 				</div>
 			</div>
-			
-			<div class="weui-cell" id="certNo">
-				<div class="weui-cell__bd">
-					证件号
-				</div>
-				<div class="weui-cell__ft">
-					${info.certNo}
-				</div>
-			</div>
 		</div>
-		<div class="weui-cells__title">学车信息</div>
+		<div class="weui-cells__title">其他信息</div>
 	   	<div class="weui-cells">
-			
-			<div class="weui-cell">
+	   		
+	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="status">
 				<div class="weui-cell__bd">
-					驾校
+					状态
 				</div>
 				<div class="weui-cell__ft">
-					${school.name}
+					<#if info.status == "1">
+						有效
+					<#else>
+						无效
+					</#if>
 				</div>
-			</div>
-			
-			<div class="weui-cell">
-				<div class="weui-cell__bd">
-					当前进度
-				</div>
-				<div class="weui-cell__ft">
-					${stage}
-				</div>
-			</div>
-			<#if info.stage == 2 && phase??  >
-				<div class="weui-cell">
-					<div class="weui-cell__bd">
-						阶段
-					</div>
-					<div class="weui-cell__ft">
-						${phase.desc}
-					</div>
-				</div>
-			</#if>
+			</a>
 
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
-					车型
+					销售等级
 				</div>
 				<div class="weui-cell__ft">
-					<#if info.driveType == 0>
-						手动档
+					<#if info.level == 1>
+						一级
+					<#elseif info.user.sex == 2>
+						二级
 					<#else>
-						自动档
+						三级
 					</#if>
 				</div>
 			</div>
 			
+			<#if parent??>
+				<a class="weui-cell weui-cell_access" href="/teacher/seller/info/${parent.id}">
+					<div class="weui-cell__bd">
+						上级销售
+					</div>
+					<div class="weui-cell__ft">
+						${parent.username}
+					</div>
+				</a>
+			</#if>
+			
+			
+
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
-					应缴学费
+					加入时间
 				</div>
 				<div class="weui-cell__ft">
-					${info.totalFee?string('#.##')}
+					${createdTime}
 				</div>
 			</div>
 			
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
-					实缴学费
+					来源
 				</div>
 				<div class="weui-cell__ft">
-					${payFee?string('#.##')}
+					<#if info.status == "1">
+						申请
+					<#else>
+						录入
+					</#if>
 				</div>
 			</div>
-			
-			<div class="weui-cell">
-				<div class="weui-cell__bd">
-					报名时间
-				</div>
-				<div class="weui-cell__ft">
-					${info.signDate}
-				</div>
-			</div>
-			
-	   	<#if seller?? >
-	   		<div class="weui-cell" href="javascript:;">
-				<div class="weui-cell__bd">
-					推荐人
-				</div>
-				<div class="weui-cell__ft">
-					${seller.username} &nbsp;&nbsp;
-				</div>
-			</div>
-	   	</#if>
-			
+			<a href="/teacher/seller/info/history/fee/paied/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">佣金历史</div>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a href="/teacher/seller/info/history/fee/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">佣金记录</div>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a href="/teacher/seller/info/history/order/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">销售历史</div>
+                <div class="weui-cell__ft"></div>
+            </a>
 	   	</div>
 
-	   	<div class="weui-cells__title">缴费信息（日期/金额）</div>
-		<div class="weui-cells">
-			<#list feeLst as fee>
-		   		<div class="weui-cell">
-					<div class="weui-cell__bd">
-						<div class="weui-flex">
-							<div class="weui-flex__item">${fee.payDate}</div>
-	            			<div class="weui-flex__item">${fee.money?string('#.##')}</div>
-        				</div>
-					</div>
-					<div class="weui-cell__ft">
-					</div>
-				</div>
-			</#list>
-		</div>
-
-		<#if examInfos ?? && (examInfos?size > 0) >
-		<div class="weui-cells__title">考试信息</div>
-		<div class="weui-cells">
-			<#list examInfos as examInfo>
-		   		<div class="weui-cell">
-					<div class="weui-cell__bd">
-						<div class="weui-flex">
-							<div class="weui-flex__item">${examInfo.exam.examDate}</div>
-							<div class="weui-flex weui-flex__item">
-								<div class="weui-flex__item">${examInfo.exam.stageName}</div>
-			            		<div class="weui-flex__item">
-			            			<#if examInfo.status == "1"> 
-										<span class="font_green">已通过</span> 
-									<#elseif examInfo.status == "0"> 
-										<span class="font_warn">未通过</span> 
-									</#if>
-								</div>
-							</div>
-	            			
-        				</div>
-					</div>
-					<div class="weui-cell__ft">
-					</div>
-				</div>
-			</#list>
-		</div>
-		</#if>
 	   	<br>
 	</div>
 	<#include "/common.ftl">
