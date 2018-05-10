@@ -122,6 +122,8 @@ public interface SellerService {
 
 	long queryCount(int level);
 
+	Seller querySeller(String openId);
+
 	/* customized code end */
 
 }

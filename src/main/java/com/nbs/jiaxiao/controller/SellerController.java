@@ -2,6 +2,7 @@ package com.nbs.jiaxiao.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,4 +68,38 @@ public class SellerController {
 		
 		return BaseRes.buildSuccess(preSellerService.addPreSeller(openId, preSeller));
 	}
+	
+	@GetMapping("/link")
+	public ModelAndView linkPage() {
+		return new ModelAndView(FTL_PREFIX + "/link");
+	}
+	
+	@PostMapping("/link")
+	public @ResponseBody BaseRes<Object> link(@RequestAttribute("openId") String openId, Seller con) {
+		Seller seller = sellerService.querySeller(con.getUsername(), con.getMobile());
+		if(seller == null) {
+			return BaseRes.build("-1", "销售员信息不存在");
+		}
+		if(!StringUtils.isBlank(seller.getOpenId())) {
+			return BaseRes.build("-1", "销售员信息已被关联");
+		}
+		if(sellerService.querySeller(openId) != null) {
+			return BaseRes.build("-1", "您的微信号已关联其他身份");
+		}
+		seller.setOpenId(openId);
+		sellerService.updateByPriKey(seller);
+		return BaseRes.buildSuccess(null);
+	}
+	
+	
+	@GetMapping("/index")
+	public ModelAndView index(@RequestAttribute("openId") String openId) {
+		Seller seller = sellerService.querySeller(openId);
+		if(seller == null) {
+			return new ModelAndView(FTL_PREFIX + "/choose");
+		}
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/index");
+		return mv;
+	}
+	
 }

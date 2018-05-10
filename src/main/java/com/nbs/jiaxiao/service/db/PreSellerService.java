@@ -108,6 +108,8 @@ public interface PreSellerService {
 
 	long queryUnReadCount();
 
+	PreSeller queryPreSeller(String openId);
+
 	/* customized code end */
 
 }

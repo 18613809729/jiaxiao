@@ -165,6 +165,14 @@ public class SellerServiceImpl implements SellerService{
 	}
 	
 	@Override
+	public Seller querySeller(String openId) {
+		Seller con = new Seller();
+		con.setOpenId(openId);
+		List<Seller> lst = selectList(con);
+		return lst.isEmpty() ? null : lst.get(0);
+	}
+	
+	@Override
 	public List<Seller> queryChildrenSellers(Integer parentId) {
 		Seller con = new Seller();
 		con.setParentId(parentId);

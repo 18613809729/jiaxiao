@@ -133,6 +133,15 @@ public class PreSellerServiceImpl implements PreSellerService{
 		return lst.isEmpty() ? null : lst.get(0);
 	}
 	
+	@Override
+	public PreSeller queryPreSeller(String openId) {
+		PreSeller con = new PreSeller();
+		con.setOpenId(openId);
+		List<PreSeller> lst = selectList(con);
+		return lst.isEmpty() ? null : lst.get(0);
+	}
+	
+	
 	@Autowired
 	private SellerService sellerService;
 	

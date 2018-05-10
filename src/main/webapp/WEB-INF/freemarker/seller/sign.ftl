@@ -8,7 +8,7 @@
 </head>
 <body ontouchstart>
 	<div class="page">
-		<div class="weui-cells__title">加入成为推广员，每成功推荐一名学员，都能销售推荐奖金，奖金金额根据推广员等级决定</div>
+		<div class="weui-cells__title">加入成为推广员，每成功推荐一名学员，都能获得推荐奖金，奖金金额根据推广员等级决定</div>
         <form id="signForm">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">

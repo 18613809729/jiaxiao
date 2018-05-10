@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-	<title>学员关联</title>
+	<title>销售关联</title>
 	<#include "/head.ftl">
 </head>
 <body ontouchstart>
@@ -38,12 +38,12 @@
                 var _btn = $(this);
                 form.validate(function(){
                     var data = $("#signForm").serialize();
-                    $.singlePost(_btn, "/student/link", data).done(function(res){
+                    $.singlePost(_btn, "/seller/link", data).done(function(res){
                         if(res.code == '0'){
                             $.toSuccess({
                             "title":"关联成功",
                             "desc":"",
-                            "primary_btn_url":"/student/index"
+                            "primary_btn_url":"/seller/index"
                             })
                         } else {
                             $.toast(res.msg, "cancel");
