@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.Phase;
-import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.State;
 import com.nbs.jiaxiao.domain.po.ExamInfo;
