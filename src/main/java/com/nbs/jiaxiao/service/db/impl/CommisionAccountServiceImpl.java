@@ -134,6 +134,15 @@ public class CommisionAccountServiceImpl implements CommisionAccountService{
 		con.getParam().appointOffset( offset == null  ? 0 : offset).appointLimit(30);
 		return commisionAccountMapper.queryPayFeeHistory(con);
 	}
+	
+	
+	@Override
+	public List<PaySellerInfo> queryAllPayFeeHistory(Integer sellerId){
+		CommisionAccount con = new CommisionAccount();
+		con.setSellerId(sellerId);
+		con.getParam().appointOffset(0).appointLimit(30000);
+		return commisionAccountMapper.queryPayFeeHistory(con);
+	}
  
 	/* customized code end */
 

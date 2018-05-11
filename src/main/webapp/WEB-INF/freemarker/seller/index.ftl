@@ -27,14 +27,14 @@
 		
 		<div class="weui-cells__title">基本信息</div>
 	   	<div class="weui-cells">
-	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="username">
+	   		<div class="weui-cell" id="username">
 				<div class="weui-cell__bd">
 					姓名
 				</div>
 				<div class="weui-cell__ft">
 					${info.username}
 				</div>
-			</a>
+			</div>
 				
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
@@ -51,14 +51,14 @@
 				</div>
 			</div>
 			
-			<a href="javascript:;" class="weui-cell weui-cell_access" id="mobile">
+			<div class="weui-cell" id="mobile">
 				<div class="weui-cell__bd">
 					手机号
 				</div>
 				<div class="weui-cell__ft">
 					${info.mobile}
 				</div>
-			</a>
+			</div>
 			
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
@@ -72,7 +72,7 @@
 		<div class="weui-cells__title">其他信息</div>
 	   	<div class="weui-cells">
 	   		
-	   		<a href="javascript:;" class="weui-cell weui-cell_access" id="status">
+	   		<div class="weui-cell" id="status">
 				<div class="weui-cell__bd">
 					状态
 				</div>
@@ -83,7 +83,7 @@
 						无效
 					</#if>
 				</div>
-			</a>
+			</div>
 
 			<div class="weui-cell">
 				<div class="weui-cell__bd">
@@ -101,49 +101,31 @@
 			</div>
 			
 			<#if parent??>
-				<a class="weui-cell weui-cell_access" href="/teacher/seller/info/${parent.id}">
+				<div class="weui-cell">
 					<div class="weui-cell__bd">
 						上级销售
 					</div>
 					<div class="weui-cell__ft">
 						${parent.username}
 					</div>
-				</a>
+				</div>
 			</#if>
-			
-			
-
-			<div class="weui-cell">
-				<div class="weui-cell__bd">
-					加入时间
-				</div>
-				<div class="weui-cell__ft">
-					${createdTime}
-				</div>
-			</div>
-			
-			<div class="weui-cell">
-				<div class="weui-cell__bd">
-					来源
-				</div>
-				<div class="weui-cell__ft">
-					<#if info.status == "1">
-						申请
-					<#else>
-						录入
-					</#if>
-				</div>
-			</div>
-			<a href="/teacher/seller/info/history/fee/paied/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
-                <div class="weui-cell__bd">佣金历史</div>
+			<#if info.level != 3>
+			<a href="/seller/children" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">我的下级</div>
                 <div class="weui-cell__ft"></div>
             </a>
-            <a href="/teacher/seller/info/history/fee/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
-                <div class="weui-cell__bd">佣金记录</div>
+            </#if>
+			<a href="/seller/pay/fee" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">已付佣金</div>
                 <div class="weui-cell__ft"></div>
             </a>
-            <a href="/teacher/seller/info/history/order/${info.id}" class="weui-cell weui-cell_link weui-cell_access">
-                <div class="weui-cell__bd">销售历史</div>
+            <a href="/seller/fee/record" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">佣金明细</div>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a href="/seller/order" class="weui-cell weui-cell_link weui-cell_access">
+                <div class="weui-cell__bd">推荐历史</div>
                 <div class="weui-cell__ft"></div>
             </a>
 	   	</div>

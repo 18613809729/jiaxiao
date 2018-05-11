@@ -1,6 +1,8 @@
 package com.nbs.jiaxiao.domain.po;
 
 
+import java.util.List;
+
 import com.nbs.jiaxiao.constant.Status;
 import com.nbs.jiaxiao.domain.base.Base;
 
@@ -108,6 +110,8 @@ public class Seller extends Base{
 	/* customized code start */
 	
 	private User user;
+	
+	private List<Seller> children;
 
 	public User getUser() {
 		return user;
@@ -128,5 +132,14 @@ public class Seller extends Base{
 	public boolean isValid() {
 		 return Status.isValid(getStatus());
 	}
+
+	public List<Seller> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Seller> children) {
+		this.children = children;
+	}
+	
 	/* customized code end */
 }

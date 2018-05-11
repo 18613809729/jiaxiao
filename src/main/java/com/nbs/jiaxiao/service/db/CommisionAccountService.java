@@ -90,6 +90,8 @@ public interface CommisionAccountService {
 	List<PaySellerInfo> queryPayFeeHistory(Integer offset);
 
 	List<PaySellerInfo> queryPayFeeHistory(Integer sellerId, Integer offset);
+
+	List<PaySellerInfo> queryAllPayFeeHistory(Integer sellerId);
 	
 	/* customized code end */
 
