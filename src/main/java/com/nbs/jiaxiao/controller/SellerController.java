@@ -76,14 +76,12 @@ public class SellerController {
 
 	@PostMapping("/join")
 	public @ResponseBody BaseRes<Object> join(@RequestAttribute("openId") String openId, PreSeller preSeller) {
-		PreSeller existPreSeller = preSellerService.queryPreSeller(preSeller.getUsername(), preSeller.getMobile());
-		if(existPreSeller != null) {
-			return BaseRes.build(ResCode.REPEATED, existPreSeller);
+		if(preSellerService.queryPreSeller(preSeller.getUsername(), preSeller.getMobile()) != null) {
+			return BaseRes.build("-1", "该身份已申请");
 		}
 		
-		Seller seller = sellerService.querySeller(preSeller.getUsername(), preSeller.getMobile());
-		if(seller != null) {
-			return BaseRes.build(ResCode.HAS_JOIN, seller);
+		if(sellerService.querySeller(preSeller.getUsername(), preSeller.getMobile()) != null) {
+			return BaseRes.build("-1", "该身份已是销售员");
 		}
 		
 		return BaseRes.buildSuccess(preSellerService.addPreSeller(openId, preSeller));
@@ -104,7 +102,7 @@ public class SellerController {
 			return BaseRes.build("-1", "销售员信息已被关联");
 		}
 		if(sellerService.querySeller(openId) != null) {
-			return BaseRes.build("-1", "您的微信号已关联其他身份");
+			return BaseRes.build("-1", "您的微信号已关联");
 		}
 		seller.setOpenId(openId);
 		sellerService.updateByPriKey(seller);

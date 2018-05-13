@@ -118,7 +118,11 @@
 			var _this = $(this);
 			$.confirm("确认通过该申请?", function() {
 				$.singlePut(_this, "/teacher/seller/join/info/${info.id}", {"state":"3"}).done(function(res){
-					res.code == "0" && (location.href = "/teacher/seller/join/list");
+					if(res.code == "0"){
+						location.href = "/teacher/seller/join/list"
+					} else {
+						$.toast(res.msg, "cancel");
+					}
 				});
 			});
 			
@@ -126,8 +130,12 @@
 		$("#rejectBtn").click(function(){
 			var _this = $(this);
 			$.confirm("确认拒绝该申请?", function() {
-				$.singlePut($(this), "/teacher/seller/join/info/${info.id}", {"state":"4"}).done(function(res){
-					res.code == "0" && (location.href = "/teacher/seller/join/list");
+				$.singlePut(_this, "/teacher/seller/join/info/${info.id}", {"state":"4"}).done(function(res){
+					if(res.code == "0"){
+						location.href = "/teacher/seller/join/list"
+					} else {
+						$.toast(res.msg, "cancel");
+					}
 				});
 			});
 		});

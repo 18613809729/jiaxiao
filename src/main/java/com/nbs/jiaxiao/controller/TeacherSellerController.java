@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
 import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.constant.State;
@@ -34,8 +33,6 @@ import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PaySellerInfo;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.domain.vo.SellerInfo;
-import com.nbs.jiaxiao.exception.InvalidParamException;
-import com.nbs.jiaxiao.exception.NotFoundException;
 import com.nbs.jiaxiao.service.biz.TeacherBizService;
 import com.nbs.jiaxiao.service.db.CommisionAccountService;
 import com.nbs.jiaxiao.service.db.CommisionFeeService;
@@ -140,8 +137,7 @@ public class TeacherSellerController {
 	
 	@PutMapping("/join/info/{id}")
 	public @ResponseBody BaseRes<Object> joinStateChange(@RequestAttribute("openId") String openId, @PathVariable("id") int id, String state) {
-		teacherService.operatePreSeller(openId, id, state);
-		return BaseRes.buildSuccess(null);
+		return teacherService.operatePreSeller(openId, id, state);
 	}
 	
 	@DeleteMapping("/join/info/{id}")

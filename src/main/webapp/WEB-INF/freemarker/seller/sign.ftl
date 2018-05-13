@@ -54,7 +54,6 @@
                             "primary_btn_url":"index"
                             })
                         } else {
-                        	//TODO 数据重复处理
                             $.toast(res.msg, "cancel");
                         }
                     });

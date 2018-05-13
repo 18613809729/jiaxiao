@@ -30,6 +30,7 @@ import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.PreSeller;
 import com.nbs.jiaxiao.domain.po.Seller;
 import com.nbs.jiaxiao.domain.po.Student;
+import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.domain.vo.Commissions;
 import com.nbs.jiaxiao.domain.vo.PreSellerInfo;
 import com.nbs.jiaxiao.exception.InvalidParamException;
@@ -256,12 +257,19 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 	
 	@Transactional
 	@Override
-	public void operatePreSeller(String openId, int id, String state) {
+	public BaseRes<Object> operatePreSeller(String openId, int id, String state) {
 		PreSeller preSeller = preSellerService.selectByPriKey(id);
 		NbsUtils.assertNotNull(preSeller, "the preseller {0} not exisd", id);
 		if(State.REJECTED.getCode().equals(state)) {
 			preSeller.setState(state);
 		} else if(State.HANDLED.getCode().equals(state)) {
+			if(sellerService.querySeller(preSeller.getUsername(), preSeller.getMobile()) != null) {
+				return BaseRes.build("-1", "该用户已是销售员");
+			}
+			if(sellerService.querySeller(preSeller.getOpenId()) != null) {
+				return BaseRes.build("-1", "该用户微信号已关联其它销售员");
+			}
+			
 			Seller seller = new Seller();
 			seller.setLastUpdateNoUserId(openId);
 			seller.setLevel(preSeller.getLevel());
@@ -277,6 +285,7 @@ public class TeacherBizServiceImpl implements TeacherBizService{
 			throw new InvalidParamException("joinStateChange bad state:" + state);
 		}
 		preSellerService.updateByPriKey(preSeller);
+		return BaseRes.buildSuccess(null);
 	}
 	
 	
