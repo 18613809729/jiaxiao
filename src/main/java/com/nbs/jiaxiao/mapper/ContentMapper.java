@@ -1,32 +1,32 @@
-package com.nbs.jiaxiao.service.db;
+package com.nbs.jiaxiao.mapper;
 
 
 import java.util.List;
-import com.nbs.jiaxiao.domain.po.ExamInfo;
+import com.nbs.jiaxiao.domain.po.Content;
 
 
-public interface ExamInfoService {
+public interface ContentMapper {
 	
 	/**
 	 * 保存
-	 * @param examInfo
+	 * @param content
 	 * @return
 	 */
-	public int insert(ExamInfo examInfo);
+	public int insert(Content content);
 	
 	/**
 	 * 根据主键更新
-	 * @param examInfo
+	 * @param content
 	 * @return
 	 */
-	public void updateByPriKey(ExamInfo examInfo);
+	public int updateByPriKey(Content content);
 	
 	/**
 	 * 根据条件逻辑删除 慎用
 	 * @param con 条件
 	 * @return
 	 */
-	public int delete(ExamInfo con);
+	public int delete(Content con);
 	
 	/**
 	 * 根据主键逻辑删除
@@ -40,7 +40,7 @@ public interface ExamInfoService {
 	 * @param con
 	 * @return
 	 */
-	public int deleteActual(ExamInfo con);
+	public int deleteActual(Content con);
 	
 	/**
 	 * 根据主键物理删除 慎用
@@ -61,40 +61,30 @@ public interface ExamInfoService {
 	 * @param id
 	 * @return
 	 */
-	public ExamInfo selectByPriKey(Integer id);
+	public Content selectByPriKey(Integer id);
 	
 	/**
 	 * 根据条件查询
 	 * @param con
 	 * @return
 	 */
-	public List<ExamInfo> selectList(ExamInfo con);
+	public List<Content> selectList(Content con);
 	
 	/**
 	 * 根据条件计数
 	 * @param con
 	 * @return
 	 */
-	public long selectCount(ExamInfo con);
+	public long selectCount(Content con);
 	
 	/**
 	 * 根据条件判断是否存在
 	 * @param con 条件
 	 * @return 存在的第一个值的主键
 	 */
-	public boolean exist(ExamInfo con);
+	public Integer exist(Content con);
 	
 	/* customized code start */
-	
-	ExamInfo queryByUk(Integer examId, Integer studentId);
-
-	void pass(ExamInfo examInfo);
-
-	void noPass(ExamInfo examInfo);
-
-	ExamInfo delete(Integer examId, Integer studentId);
-
-	List<ExamInfo> queryStudentExam(Integer studentId);
 	
 	/* customized code end */
 

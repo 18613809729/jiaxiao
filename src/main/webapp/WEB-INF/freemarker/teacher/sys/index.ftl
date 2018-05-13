@@ -58,9 +58,9 @@
 							</div>
 						</a>
 
-						<a class="weui-cell weui-cell_access" href="javascript:;">
+						<a class="weui-cell weui-cell_access" href="/teacher/sys/content">
 							<div class="weui-cell__bd">
-								<p>系统设置</p>
+								<p>首页编辑</p>
 							</div>
 							<div class="weui-cell__ft">
 							</div>
