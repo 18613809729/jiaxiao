@@ -17,14 +17,11 @@ import com.nbs.jiaxiao.constant.ResCode;
 import com.nbs.jiaxiao.domain.po.School;
 import com.nbs.jiaxiao.domain.vo.BaseRes;
 import com.nbs.jiaxiao.service.db.SchoolService;
-import com.nbs.jiaxiao.service.db.SellerService;
 
 @Controller
 @RequestMapping("/teacher/sys")
 public class TeacherSysController {
 	public static final String FTL_PREFIX = "teacher/sys";
-	@Autowired
-	private SellerService sellerService;
 
 	@Autowired
 	private SchoolService schoolService;
@@ -32,13 +29,6 @@ public class TeacherSysController {
 	@GetMapping("/index")
 	public ModelAndView index() {
 		return new ModelAndView(FTL_PREFIX + "/index");
-	}
-	
-	@GetMapping("/seller/join")
-	public ModelAndView join(Integer parentId) {
-		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/sign");
-		mv.addObject("parent", sellerService.queryParentSeller(parentId));
-		return mv;
 	}
 	
 	@PostMapping("/school/info")

@@ -201,10 +201,11 @@ public class StudentServiceImpl implements StudentService{
 			con.setPhase(Phase.REACH.getCode());
 		}
 		List<Student> lst = selectList(con);
-		Integer interval = dictService.queryExamInterval().getIntervalByStage(stage);
+		ExamInterval examInterval =  dictService.queryExamInterval();
+		
 		lst.removeIf(student -> {
 			LocalDate date = student.getExamDate().toLocalDate();
-			return date.plusDays(interval).compareTo(examDate) > 0;
+			return date.plusDays(examInterval.getIntervalByStage(stage, student.getDriveType())).compareTo(examDate) > 0;
 		});
 		lst.forEach(student -> student.setSchoolName(schoolService.queryName(student.getSchoolId())));
 		return lst;

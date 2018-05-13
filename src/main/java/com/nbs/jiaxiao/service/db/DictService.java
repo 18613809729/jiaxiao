@@ -98,6 +98,8 @@ public interface DictService {
 	void saveOrUpdateExamInterval(String opeOpenId, ExamInterval examInterval);
 
 	ExamInterval queryExamInterval();
+
+	Dict queryByTypeAndCode(String type, String code);
 	
 	/* customized code end */
 

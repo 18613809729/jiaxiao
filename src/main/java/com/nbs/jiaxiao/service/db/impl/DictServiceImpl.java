@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.DictType;
 import com.nbs.jiaxiao.domain.po.Dict;
 import com.nbs.jiaxiao.domain.vo.ExamInterval;
@@ -127,6 +128,14 @@ public class DictServiceImpl implements DictService{
 	/* customized code start */
 	
 	@Override
+	public Dict queryByTypeAndCode(String type, String code) {
+		Dict dict = new Dict();
+		dict.setType(type);
+		dict.setCode(code);
+		return NbsUtils.getFirst(selectList(dict));
+	}
+	
+	@Override
 	public List<Dict> queryDictByType(String type) {
 		Dict dict = new Dict();
 		dict.setType(type);
@@ -145,51 +154,96 @@ public class DictServiceImpl implements DictService{
 			return null;
 		}
 		ExamInterval examInterval = new ExamInterval();
-		examInterval.setInterval1(Integer.valueOf(map.get(ExamInterval.INTERVAL1).getValue()));
-		examInterval.setInterval2(Integer.valueOf(map.get(ExamInterval.INTERVAL2).getValue()));
-		examInterval.setInterval3(Integer.valueOf(map.get(ExamInterval.INTERVAL3).getValue()));
-		examInterval.setInterval4(Integer.valueOf(map.get(ExamInterval.INTERVAL4).getValue()));
+		if(map.get(ExamInterval.INTERVAL1) != null) {
+			examInterval.setInterval1(Integer.valueOf(map.get(ExamInterval.INTERVAL1).getValue()));
+		}
+		if(map.get(ExamInterval.INTERVAL20) != null) {
+			examInterval.setInterval20(Integer.valueOf(map.get(ExamInterval.INTERVAL20).getValue()));
+		}
+		if(map.get(ExamInterval.INTERVAL21) != null) {
+			examInterval.setInterval21(Integer.valueOf(map.get(ExamInterval.INTERVAL21).getValue()));
+		}
+		if(map.get(ExamInterval.INTERVAL30) != null) {
+			examInterval.setInterval30(Integer.valueOf(map.get(ExamInterval.INTERVAL30).getValue()));
+		}
+		if(map.get(ExamInterval.INTERVAL31) != null) {
+			examInterval.setInterval31(Integer.valueOf(map.get(ExamInterval.INTERVAL31).getValue()));
+		}
+		if(map.get(ExamInterval.INTERVAL4) != null) {
+			examInterval.setInterval4(Integer.valueOf(map.get(ExamInterval.INTERVAL4).getValue()));
+		}
 		return examInterval;
 	}
 	
 	@Transactional
 	@Override
 	public void saveOrUpdateExamInterval(String opeOpenId, ExamInterval examInterval) {
-		Map<String, Dict> map = queryDictMapByType(DictType.EXAM_INTERVAL.getCode());
-		if(map.size() == 0) {
-			Dict interval1 = new Dict(DictType.EXAM_INTERVAL.getCode(), ExamInterval.INTERVAL1, String.valueOf(examInterval.getInterval1()));
-			Dict interval2 = new Dict(DictType.EXAM_INTERVAL.getCode(), ExamInterval.INTERVAL2, String.valueOf(examInterval.getInterval2()));
-			Dict interval3 = new Dict(DictType.EXAM_INTERVAL.getCode(), ExamInterval.INTERVAL3, String.valueOf(examInterval.getInterval3()));
-			Dict interval4 = new Dict(DictType.EXAM_INTERVAL.getCode(), ExamInterval.INTERVAL4, String.valueOf(examInterval.getInterval4()));
-			interval1.setLastUpdateNoUserId(opeOpenId);
-			interval2.setLastUpdateNoUserId(opeOpenId);
-			interval3.setLastUpdateNoUserId(opeOpenId);
-			interval4.setLastUpdateNoUserId(opeOpenId);
-			insert(interval1);
-			insert(interval2);
-			insert(interval3);
-			insert(interval4);
-		} else {
-			Dict interval1 = map.get(ExamInterval.INTERVAL1);
+		String type = DictType.EXAM_INTERVAL.getCode();
+		Dict interval1 = queryByTypeAndCode(type, ExamInterval.INTERVAL1);
+		if(interval1 != null) {
 			interval1.setValue(String.valueOf(examInterval.getInterval1()));
 			interval1.setLastUpdateNoUserId(opeOpenId);
-
-			Dict interval2 = map.get(ExamInterval.INTERVAL2);
-			interval2.setValue(String.valueOf(examInterval.getInterval2()));
-			interval2.setLastUpdateNoUserId(opeOpenId);
-			
-			Dict interval3 = map.get(ExamInterval.INTERVAL3);
-			interval3.setValue(String.valueOf(examInterval.getInterval3()));
-			interval3.setLastUpdateNoUserId(opeOpenId);
-			
-			Dict interval4 = map.get(ExamInterval.INTERVAL4);
+			updateByPriKey(interval1);
+		} else {
+			interval1 = new Dict(type, ExamInterval.INTERVAL1, String.valueOf(examInterval.getInterval1()));
+			interval1.setLastUpdateNoUserId(opeOpenId);
+			insert(interval1);
+		}
+		
+		
+		Dict interval20 = queryByTypeAndCode(type, ExamInterval.INTERVAL20);
+		if(interval20 != null) {
+			interval20.setValue(String.valueOf(examInterval.getInterval20()));
+			interval20.setLastUpdateNoUserId(opeOpenId);
+			updateByPriKey(interval20);
+		} else {
+			interval20 = new Dict(type, ExamInterval.INTERVAL20, String.valueOf(examInterval.getInterval20()));
+			interval20.setLastUpdateNoUserId(opeOpenId);
+			insert(interval20);
+		}
+		
+		Dict interval21 = queryByTypeAndCode(type, ExamInterval.INTERVAL21);
+		if(interval21 != null) {
+			interval21.setValue(String.valueOf(examInterval.getInterval21()));
+			interval21.setLastUpdateNoUserId(opeOpenId);
+			updateByPriKey(interval21);
+		} else {
+			interval21 = new Dict(type, ExamInterval.INTERVAL21, String.valueOf(examInterval.getInterval21()));
+			interval21.setLastUpdateNoUserId(opeOpenId);
+			insert(interval21);
+		}
+		
+		Dict interval30 = queryByTypeAndCode(type, ExamInterval.INTERVAL30);
+		if(interval30 != null) {
+			interval30.setValue(String.valueOf(examInterval.getInterval30()));
+			interval30.setLastUpdateNoUserId(opeOpenId);
+			updateByPriKey(interval30);
+		} else {
+			interval30 = new Dict(type, ExamInterval.INTERVAL30, String.valueOf(examInterval.getInterval30()));
+			interval30.setLastUpdateNoUserId(opeOpenId);
+			insert(interval30);
+		}
+		
+		Dict interval31 = queryByTypeAndCode(type, ExamInterval.INTERVAL31);
+		if(interval31 != null) {
+			interval31.setValue(String.valueOf(examInterval.getInterval31()));
+			interval31.setLastUpdateNoUserId(opeOpenId);
+			updateByPriKey(interval31);
+		} else {
+			interval31 = new Dict(type, ExamInterval.INTERVAL31, String.valueOf(examInterval.getInterval31()));
+			interval31.setLastUpdateNoUserId(opeOpenId);
+			insert(interval31);
+		}
+		
+		Dict interval4 = queryByTypeAndCode(type, ExamInterval.INTERVAL4);
+		if(interval4 != null) {
 			interval4.setValue(String.valueOf(examInterval.getInterval4()));
 			interval4.setLastUpdateNoUserId(opeOpenId);
-			
-			updateByPriKey(interval1);
-			updateByPriKey(interval2);
-			updateByPriKey(interval3);
 			updateByPriKey(interval4);
+		} else {
+			interval4 = new Dict(type, ExamInterval.INTERVAL4, String.valueOf(examInterval.getInterval4()));
+			interval4.setLastUpdateNoUserId(opeOpenId);
+			insert(interval4);
 		}
 	}
 	
