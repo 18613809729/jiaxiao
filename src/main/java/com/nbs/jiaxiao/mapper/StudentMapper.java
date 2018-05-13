@@ -97,6 +97,7 @@ public interface StudentMapper {
 	
 	public List<ExamStudentInfo> selectExamStudentInfo(Integer examId);
 	
+	public  List<StudentInfo> selectArrearageInfo(String stage);
 	/* customized code end */
 
 }

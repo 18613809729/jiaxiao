@@ -197,6 +197,9 @@
 		SELECT b.id, b.username, b.mobile, b.school_id, a.status as exam_status FROM exam_info as a inner join student as b on a.student_id = b.id where a.deleted = 0 and b.deleted = 0 and a.exam_id = #{examId}
 	</select>
 	
+	<select id="selectArrearageInfo" resultType="com.nbs.jiaxiao.domain.vo.StudentInfo">
+		SELECT a.id, max(a.username) as username, max(a.total_fee) as total_fee, sum(b.money) as pay_fee FROM student as a inner join fee as b on a.id = b.user_id where a.deleted =0 and b.deleted =0 and a.is_arrearage = true and stage = #{stage} group by a.id;
+	</select>
 	
 	<!-- customized code end -->
 </mapper>

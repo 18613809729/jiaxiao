@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-	<title>推广加盟</title>
+	<title>销售申请</title>
 	<#include "/head.ftl">
 </head>
 <body ontouchstart>

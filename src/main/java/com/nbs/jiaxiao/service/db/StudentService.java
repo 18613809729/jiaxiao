@@ -117,6 +117,8 @@ public interface StudentService {
 
 	List<Student> queryStudent(String openId);
 
+	List<StudentInfo> selectArrearageInfo(String stage);
+
 	/* customized code end */
 
 }

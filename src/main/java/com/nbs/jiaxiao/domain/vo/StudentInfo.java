@@ -19,6 +19,8 @@ public class StudentInfo extends Student {
 	private java.lang.String headImg;
 	
 	private java.lang.String schoolName;
+	
+	private java.lang.Double payFee;
 
 	public java.lang.String getNickName() {
 		return nickName;
@@ -67,5 +69,11 @@ public class StudentInfo extends Student {
 	}
 	public void setSchoolName(java.lang.String schoolName) {
 		this.schoolName = schoolName;
+	}
+	public java.lang.Double getPayFee() {
+		return payFee;
+	}
+	public void setPayFee(java.lang.Double payFee) {
+		this.payFee = payFee;
 	}
 }

@@ -533,4 +533,13 @@ public class TeacherStudentController {
 		return BaseRes.buildSuccess(exam);
 	} 
 	
+	
+	@GetMapping("/fee/manage/{stage}")
+	public ModelAndView feeManage(@PathVariable("stage") String stage) {
+		List<StudentInfo> infos = studentService.selectArrearageInfo(stage);
+		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/feeManage");
+		mv.addObject("infos", infos);
+		mv.addObject("stage", stage);
+		return mv;
+	} 
 }

@@ -285,6 +285,12 @@ public class StudentServiceImpl implements StudentService{
 		return selectList(con);
 	} 
 	
+	@Override
+	public  List<StudentInfo> selectArrearageInfo(String stage){
+		return studentMapper.selectArrearageInfo(stage);
+	}
+
+	
 	/* customized code end */
 
 }

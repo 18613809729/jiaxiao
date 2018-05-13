@@ -91,6 +91,15 @@
 							<div class="weui-cell__ft">
 							</div>
 						</a>
+						
+						
+						<a class="weui-cell weui-cell_access" href="/teacher/student/fee/manage/1">
+							<div class="weui-cell__bd">
+								<p>缴费管理</p>
+							</div>
+							<div class="weui-cell__ft">
+							</div>
+						</a>
 					</div>
 
 					<br>
