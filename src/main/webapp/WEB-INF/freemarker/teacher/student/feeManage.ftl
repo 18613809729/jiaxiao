@@ -26,6 +26,7 @@
       	</div>
       	<div id="container">
 			<#if infos?? && (infos?size > 0)>
+				<div class="weui-cells__title">姓名/总额/已缴/未缴</div>
 				<div class="weui-cells">
 				<#list infos as info>
 	   				<a class="weui-cell weui-cell_access" href="/teacher/student/info/${info.id}/fee">
@@ -34,12 +35,25 @@
 					            <div class="weui-flex__item">${info.username}</div>
 					            <div class="weui-flex__item">${info.totalFee}</div>
 					            <div class="weui-flex__item">${info.payFee}</div>
+					            <div class="weui-flex__item">${info.totalFee - info.payFee}</div>
         					</div>
 						</div>
 						<div class="weui-cell__ft">
 						</div>
 					</a>
 				</#list>
+				</div>
+				<div class="weui-cells">
+					<div class="weui-cell">
+						<div class="weui-cell__bd">
+							<div class="weui-flex">
+					            欠款总额
+        					</div>
+						</div>
+						<div class="weui-cell__ft">
+							${arrangeSum}
+						</div>
+					</div>
 				</div>
 			<#else>
 				<div class="weui-loadmore weui-loadmore_line">

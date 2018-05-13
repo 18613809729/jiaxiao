@@ -540,6 +540,12 @@ public class TeacherStudentController {
 		ModelAndView mv = new ModelAndView(FTL_PREFIX + "/feeManage");
 		mv.addObject("infos", infos);
 		mv.addObject("stage", stage);
+		
+		double sum = 0.0;
+		for (StudentInfo info : infos) {
+			sum += info.getTotalFee().doubleValue() - info.getPayFee(); 
+		}
+		mv.addObject("arrangeSum", sum);
 		return mv;
 	} 
 }
