@@ -43,6 +43,12 @@
 			<bean class="com.nbs.jiaxiao.wx.WxLoginInteceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
+		 	<mvc:mapping path="/**/*"/>
+			<mvc:exclude-mapping path="/**/*.txt"/>
+			<mvc:exclude-mapping path="/wx"/>
+			<bean class="com.nbs.jiaxiao.wx.WxShareInteceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
 		 	<mvc:mapping path="/teacher/**/*"/>
 			<bean class="com.nbs.jiaxiao.inteceptor.TeacheInteceptor"/>
 		</mvc:interceptor>

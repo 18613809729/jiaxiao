@@ -106,8 +106,9 @@ public class Jedis implements JedisCommands{
 
 	@Override
 	public Long ttl(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.ttl(key);
+		}
 	}
 
 	@Override
@@ -154,8 +155,9 @@ public class Jedis implements JedisCommands{
 
 	@Override
 	public Long setnx(String key, String value) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.setnx(key, value);
+		}
 	}
 
 	@Override
@@ -197,8 +199,9 @@ public class Jedis implements JedisCommands{
 
 	@Override
 	public Long incr(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.incr(key);
+		}
 	}
 
 	@Override
@@ -215,14 +218,16 @@ public class Jedis implements JedisCommands{
 
 	@Override
 	public Long hset(String key, String field, String value) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.hset(key, field, value);
+		}
 	}
 
 	@Override
 	public String hget(String key, String field) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.hget(key, field);
+		}
 	}
 
 	@Override
@@ -719,8 +724,9 @@ public class Jedis implements JedisCommands{
 
 	@Override
 	public Long del(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		try(redis.clients.jedis.Jedis jedis = jedisPool.getResource()) {
+			return jedis.del(key);
+		}
 	}
 
 	@Override

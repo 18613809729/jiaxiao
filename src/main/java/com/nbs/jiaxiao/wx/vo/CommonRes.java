@@ -7,7 +7,7 @@ public class CommonRes extends BaseRes{
 	private String refresh_token;
 	private String openid;
 	private String scope;
-	
+	private String ticket;
 	
 	
 	public String getAccess_token() {
@@ -66,7 +66,17 @@ public class CommonRes extends BaseRes{
 	public void setScope(String scope) {
 		this.scope = scope;
 	}
-	
-	
+
+
+
+	public String getTicket() {
+		return ticket;
+	}
+
+
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
 	
 }
