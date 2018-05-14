@@ -23,7 +23,7 @@ public class WebUtil {
 		if(StringUtils.isNotBlank(request.getQueryString())) {
 			sb.append("?").append(request.getQueryString());
 		}
-		return sb.toString();
+		return sb.toString().replace("http://", "https://");
 	}
 	
 	public static boolean isAjax(HttpServletRequest request) {

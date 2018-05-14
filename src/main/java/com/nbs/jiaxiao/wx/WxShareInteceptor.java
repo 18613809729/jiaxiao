@@ -17,7 +17,7 @@ import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.common.WebUtil;
 
 public class WxShareInteceptor implements HandlerInterceptor {
-	private static final Logger LOGGER = LoggerFactory.getLogger(WxLoginInteceptor.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(WxShareInteceptor.class);
 
 	@Value("${wx.appID}")
 	private String appID;
