@@ -16,8 +16,8 @@
             	${examInfo.username}<#if examInfo_has_next>、<#else> 。</#if>
             </#list></p>
         </div>
-        <div class="weui-btn-area">
-			<a href="xlAdd1.html" class="weui-btn weui-btn_primary" id="addMore">分享通知</a>
+       <div class="weui-btn-area">
+			<a href="javascript:;" class="weui-btn weui-btn_primary" id="shareBtn"><i></i>分享通知</a>
 		</div>
 		<br>
 	</div>

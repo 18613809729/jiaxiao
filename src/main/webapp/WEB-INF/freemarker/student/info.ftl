@@ -206,6 +206,10 @@
 			</#list>
 		</div>
 		</#if>
+		<br>
+		<div class="weui-btn-area">
+			<a href="javascript:;" class="weui-btn weui-btn_primary" id="shareBtn"><i></i>邀请好友</a>
+		</div>
 	   	<br>
 	</div>
 	<#include "/common.ftl">

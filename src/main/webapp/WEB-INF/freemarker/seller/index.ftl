@@ -129,9 +129,16 @@
                 <div class="weui-cell__ft"></div>
             </a>
 	   	</div>
-
+	   	<br>
+ 		<div class="weui-btn-area">
+			<a href="javascript:;" class="weui-btn weui-btn_primary" id="shareBtn"><i></i>邀请学员</a>
+		</div>
 	   	<br>
 	</div>
 	<#include "/common.ftl">
+	<script type="text/javascript">
+		$(function(){
+		});
+	</script>
 </body>
 </html>
