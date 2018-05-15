@@ -77,7 +77,7 @@
 	                            "primary_btn_msg":"查看详情",
 	                            "primary_btn_url":"javascript:history.back();",
 	                            "default_btn_msg":"邀请考试",
-	    						"default_btn_url":"/teacher/student/exam/notify/" + res.data.id
+	    						"default_btn_url":"/student/exam/notify/" + res.data.id
 	                        });
 	      				} else {
 							$.toast(res.msg, "cancel");

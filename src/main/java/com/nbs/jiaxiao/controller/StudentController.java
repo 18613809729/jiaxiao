@@ -1,6 +1,7 @@
 package com.nbs.jiaxiao.controller;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import com.nbs.jiaxiao.common.NbsUtils;
 import com.nbs.jiaxiao.constant.Phase;
 import com.nbs.jiaxiao.constant.Stage;
 import com.nbs.jiaxiao.constant.State;
+import com.nbs.jiaxiao.domain.po.Exam;
 import com.nbs.jiaxiao.domain.po.ExamInfo;
 import com.nbs.jiaxiao.domain.po.Fee;
 import com.nbs.jiaxiao.domain.po.Seller;
@@ -37,7 +40,8 @@ import com.nbs.jiaxiao.service.db.UserService;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
-	
+	private static final DateTimeFormatter FORMAT_CN = DateTimeFormatter.ofPattern("yyyy年M月d日");
+
 	public static final String FTL_PREFIX = "student";
 	
 	@Autowired
@@ -143,4 +147,16 @@ public class StudentController {
 		return mv;
 	} 
 
+	@GetMapping("/exam/notify/{id}")
+	public ModelAndView examNotify(@PathVariable("id") Integer id) {
+		Exam exam = examService.selectByPriKey(id);
+		NbsUtils.assertNotNull(exam, "the exam {0} not exist", id);
+		Stage stage = Stage.valueOfByCode(exam.getStage());
+		ModelAndView mv =  new ModelAndView(FTL_PREFIX + "/examNotify");
+		mv.addObject("exam", exam);
+		mv.addObject("stage", stage);
+		mv.addObject("examInfos", studentService.selectExamInfo(id));
+		mv.addObject("examDate", exam.getExamDate().toLocalDate().format(FORMAT_CN));
+		return mv;
+	} 
 }

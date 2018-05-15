@@ -59,7 +59,6 @@ import com.nbs.jiaxiao.service.db.UserService;
 public class TeacherStudentController {
 	public static final String FTL_PREFIX = "teacher/student";
 	private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	private static final DateTimeFormatter FORMAT_CN = DateTimeFormatter.ofPattern("yyyy年M月d日");
 	private static final DateTimeFormatter DT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
@@ -391,18 +390,7 @@ public class TeacherStudentController {
 		return BaseRes.buildSuccess(exam);
 	} 
 	
-	@GetMapping("/exam/notify/{id}")
-	public ModelAndView examNotify(@PathVariable("id") Integer id) {
-		Exam exam = examService.selectByPriKey(id);
-		NbsUtils.assertNotNull(exam, "the exam {0} not exist", id);
-		Stage stage = Stage.valueOfByCode(exam.getStage());
-		ModelAndView mv =  new ModelAndView(FTL_PREFIX + "/examNotify");
-		mv.addObject("exam", exam);
-		mv.addObject("stage", stage);
-		mv.addObject("examInfos", studentService.selectExamInfo(id));
-		mv.addObject("examDate", exam.getExamDate().toLocalDate().format(FORMAT_CN));
-		return mv;
-	} 
+	
 	
 	
 	@GetMapping("/exam/history")
