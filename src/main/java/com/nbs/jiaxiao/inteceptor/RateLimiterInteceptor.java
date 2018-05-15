@@ -33,7 +33,7 @@ public class RateLimiterInteceptor implements HandlerInterceptor {
 			jedis.expire(key, 60);
 		}
 		LOGGER.info("RateLimiterInteceptor {} count {}", openId, count);
-		if(count < 1) {
+		if(count < 30) {
 			return true;
 		} else {
 			throw new ForbiiddernException("RateLimiterInteceptor over " + openId);
