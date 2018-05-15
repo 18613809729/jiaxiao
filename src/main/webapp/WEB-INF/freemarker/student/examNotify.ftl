@@ -22,5 +22,16 @@
 		<br>
 	</div>
 	<#include "/common.ftl">
+	<script type="text/javascript">
+		wx.ready(function(){
+  			$.share({ 
+  				title: '考试通知', 
+			    desc:'请以下人员于${examDate}参加${stage.desc}考试',
+			    link: 'https://jx.xxwkj.club/student/exam/notify/${examId}', 
+			    imgUrl: 'https://static.xxwkj.club/jiaxiao/image/share.jpg'
+			});
+		});
+
+	</script>
 </body>
 </html>

@@ -157,6 +157,7 @@ public class StudentController {
 		mv.addObject("stage", stage);
 		mv.addObject("examInfos", studentService.selectExamInfo(id));
 		mv.addObject("examDate", exam.getExamDate().toLocalDate().format(FORMAT_CN));
+		mv.addObject("examId", id);
 		return mv;
 	} 
 }
