@@ -138,6 +138,11 @@
 	<#include "/common.ftl">
 	<script type="text/javascript">
 		$(function(){
+			wx.ready(function(){
+	  			$.share({ 
+				    link: 'https://jx.xxwkj.club/m/index?invite=${info.id}', 
+				});
+			});
 		});
 	</script>
 </body>
