@@ -9,7 +9,7 @@ public class RedisKey {
 	public static final String LOCK_ACCESS_TOKEN = "LOCK_ACCESS_TOKEN";
 	public static final String JSAPI_TOKEN = "JSAPI_TOKEN";
 	public static final String LOCK_JSAPI_TOKEN = "LOCK_JSAPI_TOKEN";
-
+	public static final String RATE_LIMITER_ = "RATE_LIMITER_";
 
 
 }
