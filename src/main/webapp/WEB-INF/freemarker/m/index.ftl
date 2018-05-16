@@ -4821,8 +4821,12 @@ img{
 </div>
 <p class=""><br></p>
 
- <div class="weui-btn-area">
-    <a class="weui-btn weui-btn_primary" href="/student/join">立即报名</a>
+ <div class="weui-btn-area"> 
+ 	<#if invite??>
+ 	    <a class="weui-btn weui-btn_primary" href="/student/join?sellerId=${invite}">立即报名</a>
+ 	<#else>
+ 		<a class="weui-btn weui-btn_primary" href="/student/join">立即报名</a>
+ 	</#if>
 </div>
 <br>
 </article>
