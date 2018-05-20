@@ -22,8 +22,8 @@ wx.error(function(res){
 <script src="https://static.xxwkj.club/jiaxiao/js/pinyin.js"></script>
 <script src="https://static.xxwkj.club/jiaxiao/js/template.js"></script>
 <script src="https://static.xxwkj.club/common/js/clipboard.min.js"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/uploadError.js?v=9"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/formValidate.js?v=9"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/search.js?v=9"></script>
-<script src="https://static.xxwkj.club/jiaxiao/js/main.js?v=9"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/uploadError.js?v=10"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/formValidate.js?v=10"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/search.js?v=10"></script>
+<script src="https://static.xxwkj.club/jiaxiao/js/main.js?v=10"></script>
 
