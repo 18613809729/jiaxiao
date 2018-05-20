@@ -11,7 +11,7 @@
 		<div class="search_bar">
 			<div class="search_label" id="search">
 				<i class="weui-icon-search"></i>
-				<span>搜索</span>
+				<span>姓名/拼音/手机号</span>
 			</div>
 		</div>
 
