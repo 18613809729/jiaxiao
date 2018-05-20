@@ -248,6 +248,9 @@ public class TeacherStudentController {
 		if(StringUtils.isNotBlank(info.getUsername())) {
 			student.setUsername(info.getUsername());
 		}
+		if(info.getDriveType() != null) {
+			student.setDriveType(info.getDriveType());
+		}
 		studentService.updateByPriKey(student);
 		return BaseRes.buildSuccess(student);
 	}

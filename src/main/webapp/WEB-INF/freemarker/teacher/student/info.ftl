@@ -124,16 +124,23 @@
 				</div>
 			</#if>
 
-			<div class="weui-cell">
+			<div class="weui-cell weui-cell_swiped">
 				<div class="weui-cell__bd">
-					车型
+					<a class="weui-cell" >
+						<div class="weui-cell__bd">
+							车型
+						</div>
+						<div class="weui-cell__ft">
+							<#if info.driveType == 0>
+								手动档
+							<#else>
+								自动档
+							</#if>
+						</div>
+					</a>
 				</div>
-				<div class="weui-cell__ft">
-					<#if info.driveType == 0>
-						手动档
-					<#else>
-						自动档
-					</#if>
+				<div class="weui-cell__ft action">
+					<a class="weui-swiped-btn weui-swiped-btn_default" href="javascript:;" id="modifyDriveType">修改</a>
 				</div>
 			</div>
 			
@@ -252,6 +259,25 @@
 				});
 			});
 
+			$("#modifyDriveType").click(function(){
+				$.modal({
+				  title: "修改车型",
+				  text: "请选择车型",
+				  buttons: [
+				    { text: "手动档", onClick: function(){
+				    		$.singlePut($(this), "/teacher/student/info/${info.id}", {"driveType":0}).done(function(res){
+			  					res.code == "0" && location.reload();
+			  				});
+				    }},
+				    { text: "自动档", onClick: function(){  
+				    	$.singlePut($(this), "/teacher/student/info/${info.id}", {"driveType":1}).done(function(res){
+			  					res.code == "0" && location.reload();
+			  			});
+				    }},
+				    { text: "取消", className: "default", onClick: function(){} },
+				  ]
+				});
+			});
 
 			new Clipboard("#mobile", {
 				text: function(trigger) {
