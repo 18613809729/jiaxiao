@@ -99,7 +99,7 @@
                 if($elem.attr("name") == "payFee"){
                     var payFee = $elem.val();
                     var totalFee = $('[name="totalFee"]').val();
-                    if(payFee && totalFee && payFee > totalFee){
+                    if(payFee && totalFee && parseFloat(payFee)  > parseFloat(totalFee)){
                         errorInfos.push({"dom":$elem, "errorMsg":"实缴学费应小于等于应缴学费"});
                         return false;
                     }
