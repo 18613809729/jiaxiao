@@ -34,8 +34,8 @@
                     <div class="weui-cell__hd"><label class="weui-label">档位</label></div>
                     <div class="weui-cell__bd">
                         <select class="weui-select" name="driveType">
-                            <option selected="" value="1">自动档</option>
-                            <option value="0">手动档</option>
+                            <option  value="1">自动档</option>
+                            <option selected="selected" value="0">手动档</option>
                         </select>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
             });
 
             function loadSchool(schools){
-                var options = '<option value=""></option>';
+                var options = '';
                 for (var i = 0; i < schools.length; i++) {
                     options += '<option value="' + schools[i].id + '">' + schools[i].name + '</option>';
                 }

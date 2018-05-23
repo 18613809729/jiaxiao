@@ -54,8 +54,14 @@ public class TeacherSysController {
 	
 	@GetMapping("/school/all.json")
 	public @ResponseBody BaseRes<List<School>> allSchools(){
-		System.out.println(schoolService);
-		return BaseRes.buildSuccess(schoolService.selectList(new School()));
+		List<School> schools = schoolService.selectList(new School());
+		schools.sort((o1,o2) -> {
+			if("乾坤".equals(o1.getName())) {
+				return -1;
+			}
+			return 0;
+		});;
+		return BaseRes.buildSuccess(schools);
 	}
 	
 
