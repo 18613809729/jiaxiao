@@ -418,6 +418,38 @@
 	<script type="text/javascript" src="https://weix.91zsxt.cn/js/article/article_msg.js?v=070522"></script>
 	<script src="https://weix.91zsxt.cn/js/article/music_html_autoplay.js?v=3"></script>
 	<script src="https://weix.91zsxt.cn/js/article/article_img_wxshow.js?v=040502"></script>
+    <script>
+    wx.config({
+        debug: false, 
+        appId: '${Request.appID}', 
+        timestamp: ${Request.timestamp}, 
+        nonceStr: '${Request.noncestr}', 
+        signature: '${Request.signature}',
+        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareWeibo", "onMenuShareQZone"]
+    });
+    wx.error(function(res){
+        console.log(res);
+    });
+
+    $.share=function(opt){
+      var option = {
+        title: '紫金县龙腾驾校林教练团队', 
+        desc:'学车钜惠 还有佣金',
+        link: 'https://jx.xxwkj.club/m/index', 
+        imgUrl: 'https://static.xxwkj.club/jiaxiao/image/share.jpg'
+      };
+      $.extend(option, opt);
+      wx.onMenuShareTimeline(option);
+      wx.onMenuShareAppMessage(option);
+      wx.onMenuShareQQ(option);
+      wx.onMenuShareWeibo(option);
+      wx.onMenuShareQZone(option);
+    }
+
+    wx.ready(function(){
+      $.share({});
+    });
+    </script>
 </main>
 </div>
 </body>
